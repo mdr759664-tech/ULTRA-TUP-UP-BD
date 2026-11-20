@@ -1,16 +1,25 @@
 {
   "name": "ULTRA TOP UP BD",
   "short_name": "ULTRA TOP UP",
-  "description": "Fastest Free Fire Top Up in Bangladesh",
-  "start_url": "/index.html",
+  "description": "Fastest Free Fire Top Up in Bangladesh - Diamond, UC, TikTok, Facebook, YouTube, Instagram",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#000000",
   "theme_color": "#39ff14",
   "icons": [
     {
       "src": "logo.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }
