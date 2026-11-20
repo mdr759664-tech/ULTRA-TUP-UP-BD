@@ -6,89 +6,75 @@
 <title>ULTRA TOP UP BD</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#39ff14">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<link rel="apple-touch-icon" href="logo.png">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#000;color:#fff;padding-bottom:85px}
-.top{display:flex;justify-content:space-between;align-items:center;padding:12px 15px}
-.logo{display:flex;align-items:center;gap:10px}.logo img{width:55px;height:55px;border-radius:12px;border:2px solid #39ff14}.logo h1{color:#39ff14;font-size:22px;line-height:1}.logo h1 span{color:#fff;font-size:14px}
-.login{border:2px solid #39ff14;color:#39ff14;padding:8px 20px;border-radius:10px;font-weight:bold;cursor:pointer;background:#000}
-.bal{background:#39ff14;color:#000;padding:8px 14px;border-radius:20px;font-weight:900;font-size:13px}
-.notice{display:flex;border:2px solid #39ff14;border-radius:10px;margin:0 10px;overflow:hidden}.notice b{color:#39ff14;padding:10px;white-space:nowrap}.notice marquee{padding:10px}
-.banner{margin:12px 10px;border-radius:14px;border:2px solid #39ff14;background:linear-gradient(90deg,#001a33,#003366);padding:20px}.banner h1{color:#39ff14;font-size:28px}.banner button{background:#39ff14;border:none;padding:10px 18px;border-radius:20px;font-weight:bold;margin-top:12px}
-.btns{display:flex;gap:10px;padding:10px}.btns a{flex:1;color:#fff;border:2px solid #39ff14;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-weight:bold}
-.cats{display:flex;gap:8px;padding:0 10px;overflow-x:auto;white-space:nowrap}.cats button{background:#111;color:#39ff14;border:2px solid #39ff14;padding:9px 15px;border-radius:20px;cursor:pointer}.cats button.on{background:#39ff14;color:#000;font-weight:900}
-h2{padding:12px 15px 5px;color:#39ff14}
+body{background:#000;color:#fff;padding-bottom:85px;overflow-x:hidden}
+/* উপর থেকে পড়বো - Canvas */
+#fall{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.top,.notice,.banner,.btns,.cats,#allLists,.order,.bottom,.support,.refBox{position:relative;z-index:2}
+.top{display:flex;justify-content:space-between;align-items:center;padding:12px 15px;background:#000}
+.logo{display:flex;align-items:center;gap:10px}.logo img{width:55px;height:55px;border-radius:12px;border:2px solid var(--c,#39ff14);transition:.5s}.logo h1{color:var(--c,#39ff14);font-size:22px;line-height:1;transition:.5s}.logo h1 span{color:#fff;font-size:14px}
+.login{border:2px solid var(--c,#39ff14);color:var(--c,#39ff14);padding:8px 20px;border-radius:10px;font-weight:bold;cursor:pointer;background:#000;transition:.5s}
+.bal{background:var(--c,#39ff14);color:#000;padding:8px 14px;border-radius:20px;font-weight:900;font-size:13px;transition:.5s}
+.notice{display:flex;border:2px solid var(--c,#39ff14);border-radius:10px;margin:0 10px;overflow:hidden;background:#000;transition:.5s}.notice b{color:var(--c,#39ff14);padding:10px;white-space:nowrap}.notice marquee{padding:10px}
+.banner{margin:12px 10px;border-radius:14px;border:2px solid var(--c,#39ff14);background:linear-gradient(90deg,#001a33,#003366);padding:20px;transition:.5s}.banner h1{color:var(--c,#39ff14);font-size:28px;transition:.5s}.banner button{background:var(--c,#39ff14);color:#000;border:none;padding:10px 18px;border-radius:20px;font-weight:bold;margin-top:12px;transition:.5s}
+.btns{display:flex;gap:10px;padding:10px}.btns a{flex:1;color:#fff;border:2px solid var(--c,#39ff14);padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-weight:bold;background:#000;transition:.5s}
+.cats{display:flex;gap:8px;padding:0 10px;overflow-x:auto;white-space:nowrap}.cats button{background:#111;color:var(--c,#39ff14);border:2px solid var(--c,#39ff14);padding:9px 15px;border-radius:20px;cursor:pointer;transition:.5s}.cats button.on{background:var(--c,#39ff14);color:#000;font-weight:900}
+h2{padding:12px 15px 5px;color:var(--c,#39ff14);transition:.5s}
 .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:10px}
-.card{border:2px solid #39ff14;border-radius:14px;overflow:hidden;background:#14002b;text-align:center}.card .img{padding:18px 5px;font-size:32px;background:linear-gradient(#a020f0,#5b00a0)}.card h3{font-size:13px;padding:8px 4px;min-height:38px}.card p{font-size:11px;color:#ccc;padding-bottom:6px}.card b{color:#39ff14;font-size:14px}.card button{background:#39ff14;border:none;width:90%;padding:8px;border-radius:8px;font-weight:bold;margin:8px 0}
-.order{margin:15px;border:2px solid #39ff14;border-radius:14px;padding:15px}.order input,.order select{width:100%;padding:12px;margin:8px 0;border-radius:8px;background:#111;color:#fff;border:1px solid #39ff14}.order button{background:#39ff14;width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;font-size:16px}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0;z-index:99}.bottom div{text-align:center;font-size:12px;color:#888;cursor:pointer}.bottom div.active{color:#39ff14;font-weight:900}
-.install{background:#39ff14;color:#000;text-align:center;padding:12px;margin:10px;border-radius:10px;font-weight:bold;cursor:pointer}
+.card{border:2px solid var(--c,#39ff14);border-radius:14px;overflow:hidden;background:#14002b;text-align:center;transition:.5s}.card .img{padding:18px 5px;font-size:32px;background:linear-gradient(#a020f0,#5b00a0)}.card h3{font-size:13px;padding:8px 4px;min-height:38px}.card p{font-size:11px;color:#ccc;padding-bottom:6px}.card b{color:var(--c,#39ff14);font-size:14px;transition:.5s}.card button{background:var(--c,#39ff14);color:#000;border:none;width:90%;padding:8px;border-radius:8px;font-weight:bold;margin:8px 0;transition:.5s}
+.order{margin:15px;border:2px solid var(--c,#39ff14);border-radius:14px;padding:15px;background:#000;transition:.5s}.order input,.order select{width:100%;padding:12px;margin:8px 0;border-radius:8px;background:#111;color:#fff;border:1px solid var(--c,#39ff14)}.order button{background:var(--c,#39ff14);color:#000;width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;font-size:16px;transition:.5s}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0;z-index:99}.bottom div{text-align:center;font-size:12px;color:#888;cursor:pointer}.bottom div.active{color:var(--c,#39ff14);font-weight:900}
+.install{background:var(--c,#39ff14);color:#000;text-align:center;padding:12px;margin:10px;border-radius:10px;font-weight:bold;cursor:pointer;transition:.5s}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;overflow:auto}.modalBox{background:#fff;color:#000;margin:0 auto;max-width:430px;min-height:100vh;padding:0}.modalBox input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin:8px 0}
 .btnMain{width:100%;padding:14px;background:#e6005c;color:#fff;border:none;border-radius:10px;font-weight:900;font-size:16px;cursor:pointer;margin-top:8px}
 .payBox{background:#e6005c;color:#fff;border-radius:16px;padding:18px;margin-top:12px}.payBox input{width:100%;padding:13px;border:none;border-radius:10px;text-align:center}
 .copyBtn{background:#7a0030;color:#fff;border:none;padding:6px 12px;border-radius:8px;font-weight:900;cursor:pointer}
 .payBtn{padding:16px;background:#fff;border:2px solid #eee;border-radius:10px;font-size:18px;font-weight:900;cursor:pointer}.payBtn.on{border:2px solid #e6005c}
-.live{width:10px;height:10px;background:#22c55e;border-radius:50%;display:inline-block;animation:blink 1s infinite}@keyframes blink{50%{opacity:.2}}
 .oRow{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #eee}.oRow b{color:#111}.oRow small{color:#888}
 .done{color:#15803d;background:#dcfce7;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700}.prog{color:#b45309;background:#fef3c7;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700}
-.refBox{background:#0a2a0a;border:1px dashed #39ff14;border-radius:12px;padding:12px;margin:10px;text-align:center}
+.refBox{background:#0a2a0a;border:1px dashed var(--c,#39ff14);border-radius:12px;padding:12px;margin:10px;text-align:center}
 .support{position:fixed;right:14px;bottom:90px;width:52px;height:52px;background:#e6005c;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;z-index:99;cursor:pointer}
 </style>
 </head>
 <body>
+<canvas id="fall"></canvas>
 <div class="top"><div class="logo"><img src="logo.png"><h1>ULTRA<br><span>TOP UP BD</span></h1></div><div style="display:flex;gap:8px;align-items:center"><span class="bal">৳ <span id="myBal">0</span></span><button class="login" id="loginTopBtn" onclick="openLogin()">Login</button><span id="userAvatar" style="display:none;font-size:28px">👤</span></div></div>
-<div id="installBtn" class="install" style="display:none" onclick="installApp()">📲 APP INSTALL করো - Home Screen এ নাও</div>
-<div class="notice"><b>● NOTICE</b><marquee>অর্ডার করলে ৫-১০ মিনিটে ডেলিভারি | পেমেন্ট নাম্বার 01837450067 চেক করুন | ফেক নাম্বার থেকে সাবধান</marquee></div>
+<div id="installBtn" class="install" style="display:none" onclick="installApp()">📲 APP INSTALL করো</div>
+<div class="notice"><b>● NOTICE</b><marquee>অর্ডার করলে ৫-১০ মিনিটে ডেলিভারি | পেমেন্ট নাম্বার 01837450067 চেক করুন</marquee></div>
 <div class="banner"><h1>ULTRA TOP UP BD</h1><p>- bKash Nagad Rocket Upay -<br>- Fast Delivery -</p><p>💎 01837450067</p><button onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">▶ দ্রুত টপআপ করুন এখনি →</button></div>
-
-<div class="refBox" id="refBox" style="display:none"><b>🎁 তোমার Refer Link - 5% কমিশন</b><br><small id="myRefLink" style="word-break:break-all"></small><br><button onclick="copyRef()" style="background:#39ff14;border:none;padding:8px 14px;border-radius:8px;font-weight:900;margin-top:6px">Copy Refer Link</button><p style="margin-top:6px;font-size:13px">কেউ তোমার লিংকে ID খুলে Top Up করলে <b>প্রতি 100 টাকায় 5 টাকা</b> পাবা!</p><p>তোমার কমিশন: <b style="color:#39ff14">৳ <span id="myComm">0</span></b> | <span id="loginStatus" style="font-size:12px;color:#aaa"></span></p></div>
-<div class="refBox" id="refTease"><b>🎁 Refer করে 5% আয় করো!</b><br><small>Login করো → Refer Link নাও → বন্ধু Top Up করলেই প্রতি 100 টাকায় 5 টাকা</small><br><button onclick="openLogin()" style="background:#39ff14;border:none;padding:8px 14px;border-radius:8px;font-weight:900;margin-top:6px">Login করে Refer Link নাও</button></div>
-
+<div class="refBox" id="refBox" style="display:none"><b>🎁 তোমার Refer Link - 5% কমিশন</b><br><small id="myRefLink" style="word-break:break-all"></small><br><button onclick="copyRef()" style="background:var(--c,#39ff14);border:none;padding:8px 14px;border-radius:8px;font-weight:900;margin-top:6px;color:#000">Copy Refer Link</button><p style="margin-top:6px;font-size:13px">কেউ তোমার লিংকে ID খুলে Top Up করলে <b>প্রতি 100 টাকায় 5 টাকা</b> পাবা!</p><p>কমিশন: <b style="color:var(--c,#39ff14)">৳ <span id="myComm">0</span></b></p></div>
+<div class="refBox" id="refTease"><b>🎁 Refer করে 5% আয় করো!</b><br><small>Login করো → Refer Link নাও → বন্ধু Top Up করলেই প্রতি 100 টাকায় 5 টাকা</small><br><button onclick="openLogin()" style="background:var(--c,#39ff14);border:none;padding:8px 14px;border-radius:8px;font-weight:900;margin-top:6px;color:#000">Login করে Refer Link নাও</button></div>
 <div class="btns"><a href="https://t.me/+Q6GAbYR_AusxMjE1" target="_blank">✈️ SUPPORT<br>Telegram</a><a href="https://t.me/+RvjUmMagUWwxZGZl" target="_blank">👥 GROUP<br>Join Group</a></div>
 <div class="cats" id="cats"></div>
 <div id="allLists"></div>
-
-<div class="order" style="background:#fff;color:#111"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:24px">🛍️</span><div><h3 style="padding:0">Recent Orders</h3><span style="color:#16a34a;font-weight:700">● Live ~~~</span></div><button onclick="loadOrders()" style="margin-left:auto;background:#f1f5f9;border:none;padding:10px 14px;border-radius:50%;cursor:pointer;width:auto;font-size:18px">↻</button></div><div id="orders"></div></div>
-<div class="order" id="order"><h2 style="padding:0">Order Now</h2><input id="uid" placeholder="UID / Link / Username দাও"><select id="pkg"><option>25 Diamond - 25 TK</option><option>100 Diamond - 82 TK</option><option>60 UC - 125 TK</option><option>IMO Diamond 100 - 180 TK</option></select><input id="trx" placeholder="TrxID দাও"><button onclick="order()">Order Confirm করো</button><p id="msg" style="margin-top:10px;color:#39ff14"></p></div>
-<div style="margin:15px;border:2px solid #39ff14;border-radius:14px;padding:15px;text-align:center">Payment: bKash • Nagad • Rocket • Upay<br><b style="color:#39ff14;font-size:20px">01837450067</b></div>
-
+<div class="order" style="background:#fff!important;color:#111"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:24px">🛍️</span><div><h3 style="padding:0;color:#111">Recent Orders</h3><span style="color:#16a34a;font-weight:700">● Live ~~~</span></div><button onclick="loadOrders()" style="margin-left:auto;background:#f1f5f9;border:none;padding:10px 14px;border-radius:50%;cursor:pointer;width:auto;font-size:18px">↻</button></div><div id="orders"></div></div>
+<div class="order" id="order"><h2 style="padding:0">Order Now</h2><input id="uid" placeholder="UID / Link / Username দাও"><select id="pkg"><option>25 Diamond - 25 TK</option><option>100 Diamond - 82 TK</option><option>60 UC - 125 TK</option><option>IMO Diamond 100 - 180 TK</option></select><input id="trx" placeholder="TrxID দাও"><button onclick="order()">Order Confirm করো</button><p id="msg" style="margin-top:10px;color:var(--c,#39ff14)"></p></div>
+<div style="margin:15px;border:2px solid var(--c,#39ff14);border-radius:14px;padding:15px;text-align:center">Payment: bKash • Nagad • Rocket • Upay<br><b style="color:var(--c,#39ff14);font-size:20px">01837450067</b></div>
 <div class="bottom"><div class="active" onclick="location.reload()">🏠<br>Home</div><div onclick="showMyOrders()">📦<br>My Orders</div><div onclick="openPay(100)" style="background:#22c55e;color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;margin-top:-20px">+</div><div onclick="openLogin()">🧾<br>My Codes</div><div onclick="openLogin()">👤<br>My Account</div></div>
 <div class="support" onclick="window.open('https://t.me/+Q6GAbYR_AusxMjE1','_blank')">🎧</div>
 
-<div class="modal" id="loginModal"><div class="modalBox"><div style="background:#e6005c;color:#fff;padding:14px;display:flex;justify-content:space-between"><b>← ULTRA TOP UP BD</b><span onclick="closeModal('loginModal')" style="cursor:pointer">✕</span></div><div style="padding:16px"><p style="color:#b45309;font-size:12px">● SECURE ACCOUNT ACCESS</p><h1 style="font-size:38px;line-height:1.1">Welcome<br><span style="color:#e6005c">Back</span></h1><p style="color:#888;margin-top:8px">Fast, secure and simple access to your account.</p><div style="background:#fff5f5;padding:14px;border-radius:12px;margin-top:14px"><b>🛡️ Sign in to continue</b><br><small style="color:#888">Access your account securely - Real Login, কাটবো না</small></div><input id="l_name" placeholder="তোমার নাম (Sign Up এর জন্য)"><input id="l_phone" placeholder="Email দাও - example@gmail.com"><input id="l_pass" type="password" placeholder="Password (কমপক্ষে 6 অক্ষর)"><input id="l_ref" placeholder="Refer Code (যদি থাকে)"><button class="btnMain" onclick="doLogin()">Login / Sign Up →</button><button onclick="googleLogin()" style="width:100%;padding:14px;background:#fff;border:1px solid #ddd;border-radius:10px;margin-top:8px;text-align:left;font-weight:700">G Continue with Google →<br><small style="color:#888">Quick and secure sign in</small></button><p id="loginErr" style="color:red;text-align:center;margin-top:8px;font-size:13px"></p><div style="display:flex;justify-content:space-around;text-align:center;margin-top:14px;font-size:12px;color:#888"><div>⚡<br><b style="color:#111">Fast</b></div><div>✓<br><b style="color:#111">Secure</b></div><div>❤️<br><b style="color:#111">Trusted</b></div></div><div style="background:#fff1f2;padding:12px;border-radius:10px;margin-top:12px">✅ <b style="color:#9f1239">Your data is safe</b><br><small style="color:#888">Firebase Official Login - Google Server এ থাকবো</small></div></div></div></div>
+<div class="modal" id="loginModal"><div class="modalBox"><div style="background:#e6005c;color:#fff;padding:14px;display:flex;justify-content:space-between"><b>← ULTRA TOP UP BD</b><span onclick="closeModal('loginModal')" style="cursor:pointer">✕</span></div><div style="padding:16px"><p style="color:#b45309;font-size:12px">● SECURE ACCOUNT ACCESS</p><h1 style="font-size:38px;line-height:1.1;color:#000">Welcome<br><span style="color:#e6005c">Back</span></h1><input id="l_name" placeholder="তোমার নাম"><input id="l_phone" placeholder="Email দাও - example@gmail.com"><input id="l_pass" type="password" placeholder="Password (কমপক্ষে 6 অক্ষর)"><input id="l_ref" placeholder="Refer Code (যদি থাকে)"><button class="btnMain" onclick="doLogin()">Login / Sign Up →</button><button onclick="googleLogin()" style="width:100%;padding:14px;background:#fff;border:1px solid #ddd;border-radius:10px;margin-top:8px;text-align:left;font-weight:700;color:#000">G Continue with Google →</button><p id="loginErr" style="color:red;text-align:center;margin-top:8px;font-size:13px"></p></div></div></div>
 
-<div class="modal" id="payModal"><div class="modalBox"><div style="background:#e6005c;color:#fff;padding:14px;display:flex;justify-content:space-between"><span onclick="closeModal('payModal')">←</span><b>🔒 নিরাপদ পেমেন্ট</b><span>⋯</span></div><div style="padding:16px;background:#f1f5f9"><h2 style="color:#64748b;text-align:center">নিরাপদ পেমেন্ট</h2><div style="background:#0057ff;color:#fff;text-align:center;padding:12px;border-radius:10px;margin:12px 0;font-weight:900">মোবাইল ব্যাংকিং</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button onclick="selectPay('bKash','01837450067','*247#')" id="btn-bKash" class="payBtn on">💗 bKash</button><button onclick="selectPay('Upay','01837450067','*268#')" id="btn-Upay" class="payBtn">🟡 উপায়</button><button onclick="selectPay('Rocket','01837450067','*322#')" id="btn-Rocket" class="payBtn">🚀 রকেট</button><button onclick="selectPay('Nagad','01837450067','*167#')" id="btn-Nagad" class="payBtn">🧡 নগদ</button></div><h2 style="color:#111;padding:12px 0">৳ <span id="payAmtTop">60</span></h2><div class="payBox"><h3 style="text-align:center">ট্রানজেকশন আইডি দিন</h3><input id="trxId" placeholder="ট্রানজেকশন আইডি দিন" style="margin-top:12px"><p style="margin-top:14px">• <span id="payCode">*247#</span> ডায়াল করে আপনার <span id="payName">bKash</span> মোবাইল মেনুতে যান অথবা অ্যাপ খুলুন।</p><p style="margin-top:8px">• Send Money -এ ক্লিক করুন।</p><p style="margin-top:8px">• এই নম্বরে টাকা পাঠান। <b style="color:#ffeb3b" id="payNumber">01837450067</b> <button class="copyBtn" onclick="copyPayNum()">📋 কপি</button></p><p style="margin-top:8px">• টাকার পরিমাণ: <b style="color:#ffeb3b">৳ <span class="payAmt2">60</span></b></p><p style="margin-top:8px">• নিশ্চিত করে এখন আপনার <span id="payName2">bKash</span> PIN লিখুন।</p><p style="margin-top:8px">• টাকা পাঠান এবং ট্রানজ্যাকশন আইডি কপি করুন।</p><p style="margin-top:8px">• ট্রানজ্যাকশন আইডি লিখে ভেরিফাই চাপুন।</p></div><button class="btnMain" style="background:#a8002e" onclick="verifyPay()">ভেরিফাই</button><p id="payMsg" style="text-align:center;margin-top:8px;color:green;font-weight:700"></p></div><button onclick="verifyPay()" style="width:100%;padding:16px;background:#bcd6ff;border:none;font-size:18px;font-weight:900;color:#0057ff">পে করুন <span id="payAmt">60.00</span></button></div></div>
+<div class="modal" id="payModal"><div class="modalBox"><div style="background:#e6005c;color:#fff;padding:14px;display:flex;justify-content:space-between"><span onclick="closeModal('payModal')">←</span><b>🔒 নিরাপদ পেমেন্ট</b><span>⋯</span></div><div style="padding:16px;background:#f1f5f9"><h2 style="color:#64748b;text-align:center">নিরাপদ পেমেন্ট</h2><div style="background:#0057ff;color:#fff;text-align:center;padding:12px;border-radius:10px;margin:12px 0;font-weight:900">মোবাইল ব্যাংকিং</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button onclick="selectPay('bKash','01837450067','*247#')" id="btn-bKash" class="payBtn on">💗 bKash</button><button onclick="selectPay('Upay','01837450067','*268#')" id="btn-Upay" class="payBtn">🟡 উপায়</button><button onclick="selectPay('Rocket','01837450067','*322#')" id="btn-Rocket" class="payBtn">🚀 রকেট</button><button onclick="selectPay('Nagad','01837450067','*167#')" id="btn-Nagad" class="payBtn">🧡 নগদ</button></div><h2 style="color:#111;padding:12px 0">৳ <span id="payAmtTop">60</span></h2><div class="payBox"><h3 style="text-align:center">ট্রানজেকশন আইডি দিন</h3><input id="trxId" placeholder="ট্রানজেকশন আইডি দিন" style="margin-top:12px"><p style="margin-top:14px">• <span id="payCode">*247#</span> ডায়াল করে আপনার <span id="payName">bKash</span> মোবাইল মেনুতে যান।</p><p style="margin-top:8px">• Send Money -এ ক্লিক করুন।</p><p style="margin-top:8px">• এই নম্বরে টাকা পাঠান। <b style="color:#ffeb3b" id="payNumber">01837450067</b> <button class="copyBtn" onclick="copyPayNum()">📋 কপি</button></p><p style="margin-top:8px">• টাকার পরিমাণ: <b style="color:#ffeb3b">৳ <span class="payAmt2">60</span></b></p><p style="margin-top:8px">• ট্রানজ্যাকশন আইডি লিখে ভেরিফাই চাপুন।</p></div><button class="btnMain" style="background:#a8002e!important" onclick="verifyPay()">ভেরিফাই</button><p id="payMsg" style="text-align:center;margin-top:8px;color:green;font-weight:700"></p></div><button onclick="verifyPay()" style="width:100%;padding:16px;background:#bcd6ff;border:none;font-size:18px;font-weight:900;color:#0057ff">পে করুন <span id="payAmt">60.00</span></button></div></div>
 
-<!-- FIREBASE - REAL LOGIN -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script>
-// 👇👇👇 এইখানে তোর Firebase Config বসা - console.firebase.google.com থেকে নিবি
-const firebaseConfig = {
-  apiKey: "PASTE_TOMAR_API_KEY",
-  authDomain: "ultra-top-up-bd.firebaseapp.com",
-  projectId: "ultra-top-up-bd",
-  storageBucket: "ultra-top-up-bd.appspot.com",
-  messagingSenderId: "PASTE_TOMAR_SENDER_ID",
-  appId: "PASTE_TOMAR_APP_ID"
-};
-let auth = null;
-try{ if(firebaseConfig.apiKey!=="PASTE_TOMAR_API_KEY"){ firebase.initializeApp(firebaseConfig); auth = firebase.auth(); auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL); } }catch(e){ auth=null; }
+const firebaseConfig={apiKey:"PASTE_TOMAR_API_KEY",authDomain:"ultra-top-up-bd.firebaseapp.com",projectId:"ultra-top-up-bd",storageBucket:"ultra-top-up-bd.appspot.com",messagingSenderId:"PASTE_TOMAR_SENDER_ID",appId:"PASTE_TOMAR_APP_ID"};
+let auth=null;try{if(firebaseConfig.apiKey!=="PASTE_TOMAR_API_KEY"){firebase.initializeApp(firebaseConfig);auth=firebase.auth();auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);}}catch(e){auth=null;}
 
-const DATA={
-"Free Fire":[["25 Diamond GIVEAWAY",25,"💎"],["50 Diamond",45,"💎"],["100 Diamond",82,"💎"],["115 Diamond",95,"💎"],["200 Diamond",165,"💎"],["310 Diamond",250,"💎"],["500 Diamond",400,"💎"],["1000 Diamond",780,"💎"],["Weekly Lite BD",160,"👑"],["Weekly Membership",185,"📅"],["Monthly Membership",810,"📅"],["Level Up Pass",200,"🎫"],["Booyah Pass",480,"🎫"],["FF UID Top Up BD",95,"🔥"]],
-"PUBG UC":[["60 UC",125,"🎮"],["325 UC",620,"🎮"],["660 UC",1250,"🎮"],["1800 UC",3100,"🎮"],["3850 UC",6200,"🎮"],["Royale Pass",980,"🎮"]],
-"Gun Skin & Bundle":[["Gun Skin - AK47",300,"🔫"],["Gun Skin - M1887",350,"🔫"],["Gun Skin - MP40",330,"🔫"],["Bundle Global - Heroic",580,"👕"],["Bundle - Cobra",1650,"👕"],["Bundle - Hip Hop",2700,"👕"]],
-"TikTok":[["1K TikTok Like",95,"🎵"],["1K TikTok Follower",270,"🎵"],["10K TikTok View",60,"👁️"],["TikTok Coin 70",140,"🪙"],["TikTok Coin 700",1250,"🪙"]],
-"Facebook":[["1K FB Page Like",150,"📘"],["1K FB Follower",185,"📘"],["1K FB Post Like",90,"📘"]],
-"YouTube":[["1K YouTube Subscribe",980,"▶️"],["10K YouTube View",150,"👁️"],["1K YouTube Like",110,"👍"]],
-"Instagram":[["1K Instagram Follower",230,"📸"],["1K Instagram Like",90,"❤️"],["10K Instagram View",125,"👁️"]],
-"IMO":[["IMO Diamond 100",180,"📱"],["IMO Diamond 500",780,"📱"],["IMO Diamond 1000",1500,"📱"],["IMO Coin 1000",300,"📱"],["IMO Coin 5000",1300,"📱"]],
-"WhatsApp & Telegram":[["1K WhatsApp Channel Follow",230,"💚"],["5K WhatsApp Channel Follow",1050,"💚"],["1K Telegram Member",270,"✈️"],["1K Telegram View",75,"👁️"]]
-};
+// ===== 1. RANDOM COLOR CHANGE - 3 সেকেন্ড পর পর কালার বদলাইবো =====
+const COLORS=["#39ff14","#e6005c","#a020f0","#00c3ff","#ffcc00","#ff6600","#ff00ff"];
+let ci=0; setInterval(()=>{ ci=(ci+1)%COLORS.length; document.documentElement.style.setProperty('--c',COLORS[ci]); document.querySelector('meta[name="theme-color"]').setAttribute('content',COLORS[ci]); },3000);
+
+// ===== 2. উপর থেকে ছোট ছোট জিনিস পড়বো - তোর ভিডিওর মতো =====
+const cv=document.getElementById('fall'); const ctx=cv.getContext('2d'); let W,H; function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;} resize(); addEventListener('resize',resize);
+const PCOLORS=["#ffffff","#39ff14","#e6005c","#a020f0","#00c3ff","#ffcc00","#ff6600"];
+let parts=[]; for(let i=0;i<90;i++){ parts.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*3+1,s:Math.random()*1.5+0.5,c:PCOLORS[Math.floor(Math.random()*PCOLORS.length)],o:Math.random()*0.8+0.2}); }
+function drawFall(){ ctx.clearRect(0,0,W,H); parts.forEach(p=>{ ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=p.c; ctx.globalAlpha=p.o; ctx.fill(); p.y+=p.s; p.x+=Math.sin(p.y*0.01)*0.5; if(p.y>H){p.y=-5;p.x=Math.random()*W;p.c=PCOLORS[Math.floor(Math.random()*PCOLORS.length)];} }); ctx.globalAlpha=1; requestAnimationFrame(drawFall); } drawFall();
+
+const DATA={"Free Fire":[["25 Diamond GIVEAWAY",25,"💎"],["50 Diamond",45,"💎"],["100 Diamond",82,"💎"],["115 Diamond",95,"💎"],["200 Diamond",165,"💎"],["310 Diamond",250,"💎"],["500 Diamond",400,"💎"],["1000 Diamond",780,"💎"],["Weekly Lite BD",160,"👑"],["Weekly Membership",185,"📅"],["Monthly Membership",810,"📅"],["Level Up Pass",200,"🎫"],["Booyah Pass",480,"🎫"]],"PUBG UC":[["60 UC",125,"🎮"],["325 UC",620,"🎮"],["660 UC",1250,"🎮"],["1800 UC",3100,"🎮"],["3850 UC",6200,"🎮"],["Royale Pass",980,"🎮"]],"Gun Skin & Bundle":[["Gun Skin - AK47",300,"🔫"],["Gun Skin - M1887",350,"🔫"],["Gun Skin - MP40",330,"🔫"],["Bundle - Cobra",1650,"👕"]],"TikTok":[["1K TikTok Like",95,"🎵"],["1K TikTok Follower",270,"🎵"],["10K TikTok View",60,"👁️"],["TikTok Coin 70",140,"🪙"]],"Facebook":[["1K FB Page Like",150,"📘"],["1K FB Follower",185,"📘"]],"YouTube":[["1K YouTube Subscribe",980,"▶️"],["10K YouTube View",150,"👁️"]],"Instagram":[["1K Instagram Follower",230,"📸"],["1K Instagram Like",90,"❤️"]],"IMO":[["IMO Diamond 100",180,"📱"],["IMO Diamond 500",780,"📱"],["IMO Diamond 1000",1500,"📱"],["IMO Coin 1000",300,"📱"]],"WhatsApp & Telegram":[["1K WhatsApp Channel Follow",230,"💚"],["1K Telegram Member",270,"✈️"]]};
 let curCat="All";let curPrice=60,curItem="25 Diamond",curPayMethod="bKash",curPayNumber="01837450067";
 function renderCats(){let cats=["All",...Object.keys(DATA)];document.getElementById("cats").innerHTML=cats.map(c=>`<button class="${c===curCat?'on':''}" onclick="curCat='${c}';renderCats();renderLists()">${c}</button>`).join("");}
 function renderLists(){let html="";for(let cat in DATA){if(curCat!=="All"&&curCat!==cat)continue;html+=`<h2>| ${cat}</h2><div class="grid">`+DATA[cat].map(([n,p,em])=>`<div class="card"><div class="img">${em}</div><h3>${n}</h3><p>${cat}</p><b>${p} TK</b><button onclick="buy('${n}',${p})">Buy</button></div>`).join("")+`</div>`;}document.getElementById("allLists").innerHTML=html;}
@@ -97,56 +83,24 @@ function order(){let uid=document.getElementById('uid').value;let trx=document.g
 function openPay(amt){curPrice=amt||curPrice;document.getElementById("payAmt").innerText=curPrice+".00";document.getElementById("payAmtTop").innerText=curPrice;document.querySelectorAll(".payAmt2").forEach(e=>e.innerText=curPrice);document.getElementById("payModal").style.display="block";selectPay('bKash','01837450067','*247#');}
 function selectPay(m,num,code){curPayMethod=m;curPayNumber=num;document.getElementById("payName").innerText=m;document.getElementById("payName2").innerText=m;document.getElementById("payNumber").innerText=num;document.getElementById("payCode").innerText=code;["bKash","Upay","Rocket","Nagad"].forEach(x=>{document.getElementById("btn-"+x).classList.toggle("on",x===m)});}
 function copyPayNum(){navigator.clipboard.writeText(curPayNumber);alert("✅ "+curPayMethod+" কপি হইছে: "+curPayNumber);}
-function verifyPay(){let trx=document.getElementById("trxId").value.trim()||document.getElementById("trx").value.trim();if(trx.length<6){alert("সঠিক TrxID দাও!");return}document.getElementById("payMsg").innerText="✅ "+curPayMethod+" TrxID জমা হইছে! Admin ৫-১০ মিনিটে Verify করবো।";let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");orders.unshift({item:curItem,price:curPrice,trx,pay:curPayMethod});localStorage.setItem("ut_orders",JSON.stringify(orders));let user=JSON.parse(localStorage.getItem("ut_user")||"null");if(user&&user.referredBy){let comm=Math.round(curPrice*0.05);let all=JSON.parse(localStorage.getItem("ut_comm")||"{}");all[user.referredBy]=(all[user.referredBy]||0)+comm;localStorage.setItem("ut_comm",JSON.stringify(all));updateUser();}setTimeout(()=>{closeModal("payModal");alert("✅ Order Received! "+curPayMethod+" TrxID: "+trx);},800);}
+function verifyPay(){let trx=document.getElementById("trxId").value.trim()||document.getElementById("trx").value.trim();if(trx.length<6){alert("সঠিক TrxID দাও!");return}document.getElementById("payMsg").innerText="✅ "+curPayMethod+" TrxID জমা হইছে!";setTimeout(()=>{closeModal("payModal");alert("✅ Order Received! "+curPayMethod+" TrxID: "+trx);},800);}
 function openLogin(){document.getElementById("loginModal").style.display="block";}
 function closeModal(id){document.getElementById(id).style.display="none";}
-// REAL LOGIN - Firebase থাকলে Firebase, না থাকলে Local (কাটবো না, LOCAL এ থাকবো)
-function doLogin(){
-  let name=document.getElementById("l_name").value||"User";
-  let email=document.getElementById("l_phone").value.trim();
-  let pass=document.getElementById("l_pass").value;
-  let ref=document.getElementById("l_ref").value.trim();
-  if(!email||!pass){alert("Email + Password দাও!");return}
-  if(!email.includes("@")){email=email+"@gmail.com";}
-  if(pass.length<6){alert("Password কমপক্ষে 6 অক্ষর দাও!");return}
-  if(auth){
-    auth.createUserWithEmailAndPassword(email,pass).then(cred=>{saveUserLocal(name,email,ref,cred.user.uid);closeModal("loginModal");alert("✅ Real Account হইছে! "+name+" - এখন আর Login কাটবো না");})
-    .catch(()=>{ auth.signInWithEmailAndPassword(email,pass).then(cred=>{saveUserLocal(name,email,ref,cred.user.uid);closeModal("loginModal");alert("✅ Welcome Back "+name+"! Real Login হইছে");}).catch(e=>{document.getElementById("loginErr").innerText="ভুল Email / Password! "+e.message;}); });
-  } else {
-    // Firebase Config এখনো বসাও নাই - Local এ Save হবে, Config বসাইলে Real হইবো
-    let code="UT"+Math.floor(1000+Math.random()*9000);
-    let user={name,phone:email,code,referredBy:ref||null};
-    localStorage.setItem("ut_user",JSON.stringify(user));updateUser();closeModal("loginModal");alert("✅ Welcome "+name+"! তোমার Refer Code: "+code+" | Firebase Config বসাইলে এই Login Real হইবো");
-  }
-}
-function googleLogin(){
-  if(auth){
-    let p=new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(p).then(r=>{saveUserLocal(r.user.displayName||"Google User",r.user.email,"",r.user.uid);closeModal("loginModal");alert("✅ Real Google Login হইছে!");}).catch(e=>{document.getElementById("loginErr").innerText=e.message;});
-  } else {
-    let code="UT"+Math.floor(1000+Math.random()*9000);let user={name:"Google User",phone:"google",code};localStorage.setItem("ut_user",JSON.stringify(user));updateUser();closeModal("loginModal");alert("✅ Google Login হইছে! Firebase Config বসাইলে Real হইবো");
-  }
-}
-function saveUserLocal(name,email,ref,uid){
-  let old=JSON.parse(localStorage.getItem("ut_user")||"{}");
-  let code=old.code||("UT"+Math.floor(1000+Math.random()*9000));
-  let user={name,phone:email,code,referredBy:ref||old.referredBy||null,uid};
-  localStorage.setItem("ut_user",JSON.stringify(user));updateUser();
-}
-if(auth){ auth.onAuthStateChanged(u=>{ if(u){ document.getElementById("loginTopBtn").style.display="none"; document.getElementById("userAvatar").style.display="inline"; document.getElementById("loginStatus").innerText="✅ Real Login - "+u.email; updateUser(); } }); }
+function doLogin(){let name=document.getElementById("l_name").value||"User";let email=document.getElementById("l_phone").value.trim();let pass=document.getElementById("l_pass").value;let ref=document.getElementById("l_ref").value.trim();if(!email||!pass){alert("Email + Password দাও!");return}if(!email.includes("@")){email=email+"@gmail.com";}if(pass.length<6){alert("Password কমপক্ষে 6 অক্ষর!");return}if(auth){auth.createUserWithEmailAndPassword(email,pass).then(c=>{saveUserLocal(name,email,ref,c.user.uid);closeModal("loginModal");alert("✅ Real Account হইছে! "+name);}).catch(()=>{auth.signInWithEmailAndPassword(email,pass).then(c=>{saveUserLocal(name,email,ref,c.user.uid);closeModal("loginModal");alert("✅ Welcome Back "+name);}).catch(e=>{document.getElementById("loginErr").innerText=e.message;});});}else{let code="UT"+Math.floor(1000+Math.random()*9000);let user={name,phone:email,code,referredBy:ref||null};localStorage.setItem("ut_user",JSON.stringify(user));updateUser();closeModal("loginModal");alert("✅ Welcome "+name+"! Refer Code: "+code);}}
+function googleLogin(){if(auth){let p=new firebase.auth.GoogleAuthProvider();auth.signInWithPopup(p).then(r=>{saveUserLocal(r.user.displayName||"Google User",r.user.email,"",r.user.uid);closeModal("loginModal");alert("✅ Real Google Login হইছে!");}).catch(e=>{document.getElementById("loginErr").innerText=e.message;});}else{let code="UT"+Math.floor(1000+Math.random()*9000);let user={name:"Google User",phone:"google",code};localStorage.setItem("ut_user",JSON.stringify(user));updateUser();closeModal("loginModal");alert("✅ Google Login হইছে!");}}
+function saveUserLocal(name,email,ref,uid){let old=JSON.parse(localStorage.getItem("ut_user")||"{}");let code=old.code||("UT"+Math.floor(1000+Math.random()*9000));let user={name,phone:email,code,referredBy:ref||old.referredBy||null,uid};localStorage.setItem("ut_user",JSON.stringify(user));updateUser();}
+if(auth){auth.onAuthStateChanged(u=>{if(u){document.getElementById("loginTopBtn").style.display="none";document.getElementById("userAvatar").style.display="inline";updateUser();}});}
 function updateUser(){let u=JSON.parse(localStorage.getItem("ut_user")||"null");if(u){document.getElementById("loginTopBtn").style.display="none";document.getElementById("userAvatar").style.display="inline";document.getElementById("refBox").style.display="block";document.getElementById("refTease").style.display="none";document.getElementById("myRefLink").innerText=location.origin+"/?ref="+u.code;let all=JSON.parse(localStorage.getItem("ut_comm")||"{}");let c=all[u.code]||0;document.getElementById("myComm").innerText=c;document.getElementById("myBal").innerText=c;}}
 function copyRef(){let u=JSON.parse(localStorage.getItem("ut_user")||"{}");navigator.clipboard.writeText(location.origin+"/?ref="+u.code);alert("✅ Refer Link কপি হইছে!");}
 function showMyOrders(){let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");if(!o.length){alert("এখনো কোনো অর্ডার নাই!");return}alert(o.map(x=>x.item+" - ৳"+x.price+" - "+x.pay).join("\n"));}
-const fakeNames=["Hasan Rabbi","Rifat Yt","Itz Mursalim Ali","Sakib Hasan","Tanvir Ahmed","Arif Khan","Nusrat Jahan","Mehedi Hasan","Rakibul Islam","Fahim Ahmed"];
-const fakeItems=[["Level Up Package - level 30",105],["Monthly - ",780],["Weekly Lite - ",42],["115 Diamond - ",78],["100 Diamond - ",82],["310 Diamond - ",250],["60 UC - ",125],["1K TikTok Follower - ",270]];
+const fakeNames=["Hasan Rabbi","Rifat Yt","Itz Mursalim Ali","Sakib Hasan","Tanvir Ahmed"];
+const fakeItems=[["Level Up Package",105],["Monthly",780],["Weekly Lite",42],["115 Diamond",78],["100 Diamond",82]];
 function loadOrders(){let h="";for(let i=0;i<5;i++){let n=fakeNames[Math.floor(Math.random()*fakeNames.length)];let it=fakeItems[Math.floor(Math.random()*fakeItems.length)];let d=Math.random()>0.3;h+=`<div class="oRow"><div><b>👤 ${n}</b><br><small>${it[0]} ৳${it[1]}</small></div><span class="${d?"done":"prog"}">${d?"✅ Done":"⏳ In Progress"}</span></div>`}document.getElementById("orders").innerHTML=h;}
 renderCats();renderLists();loadOrders();updateUser();setInterval(loadOrders,15000);
 let params=new URLSearchParams(location.search);if(params.get("ref")){document.getElementById("l_ref").value=params.get("ref");}
-// APP DOWNLOAD
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
 let deferredPrompt;window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='block';});
-function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==="accepted"){alert("✅ App Install হইছে!");}});}else{alert("📲 Chrome এর ⋮ -> Add to Home Screen / Install App চাপ দাও, App হয়ে যাইবো!");}
-}
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();}else{alert("📲 Chrome এর ⋮ -> Add to Home Screen চাপ দাও");}}
 </script>
 </body>
 </html>
