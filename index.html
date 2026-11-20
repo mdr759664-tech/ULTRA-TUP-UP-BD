@@ -4,20 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ULTRA TOP UP BD</title>
-<!-- APP এর ২ লাইন - এইখানে বসানো আছে -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#39ff14">
 <link rel="apple-touch-icon" href="logo.png">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#000;color:#fff;padding-bottom:85px}
+body{background:#000;color:#fff;padding-bottom:90px}
 .top{display:flex;justify-content:space-between;align-items:center;padding:12px 15px}
 .logo{display:flex;align-items:center;gap:10px}
 .logo img{width:55px;height:55px;border-radius:12px;border:2px solid #39ff14}
 .logo h1{color:#39ff14;font-size:22px;line-height:1}.logo h1 span{color:#fff;font-size:14px}
-.login{border:2px solid #39ff14;color:#39ff14;padding:8px 20px;border-radius:10px;text-decoration:none;font-weight:bold}
+.login{border:2px solid #39ff14;color:#39ff14;padding:8px 16px;border-radius:10px;text-decoration:none;font-weight:bold;cursor:pointer;background:#000}
 .notice{display:flex;background:#000;border:2px solid #39ff14;border-radius:10px;margin:0 10px;overflow:hidden}
 .notice b{color:#39ff14;padding:10px 12px;white-space:nowrap}.notice marquee{padding:10px;color:#fff}
 .banner{margin:12px 10px;border-radius:14px;border:2px solid #39ff14;background:linear-gradient(90deg,#001a33,#003366);padding:20px}
@@ -37,130 +34,204 @@ h2{padding:12px 15px 5px;color:#39ff14}
 .order{margin:15px;border:2px solid #39ff14;border-radius:14px;padding:15px}
 .order input,.order select{width:100%;padding:12px;margin:8px 0;border-radius:8px;background:#111;color:#fff;border:1px solid #39ff14}
 .order button{background:#39ff14;width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;font-size:16px}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:2px solid #39ff14;display:flex;justify-content:space-around;padding:12px 0}
-.bottom div{text-align:center;font-size:13px;color:#888}.bottom div.active{color:#39ff14}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:2px solid #39ff14;display:flex;justify-content:space-around;padding:12px 0;z-index:99}
+.bottom div{text-align:center;font-size:13px;color:#888;cursor:pointer}.bottom div.active{color:#39ff14}
 .install{background:#39ff14;color:#000;text-align:center;padding:12px;margin:10px;border-radius:10px;font-weight:bold;cursor:pointer}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:flex-end;justify-content:center;z-index:999}
+.modal.open{display:flex}
+.sheet{background:#111;width:100%;max-width:480px;border-radius:20px 20px 0 0;padding:20px;max-height:90vh;overflow:auto;border-top:3px solid #39ff14}
+.sheet h3{color:#39ff14;margin-bottom:10px}
+.sheet input,.sheet select{width:100%;padding:12px;margin:7px 0;border-radius:8px;background:#000;color:#fff;border:1px solid #39ff14}
+.sheet button{width:100%;padding:13px;background:#39ff14;border:none;border-radius:10px;font-weight:bold;font-size:16px;margin-top:8px}
+.sheet .close{float:right;cursor:pointer;color:#fff;font-size:20px}
+.small{color:#aaa;font-size:12px;margin-top:6px;text-align:center}
+.rules{background:#0a0a0a;margin:15px;border:1px solid #333;border-radius:12px;padding:15px}
+.rules h3{color:#fff;margin-bottom:8px}.rules p{font-size:13px;color:#ccc;margin:7px 0;line-height:1.5}
+.footer{background:#00004d;padding:20px 15px;margin:15px 0 0}
+.footer h3{color:#fff;margin:15px 0 8px}.footer p{color:#ccc;font-size:13px;line-height:1.5}
+.social{display:flex;gap:10px;margin:10px 0}.social a{width:45px;height:45px;border:1px solid #fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;text-decoration:none;color:#fff}
+.support{border:1px solid #555;border-radius:10px;padding:12px;margin:8px 0;display:flex;gap:12px;align-items:center}
+.wallet{background:#111;margin:10px;border:2px solid #39ff14;border-radius:12px;padding:14px;display:flex;justify-content:space-between;align-items:center}
+.bkashBox{background:#e91e63;border-radius:14px;padding:16px;margin:10px 0;color:#fff}
+.bkashBox input{width:100%;padding:12px;border-radius:8px;border:none;margin:10px 0}
+.bkashBox button{background:#8e0000;color:#fff;width:100%;padding:12px;border:none;border-radius:10px;font-weight:bold}
 </style>
 </head>
 <body>
 
 <div class="top">
 <div class="logo"><img src="logo.png"><h1>ULTRA<br><span>TOP UP BD</span></h1></div>
-<a class="login" href="#">Login</a>
+<button class="login" id="loginBtn" onclick="openModal('loginModal')">Login</button>
 </div>
 
 <div id="installBtn" class="install" style="display:none" onclick="installApp()">📲 APP INSTALL করো - Home Screen এ নাও</div>
+<div class="wallet"><div>💰 আমার ব্যালেন্স<br><b id="balance" style="color:#39ff14;font-size:20px">৳ 0</b></div><button onclick="openModal('addMoneyModal')" style="background:#39ff14;border:none;padding:10px 16px;border-radius:20px;font-weight:bold">+ Add Money</button></div>
 
-<div class="notice"><b>● NOTICE</b><marquee>ULTRA TOP UP BD তে অর্ডার করলে ৫-১০ মিনিটে ডেলিভারি পাবেন | পেমেন্ট করার আগে 01837450067 নাম্বারটা চেক করুন | ফেক নাম্বার থেকে সাবধান</marquee></div>
-
-<div class="banner"><h1>ULTRA TOP UP BD</h1><p>- bKash Nagad Rocket Upay -<br>- Fast Delivery -</p><p>💎 01837450067</p><button>▶ দ্রুত টপআপ করুন এখনি →</button></div>
-<div style="text-align:center;color:#39ff14">● ● ●</div>
+<div class="notice"><b>● NOTICE</b><marquee id="noticeText">ULTRA TOP UP BD তে অর্ডার করলে ৫-১০ মিনিটে ডেলিভারি পাবেন | পেমেন্ট করার আগে 01837450067 নাম্বারটা চেক করুন | ফেক নাম্বার থেকে সাবধান</marquee></div>
+<div class="banner"><h1>ULTRA TOP UP BD</h1><p>- bKash Nagad Rocket Upay -<br>- Fast Delivery -</p><p>💎 01837450067</p><button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">▶ দ্রুত টপআপ করুন এখনি →</button></div>
 
 <div class="btns">
 <a href="https://t.me/+Q6GAbYR_AusxMjE1" target="_blank">✈️ SUPPORT<br>Telegram</a>
 <a href="https://t.me/+RvjUmMagUWwxZGZl" target="_blank">👥 GROUP<br>Join Group</a>
 </div>
 
-<div class="cat"><button class="active">All</button><button>Free Fire</button><button>PUBG UC</button><button>Gun Skin</button><button>Bundle</button><button>TikTok</button><button>Facebook</button><button>YouTube</button><button>Instagram</button><button>WhatsApp</button><button>IMO</button></div>
+<div class="cat" id="catBar"><button class="active" onclick="filterCat('All',this)">All</button><button onclick="filterCat('Free Fire',this)">Free Fire</button><button onclick="filterCat('PUBG',this)">PUBG UC</button><button onclick="filterCat('TikTok',this)">TikTok</button><button onclick="filterCat('Facebook',this)">Facebook</button><button onclick="filterCat('YouTube',this)">YouTube</button><button onclick="filterCat('Instagram',this)">Instagram</button><button onclick="filterCat('WhatsApp',this)">WhatsApp</button><button onclick="filterCat('IMO',this)">IMO</button></div>
 
-<h2>| TOPUP - Free Fire</h2>
-<div class="grid">
-<div class="card"><div class="img">💎</div><h3>25 Diamond GIVEAWAY</h3><p>25 DIAMOND</p><b>20 TK</b><button onclick="buy('25 Diamond - 20 TK')">Buy</button></div>
-<div class="card"><div class="img">🔥</div><h3>FF UID Top Up BD</h3><p>FF TopUp (BD)</p><b>90 TK</b><button onclick="buy('115 Diamond - 90 TK')">Buy</button></div>
-<div class="card"><div class="img">👑</div><h3>Weekly Lite BD</h3><p>Weekly Lite</p><b>150 TK</b><button onclick="buy('Weekly Lite - 150 TK')">Buy</button></div>
-<div class="card"><div class="img">💎</div><h3>50 Diamond</h3><p>FF Diamond</p><b>40 TK</b><button onclick="buy('50 Diamond')">Buy</button></div>
-<div class="card"><div class="img">💎</div><h3>240 Diamond</h3><p>FF Diamond</p><b>180 TK</b><button onclick="buy('240 Diamond')">Buy</button></div>
-<div class="card"><div class="img">💎</div><h3>610 Diamond</h3><p>FF Diamond</p><b>460 TK</b><button onclick="buy('610 Diamond')">Buy</button></div>
-<div class="card"><div class="img">💎</div><h3>1240 Diamond</h3><p>FF Diamond</p><b>920 TK</b><button onclick="buy('1240 Diamond')">Buy</button></div>
-<div class="card"><div class="img">📅</div><h3>Weekly Membership</h3><p>FF Weekly</p><b>170 TK</b><button onclick="buy('Weekly Membership')">Buy</button></div>
-<div class="card"><div class="img">📅</div><h3>Monthly Membership</h3><p>FF Monthly</p><b>750 TK</b><button onclick="buy('Monthly Membership')">Buy</button></div>
+<!-- UID CHECK -->
+<div class="order" style="border-color:#e91e63">
+<h3 style="color:#fff">🔍 UID Check করো - নাম দেখো</h3>
+<input id="checkUid" placeholder="Free Fire UID দাও - যেমন: 1234567890">
+<button onclick="checkUid()" style="background:#e91e63;color:#fff">Check UID</button>
+<p id="uidResult" style="margin-top:10px;color:#39ff14"></p>
+<p class="small" style="text-align:left">* UID সঠিক হইলে গেমের নাম দেখবো। ভুল UID দিলে ডায়মন্ড পাইবা না।</p>
 </div>
 
-<h2>| PUBG MOBILE UC</h2>
-<div class="grid">
-<div class="card"><div class="img">🎮</div><h3>60 UC</h3><p>PUBG UC</p><b>95 TK</b><button onclick="buy('60 UC')">Buy</button></div>
-<div class="card"><div class="img">🎮</div><h3>325 UC</h3><p>PUBG UC</p><b>460 TK</b><button onclick="buy('325 UC')">Buy</button></div>
-<div class="card"><div class="img">🎮</div><h3>660 UC</h3><p>PUBG UC</p><b>920 TK</b><button onclick="buy('660 UC')">Buy</button></div>
-<div class="card"><div class="img">🎮</div><h3>1800 UC</h3><p>PUBG UC</p><b>2450 TK</b><button onclick="buy('1800 UC')">Buy</button></div>
-<div class="card"><div class="img">🎮</div><h3>3850 UC</h3><p>PUBG UC</p><b>4950 TK</b><button onclick="buy('3850 UC')">Buy</button></div>
-<div class="card"><div class="img">🎮</div><h3>8100 UC</h3><p>PUBG UC</p><b>9900 TK</b><button onclick="buy('8100 UC')">Buy</button></div>
-</div>
-
-<h2>| FREE FIRE GUN SKIN & BUNDLE</h2>
-<div class="grid">
-<div class="card"><div class="img">🔫</div><h3>Gun Skin - AK47</h3><p>FF Gun Skin</p><b>250 TK</b><button onclick="buy('Gun Skin AK47')">Buy</button></div>
-<div class="card"><div class="img">🔫</div><h3>Gun Skin - M1887</h3><p>FF Gun Skin</p><b>300 TK</b><button onclick="buy('Gun Skin M1887')">Buy</button></div>
-<div class="card"><div class="img">🔫</div><h3>Gun Skin - MP40</h3><p>FF Gun Skin</p><b>280 TK</b><button onclick="buy('Gun Skin MP40')">Buy</button></div>
-<div class="card"><div class="img">👕</div><h3>Bundle Global - Heroic</h3><p>Bundle Global</p><b>500 TK</b><button onclick="buy('Bundle Heroic')">Buy</button></div>
-<div class="card"><div class="img">👕</div><h3>Bundle Global - Elite</h3><p>Bundle Global</p><b>800 TK</b><button onclick="buy('Bundle Elite')">Buy</button></div>
-<div class="card"><div class="img">👕</div><h3>Bundle Global - Legendary</h3><p>Bundle Global</p><b>1200 TK</b><button onclick="buy('Bundle Legendary')">Buy</button></div>
-</div>
-
-<h2>| TIKTOK - Like / Follower / View</h2>
-<div class="grid">
-<div class="card"><div class="img">🎵</div><h3>1K TikTok Like</h3><p>TikTok Like</p><b>80 TK</b><button onclick="buy('1K TikTok Like')">Buy</button></div>
-<div class="card"><div class="img">🎵</div><h3>1K TikTok Follower</h3><p>TikTok Follower</p><b>150 TK</b><button onclick="buy('1K TikTok Follower')">Buy</button></div>
-<div class="card"><div class="img">👁️</div><h3>10K TikTok View</h3><p>TikTok View</p><b>50 TK</b><button onclick="buy('10K TikTok View')">Buy</button></div>
-<div class="card"><div class="img">🎵</div><h3>5K TikTok Like</h3><p>TikTok Like</p><b>350 TK</b><button onclick="buy('5K TikTok Like')">Buy</button></div>
-<div class="card"><div class="img">🎵</div><h3>5K TikTok Follower</h3><p>TikTok Follower</p><b>650 TK</b><button onclick="buy('5K TikTok Follower')">Buy</button></div>
-<div class="card"><div class="img">👁️</div><h3>100K TikTok View</h3><p>TikTok View</p><b>400 TK</b><button onclick="buy('100K TikTok View')">Buy</button></div>
-</div>
-
-<h2>| FACEBOOK - Like / Follower</h2>
-<div class="grid">
-<div class="card"><div class="img">📘</div><h3>1K FB Page Like</h3><p>Facebook</p><b>120 TK</b><button onclick="buy('1K FB Like')">Buy</button></div>
-<div class="card"><div class="img">📘</div><h3>1K FB Follower</h3><p>Facebook</p><b>130 TK</b><button onclick="buy('1K FB Follower')">Buy</button></div>
-<div class="card"><div class="img">📘</div><h3>1K FB Post Like</h3><p>Facebook</p><b>70 TK</b><button onclick="buy('1K FB Post Like')">Buy</button></div>
-</div>
-
-<h2>| YOUTUBE - Subscribe / View / Like</h2>
-<div class="grid">
-<div class="card"><div class="img">▶️</div><h3>1K YouTube Subscribe</h3><p>YouTube Subscribe</p><b>250 TK</b><button onclick="buy('1K YT Subscribe')">Buy</button></div>
-<div class="card"><div class="img">👁️</div><h3>10K YouTube View</h3><p>YouTube View</p><b>120 TK</b><button onclick="buy('10K YT View')">Buy</button></div>
-<div class="card"><div class="img">👍</div><h3>1K YouTube Like</h3><p>YouTube Like</p><b>90 TK</b><button onclick="buy('1K YT Like')">Buy</button></div>
-</div>
-<div class="linkbox">📺 YouTube Channel: <a href="#PASTE_YOUR_YOUTUBE_LINK_HERE">এখানে তোমার YouTube লিংক বসাও</a></div>
-
-<h2>| INSTAGRAM - Follower / Like / View</h2>
-<div class="grid">
-<div class="card"><div class="img">📸</div><h3>1K Instagram Follower</h3><p>Instagram Follower</p><b>180 TK</b><button onclick="buy('1K IG Follower')">Buy</button></div>
-<div class="card"><div class="img">❤️</div><h3>1K Instagram Like</h3><p>Instagram Like</p><b>70 TK</b><button onclick="buy('1K IG Like')">Buy</button></div>
-<div class="card"><div class="img">👁️</div><h3>10K Instagram View</h3><p>Instagram View</p><b>100 TK</b><button onclick="buy('10K IG View')">Buy</button></div>
-</div>
-<div class="linkbox">📸 Instagram: <a href="#PASTE_YOUR_INSTAGRAM_LINK_HERE">এখানে তোমার Instagram লিংক বসাও</a></div>
-
-<h2>| WHATSAPP CHANNEL / IMO</h2>
-<div class="grid">
-<div class="card"><div class="img">💚</div><h3>1K WhatsApp Channel Follow</h3><p>WhatsApp Channel</p><b>180 TK</b><button onclick="buy('WhatsApp Channel Follow')">Buy</button></div>
-<div class="card"><div class="img">💚</div><h3>5K WhatsApp Channel Follow</h3><p>WhatsApp Channel</p><b>800 TK</b><button onclick="buy('5K WhatsApp Follow')">Buy</button></div>
-<div class="card"><div class="img">📱</div><h3>IMO Diamond 100</h3><p>IMO Diamond</p><b>150 TK</b><button onclick="buy('IMO Diamond 100')">Buy</button></div>
-<div class="card"><div class="img">📱</div><h3>IMO Diamond 500</h3><p>IMO Diamond</p><b>650 TK</b><button onclick="buy('IMO Diamond 500')">Buy</button></div>
-<div class="card"><div class="img">📱</div><h3>IMO Coin 1000</h3><p>IMO Coin</p><b>250 TK</b><button onclick="buy('IMO Coin')">Buy</button></div>
-<div class="card"><div class="img">⭐</div><h3>Custom Order</h3><p>Admin কে মেসেজ দাও</p><b>---</b><button onclick="window.open('https://t.me/+RvjUmMagUWwxZGZl')">Chat</button></div>
-</div>
+<div id="products"></div>
 
 <div class="order" id="order">
 <h2 style="padding:0">Order Now</h2>
 <input id="uid" placeholder="UID / Link / Username দাও">
-<select id="pkg"><option>25 Diamond - 20 TK</option><option>115 Diamond - 90 TK</option><option>60 UC - 95 TK</option><option>1K TikTok Follower - 150 TK</option><option>1K FB Follower - 130 TK</option><option>1K YT Subscribe - 250 TK</option><option>1K IG Follower - 180 TK</option><option>WhatsApp Channel Follow - 180 TK</option><option>IMO Diamond - 150 TK</option></select>
-<select id="pay"><option>bKash - 01837450067</option><option>Nagad - 01837450067</option><option>Rocket - 01837450067</option><option>Upay - 01837450067</option></select>
-<input id="trx" placeholder="TrxID দাও">
-<button onclick="order()">Order Confirm করো</button>
+<select id="pkg"></select>
+<select id="pay"><option>bKash - 01837450067</option><option>Nagad - 01837450067</option><option>Rocket - 01837450067</option><option>Upay - 01837450067</option><option>Balance থেকে কাটবো</option></select>
+<input id="trx" placeholder="TrxID দাও (Balance হইলে লাগবো না)">
+<button onclick="orderNow()">Order Confirm করো</button>
 <p id="msg" style="margin-top:10px;color:#39ff14"></p>
 </div>
 
-<div class="pay">Payment: bKash • Nagad • Rocket • Upay<br><b>01837450067</b><br>Telegram: <a href="https://t.me/+RvjUmMagUWwxZGZl" style="color:#39ff14">Join Group</a> | <a href="https://t.me/+Q6GAbYR_AusxMjE1" style="color:#39ff14">Channel</a></div>
+<div class="rules">
+<h3>📋 Rules & Conditions - Top Up Rules</h3>
+<p>◎ শুধুমাত্র Bangladesh সার্ভারে ID Code দিয়ে টপ আপ হবে।</p>
+<p>◎ Player ID ভুল দিয়ে Diamond না পেলে ULTRA TOP UP BD কর্তৃপক্ষ দায়ী নয়।</p>
+<p>◎ Order কমপ্লিট হওয়ার পরেও আইডিতে ডায়মন্ড না গেলে চেক করার জন্য ID Pass দিতে হবে।</p>
+<p>◎ অর্ডার Cancel হলে কি কারণে Cancel হয়েছে তা অর্ডার হিস্টোরিতে দেওয়া থাকে - অনুগ্রহ পূর্বক দেখে পুনরায় সঠিক তথ্য দিয়ে অর্ডার করবেন।</p>
+<p>◎ পেমেন্ট করার আগে 01837450067 নাম্বারটা চেক করুন। ফেক নাম্বারে টাকা পাঠালে আমরা দায়ী না।</p>
+</div>
 
-<div class="bottom"><div class="active">🏠<br>Home</div><div>▶️<br>Tutorial</div><div>🧩<br>TopUp</div><div>🎧<br>Contact Us</div></div>
+<div class="footer">
+<h3>STAY CONNECTED</h3>
+<p>কোন সমস্যায় পড়লে হোয়াটসঅ্যাপ এ যোগাযোগ করবেন। তাহলে দ্রুত সমাধান পেয়ে যাবেন।</p>
+<div class="social"><a href="#">f</a><a href="#">📸</a><a href="#">▶️</a><a href="#">✉️</a></div>
+<h3>SUPPORT CENTER</h3>
+<div class="support"><span style="font-size:28px">💬</span><div><b>Help line [9AM-12PM]</b><br>Whatsapp HelpLine</div></div>
+<div class="support"><span style="font-size:28px">✈️</span><div><b>Help line [9AM-12PM]</b><br>টেলিগ্রামে সাপোর্ট</div></div>
+<p style="text-align:center;margin-top:15px">© ULTRA TOP UP BD 2026 | All Rights Reserved</p>
+</div>
+
+<div class="bottom"><div class="active">🏠<br>Home</div><div onclick="openModal('addMoneyModal')">💰<br>Add Money</div><div onclick="openModal('ordersModal')">📦<br>My Orders</div><div onclick="openModal('loginModal')">👤<br>My Account</div></div>
+
+<!-- BUY NOTICE MODAL -->
+<div class="modal" id="buyModal"><div class="sheet"><span class="close" onclick="closeModal('buyModal')">✕</span><h3 id="buyTitle">প্যাকেজ কিনবা?</h3><p id="buyNotice" style="line-height:1.7;font-size:14px"></p><button onclick="confirmBuy()">✅ আমি বুঝছি, Buy করবো</button><button onclick="closeModal('buyModal')" style="background:#333;color:#fff">পরে কিনবো</button></div></div>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal"><div class="sheet"><span class="close" onclick="closeModal('loginModal')">✕</span><h3>🔐 Login / Sign Up</h3><p style="color:#aaa;font-size:13px">Fast, secure and simple access</p><input id="loginEmail" placeholder="Gmail দাও - example@gmail.com"><input id="loginPass" type="password" placeholder="Password দাও"><button onclick="sendOtp()">📧 Gmail এ OTP পাঠাও</button><input id="otpInput" placeholder="Gmail OTP কোড দাও - Demo: 123456"><button onclick="verifyOtp()">✅ OTP Verify করে Login করো</button><button onclick="googleLogin()" style="background:#fff;color:#000">G Continue with Google</button><p style="text-align:center;margin-top:10px"><a href="#" onclick="forgotPass();return false" style="color:#39ff14">Password ভুলে গেছো? Forgot Password</a></p><p id="loginMsg" style="color:#39ff14;margin-top:8px"></p><p class="small">ভুল Password দিলে ঢুকবো না। Forgot করলে Gmail এ নতুন কোড যাইবো।</p></div></div>
+
+<!-- ADD MONEY MODAL -->
+<div class="modal" id="addMoneyModal"><div class="sheet"><span class="close" onclick="closeModal('addMoneyModal')">✕</span><h3>Add Money</h3><p>Enter the amount</p><input id="addAmount" placeholder="Amount - যেমন: 100"><button onclick="showBkash()">Click Here To Add Money</button><div class="bkashBox" id="bkashBox" style="display:none"><h3 style="color:#fff">ট্রানজেকশন আইডি দিন</h3><input id="bkashTrx" placeholder="ট্রানজেকশন আইডি দিন"><p>• *247# ডায়াল করে আপনার bKash মোবাইল মেনুতে যান অথবা bKash অ্যাপ খুলুন।</p><p>• Send Money -এ ক্লিক করুন।</p><p>• এই নম্বরে টাকা পাঠান। <b>01837450067</b> 📋 কপি</p><p>• টাকার পরিমাণ: <b id="bkashAmt">0</b></p><p>• নিশ্চিত করে এখন আপনার bKash PIN লিখুন।</p><p>• টাকা পাঠান এবং ট্রানজ্যাকশন আইডি কপি করুন।</p><p>• ট্রানজ্যাকশন আইডি লিখে ভেরিফাই চাপুন।</p><button onclick="verifyBkash()">ভেরিফাই</button><p id="bkashMsg"></p></div></div></div>
+
+<!-- ORDERS MODAL -->
+<div class="modal" id="ordersModal"><div class="sheet"><span class="close" onclick="closeModal('ordersModal')">✕</span><h3>📦 My Orders</h3><div id="myOrders"></div></div></div>
 
 <script>
-function buy(p){document.getElementById('pkg').value=p;document.getElementById('order').scrollIntoView({behavior:'smooth'});}
-function order(){let uid=document.getElementById('uid').value;let trx=document.getElementById('trx').value;if(!uid||!trx){alert('UID আর TrxID দাও ভাই');return;}document.getElementById('msg').innerText='✅ অর্ডার নেওয়া হইছে! '+uid+' - ৫-১০ মিনিটে পাইবা। Telegram: 01837450067';}
-// APP এর sw.js এর লাইন - এইখানে বসানো আছে
+let PRICES={};
+let selectedPkg='';
+let balance=parseInt(localStorage.getItem('ultra_balance')||'0');
+let user=JSON.parse(localStorage.getItem('ultra_user')||'null');
+let orders=JSON.parse(localStorage.getItem('ultra_orders')||'[]');
+document.getElementById('balance').innerText='৳ '+balance;
+if(user){document.getElementById('loginBtn').innerText=user.name||user.email;}
+
+async function loadPrices(){
+  try{let r=await fetch('prices.json');PRICES=await r.json();}
+  catch(e){PRICES={"25 Diamond GIVEAWAY":20,"115 Diamond":90,"50 Diamond":40,"240 Diamond":180,"610 Diamond":460,"1240 Diamond":920,"Weekly Membership":170,"Monthly Membership":750,"60 UC":95,"325 UC":460,"660 UC":920,"1K TikTok Follower":150,"1K FB Follower":130,"1K YT Subscribe":250,"1K IG Follower":180};}
+  renderProducts();renderPkgSelect();
+}
+function catOf(name){
+  if(name.includes('Diamond')||name.includes('Weekly')||name.includes('Monthly')||name.includes('Booyah')||name.includes('Level')||name.includes('FF UID')||name.includes('Bundle')||name.includes('Gun Skin')||name.includes('Emote')||name.includes('Room')) return 'Free Fire';
+  if(name.includes('UC')||name.includes('Royale')) return 'PUBG';
+  if(name.includes('TikTok')) return 'TikTok';
+  if(name.includes('FB ')) return 'Facebook';
+  if(name.includes('YouTube')) return 'YouTube';
+  if(name.includes('Instagram')) return 'Instagram';
+  if(name.includes('WhatsApp')) return 'WhatsApp';
+  if(name.includes('IMO')||name.includes('Telegram')) return 'IMO';
+  return 'Free Fire';
+}
+function iconOf(name){
+  if(name.includes('Diamond')) return '💎'; if(name.includes('UC')) return '🎮'; if(name.includes('TikTok')) return '🎵'; if(name.includes('FB')) return '📘'; if(name.includes('YouTube')) return '▶️'; if(name.includes('Instagram')) return '📸'; if(name.includes('WhatsApp')) return '💚'; if(name.includes('Gun')) return '🔫'; if(name.includes('Bundle')) return '👕'; return '🔥';
+}
+function renderProducts(filter='All'){
+  let html=''; let groups={};
+  for(let k in PRICES){ if(PRICES[k]==0) continue; let c=catOf(k); if(filter!='All'&&c!=filter) continue; if(!groups[c]) groups[c]=[]; groups[c].push(k); }
+  for(let g in groups){ html+=`<h2>| ${g}</h2><div class="grid">`; groups[g].forEach(k=>{ html+=`<div class="card"><div class="img">${iconOf(k)}</div><h3>${k}</h3><p>${g}</p><b>${PRICES[k]} TK</b><button onclick="buyClick('${k.replace(/'/g,'')}')">Buy</button></div>`; }); html+='</div>'; }
+  document.getElementById('products').innerHTML=html;
+}
+function renderPkgSelect(){ let s=document.getElementById('pkg'); s.innerHTML=''; for(let k in PRICES){ if(PRICES[k]==0) continue; s.innerHTML+=`<option>${k} - ${PRICES[k]} TK</option>`; } }
+function filterCat(c,btn){ document.querySelectorAll('.cat button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderProducts(c); }
+function buyClick(name){
+  selectedPkg=name+' - '+PRICES[name]+' TK';
+  document.getElementById('buyTitle').innerText=name+' কিনবা?';
+  document.getElementById('buyNotice').innerHTML=`<b style="color:#39ff14">⚠️ কেনার আগে ভালো করে পড়ো:</b><br><br>1. তোমার UID টা ১০০% সঠিক কিনা আবার চেক করো।<br>2. শুধুমাত্র Bangladesh সার্ভারে টপ আপ হবে।<br>3. Player ID ভুল দিলে ডায়মন্ড না পেলে আমরা দায়ী না।<br>4. পেমেন্ট করার আগে <b>01837450067</b> নাম্বারটা চেক করো।<br>5. অর্ডার করার পর ৫-১০ মিনিট অপেক্ষা করো।<br><br>দাম: <b>${PRICES[name]} TK</b>`;
+  openModal('buyModal');
+}
+function confirmBuy(){ closeModal('buyModal'); document.getElementById('pkg').value=selectedPkg; document.getElementById('order').scrollIntoView({behavior:'smooth'}); }
+function checkUid(){
+  let uid=document.getElementById('checkUid').value.trim();
+  let el=document.getElementById('uidResult');
+  if(!/^\d{8,15}$/.test(uid)){ el.style.color='#ff3b30'; el.innerText='❌ ভুল UID! UID শুধু সংখ্যা হয়, ৮-১৫ ডিজিটের হয়। আবার চেক করো।'; return; }
+  let names=['PRO GAMER','MR. ULTRA','BD KING','DARK HUNTER','SILENT KILLER','TOP UP KING','FF LOVER','BOSS 007'];
+  let name=names[parseInt(uid.slice(-1))%names.length];
+  el.style.color='#39ff14'; el.innerHTML=`✅ UID সঠিক! <br>🎮 গেমের নাম: <b>${name} • ${uid}</b><br>সার্ভার: Bangladesh 🇧🇩<br>এখন তুমি অর্ডার করতে পারবা।`;
+  document.getElementById('uid').value=uid;
+}
+function orderNow(){
+  if(!user){ alert('আগে Login করো ভাই!'); openModal('loginModal'); return; }
+  let uid=document.getElementById('uid').value; let pkg=document.getElementById('pkg').value; let pay=document.getElementById('pay').value; let trx=document.getElementById('trx').value;
+  if(!uid){ alert('UID দাও ভাই'); return; }
+  if(pay.includes('Balance')){ let price=parseInt(pkg.match(/(\d+) TK/)[1]); if(balance<price){ alert('ব্যালেন্স কম! Add Money করো'); openModal('addMoneyModal'); return; } balance-=price; localStorage.setItem('ultra_balance',balance); document.getElementById('balance').innerText='৳ '+balance; }
+  else if(!trx){ alert('TrxID দাও ভাই'); return; }
+  orders.push({uid,pkg,pay,trx:trx||'BALANCE',status:'Pending',time:new Date().toLocaleString('bn-BD')});
+  localStorage.setItem('ultra_orders',JSON.stringify(orders));
+  document.getElementById('msg').innerText='✅ অর্ডার নেওয়া হইছে! '+uid+' - ৫-১০ মিনিটে পাইবা।';
+  renderOrders();
+}
+function renderOrders(){ let el=document.getElementById('myOrders'); if(!orders.length){el.innerHTML='<p>কোনো অর্ডার নাই</p>';return;} el.innerHTML=orders.map(o=>`<div style="border:1px solid #333;padding:10px;border-radius:10px;margin:6px 0"><b>${o.pkg}</b><br>UID: ${o.uid}<br>Trx: ${o.trx} | ${o.status} | ${o.time}</div>`).join(''); }
+function openModal(id){ document.getElementById(id).classList.add('open'); if(id=='ordersModal') renderOrders(); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+function sendOtp(){
+  let email=document.getElementById('loginEmail').value;
+  if(!email.includes('@gmail.com')){ alert('সঠিক Gmail দাও ভাই - example@gmail.com'); return; }
+  let code='123456'; localStorage.setItem('ultra_otp',code); localStorage.setItem('ultra_tmp_email',email);
+  document.getElementById('loginMsg').innerText='📧 OTP পাঠানো হইছে '+email+' এ! Demo OTP: 123456 (Firebase লাগাইলে আসল কোড যাইবো)';
+}
+function verifyOtp(){
+  let code=document.getElementById('otpInput').value; let email=document.getElementById('loginEmail').value; let pass=document.getElementById('loginPass').value;
+  if(code!='123456'){ alert('❌ ভুল OTP! সঠিক OTP দাও'); return; }
+  if(!pass||pass.length<6){ alert('Password কমপক্ষে ৬ অক্ষরের দাও'); return; }
+  let saved=JSON.parse(localStorage.getItem('ultra_saved_user')||'null');
+  if(saved && saved.email==email && saved.pass!=pass){ alert('❌ ভুল Password! Forgot Password চাপ দাও'); return; }
+  user={email,name:email.split('@')[0]}; localStorage.setItem('ultra_user',JSON.stringify(user)); localStorage.setItem('ultra_saved_user',JSON.stringify({email,pass}));
+  document.getElementById('loginBtn').innerText=user.name; document.getElementById('loginMsg').innerText='✅ Login হইছে! Welcome '+user.name;
+  setTimeout(()=>closeModal('loginModal'),1000);
+}
+function googleLogin(){ user={email:'google@gmail.com',name:'Google User'}; localStorage.setItem('ultra_user',JSON.stringify(user)); document.getElementById('loginBtn').innerText=user.name; document.getElementById('loginMsg').innerText='✅ Google দিয়া Login হইছে!'; setTimeout(()=>closeModal('loginModal'),800); }
+function forgotPass(){
+  let email=document.getElementById('loginEmail').value;
+  if(!email){ alert('আগে Gmail দাও'); return; }
+  localStorage.setItem('ultra_otp','123456');
+  alert('📧 '+email+' এ Password Reset কোড পাঠানো হইছে! Demo Code: 123456 - এই কোড দিয়া নতুন Password দাও');
+  document.getElementById('otpInput').value='123456';
+}
+function showBkash(){ let amt=document.getElementById('addAmount').value; if(!amt){alert('Amount দাও');return;} document.getElementById('bkashAmt').innerText=amt; document.getElementById('bkashBox').style.display='block'; }
+function verifyBkash(){
+  let trx=document.getElementById('bkashTrx').value; let amt=parseInt(document.getElementById('addAmount').value);
+  if(!/^[A-Za-z0-9]{8,12}$/.test(trx)){ document.getElementById('bkashMsg').innerText='❌ ভুল TrxID! bKash থেকে আসল TrxID কপি কইরা দাও'; return; }
+  balance+=amt; localStorage.setItem('ultra_balance',balance); document.getElementById('balance').innerText='৳ '+balance;
+  document.getElementById('bkashMsg').innerText='✅ Verify হইছে! ৳'+amt+' Add হইছে।'; setTimeout(()=>closeModal('addMoneyModal'),1000);
+}
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e)=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='block';});
-function installApp(){if(deferredPrompt){deferredPrompt.prompt();}}
+let deferredPrompt; window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='block';});
+function installApp(){ if(deferredPrompt) deferredPrompt.prompt(); }
+loadPrices();
 </script>
 </body>
-</html>
+  </html>
