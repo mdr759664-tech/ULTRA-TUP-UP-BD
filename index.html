@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ULTRA TOP UP BD</title>
+<!-- APP এর ২ লাইন - এইখানে বসানো আছে -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#39ff14">
+<link rel="apple-touch-icon" href="logo.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#000;color:#fff;padding-bottom:85px}
@@ -33,6 +39,7 @@ h2{padding:12px 15px 5px;color:#39ff14}
 .order button{background:#39ff14;width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;font-size:16px}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:2px solid #39ff14;display:flex;justify-content:space-around;padding:12px 0}
 .bottom div{text-align:center;font-size:13px;color:#888}.bottom div.active{color:#39ff14}
+.install{background:#39ff14;color:#000;text-align:center;padding:12px;margin:10px;border-radius:10px;font-weight:bold;cursor:pointer}
 </style>
 </head>
 <body>
@@ -42,7 +49,8 @@ h2{padding:12px 15px 5px;color:#39ff14}
 <a class="login" href="#">Login</a>
 </div>
 
-<!-- NEW NOTICE -->
+<div id="installBtn" class="install" style="display:none" onclick="installApp()">📲 APP INSTALL করো - Home Screen এ নাও</div>
+
 <div class="notice"><b>● NOTICE</b><marquee>ULTRA TOP UP BD তে অর্ডার করলে ৫-১০ মিনিটে ডেলিভারি পাবেন | পেমেন্ট করার আগে 01837450067 নাম্বারটা চেক করুন | ফেক নাম্বার থেকে সাবধান</marquee></div>
 
 <div class="banner"><h1>ULTRA TOP UP BD</h1><p>- bKash Nagad Rocket Upay -<br>- Fast Delivery -</p><p>💎 01837450067</p><button>▶ দ্রুত টপআপ করুন এখনি →</button></div>
@@ -148,6 +156,11 @@ h2{padding:12px 15px 5px;color:#39ff14}
 <script>
 function buy(p){document.getElementById('pkg').value=p;document.getElementById('order').scrollIntoView({behavior:'smooth'});}
 function order(){let uid=document.getElementById('uid').value;let trx=document.getElementById('trx').value;if(!uid||!trx){alert('UID আর TrxID দাও ভাই');return;}document.getElementById('msg').innerText='✅ অর্ডার নেওয়া হইছে! '+uid+' - ৫-১০ মিনিটে পাইবা। Telegram: 01837450067';}
+// APP এর sw.js এর লাইন - এইখানে বসানো আছে
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e)=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='block';});
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();}}
 </script>
 </body>
 </html>
