@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ULTRA TOP UP BD - Admin Panel</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#000;color:#fff;padding:15px;padding-bottom:80px}
+.top{display:flex;justify-content:space-between;align-items:center}
+.top h1{color:#39ff14;font-size:22px}
+.top a{color:#39ff14;text-decoration:none;border:2px solid #39ff14;padding:6px 14px;border-radius:8px}
+.login-box{max-width:380px;margin:60px auto;border:2px solid #39ff14;border-radius:14px;padding:20px;text-align:center}
+.login-box h2{color:#39ff14;margin-bottom:15px}
+.login-box input{width:100%;padding:12px;margin:8px 0;border-radius:8px;background:#111;color:#fff;border:1px solid #39ff14}
+.login-box button{background:#39ff14;width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;font-size:16px}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:15px 0}
+.stat{border:2px solid #39ff14;border-radius:12px;padding:15px;text-align:center;background:#0a0a0a}
+.stat b{color:#39ff14;font-size:24px;display:block}
+.tabs{display:flex;gap:8px;overflow-x:auto}
+.tabs button{background:#111;color:#39ff14;border:2px solid #39ff14;padding:9px 14px;border-radius:20px;white-space:nowrap}
+.tabs button.active{background:#39ff14;color:#000}
+.box{border:2px solid #39ff14;border-radius:14px;padding:15px;margin-top:12px}
+.box h3{color:#39ff14;margin-bottom:10px}
+.box input,.box select,.box textarea{width:100%;padding:11px;margin:6px 0;border-radius:8px;background:#111;color:#fff;border:1px solid #39ff14}
+.box button{background:#39ff14;border:none;padding:11px 16px;border-radius:8px;font-weight:bold;width:100%;margin-top:6px}
+.order-card{border:1px solid #333;border-radius:10px;padding:12px;margin:8px 0;background:#111}
+.order-card b{color:#39ff14}
+.order-card .row{display:flex;justify-content:space-between;margin:4px 0;font-size:14px}
+.btns{display:flex;gap:8px;margin-top:8px}
+.btns button{flex:1;padding:9px;border-radius:8px;border:none;font-weight:bold}
+.ok{background:#39ff14}.no{background:#ff3b30;color:#fff}.wa{background:#25D366}
+.price-row{display:flex;gap:8px;align-items:center;margin:6px 0}
+.price-row span{flex:1}
+.price-row input{width:90px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<div class="top">
+<h1>ULTRA TOP UP BD<br><span style="font-size:13px;color:#fff">Admin Panel</span></h1>
+<a href="index.html">🏠 Site দেখো</a>
+</div>
+
+<!-- LOGIN -->
+<div id="loginBox" class="login-box">
+<h2>🔐 Admin Login</h2>
+<p style="color:#aaa;font-size:13px">শুধু তুমি ঢুকবা ভাই</p>
+<input id="pass" type="password" placeholder="Admin Password দাও">
+<button onclick="login()">Login করো</button>
+<p id="loginMsg" style="color:#ff3b30;margin-top:10px"></p>
+<p style="color:#666;font-size:12px;margin-top:10px">Demo Password: ultra123<br>পরে চেঞ্জ কইরা নিও</p>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dash" class="hidden">
+<div class="stats">
+<div class="stat"><span>মোট অর্ডার</span><b id="totalOrder">0</b></div>
+<div class="stat"><span>মোট টাকা</span><b id="totalTk">৳0</b></div>
+<div class="stat"><span>Pending</span><b id="pendingOrder">0</b></div>
+</div>
+
+<div class="tabs">
+<button class="active" onclick="showTab('orders',this)">📋 Orders</button>
+<button onclick="showTab('notice',this)">📢 Notice</button>
+<button onclick="showTab('price',this)">💰 Price</button>
+<button onclick="showTab('links',this)">🔗 Links</button>
+<button onclick="showTab('settings',this)">⚙️ Settings</button>
+</div>
+
+<!-- ORDERS -->
+<div id="tab-orders" class="box">
+<h3>📋 নতুন অর্ডার</h3>
+<input id="searchOrder" placeholder="🔍 UID / TrxID / নাম দিয়া খুঁজো" oninput="renderOrders()">
+<div id="orderList"></div>
+<button onclick="clearOrders()" style="background:#ff3b30;color:#fff">সব অর্ডার ডিলিট করো</button>
+<p style="color:#aaa;font-size:12px;margin-top:8px">* কাস্টমার index.html থেকে অর্ডার করলে এইখানে আসবো। এখন ডেমো অর্ডার দেখতেছো।</p>
+</div>
+
+<!-- NOTICE -->
+<div id="tab-notice" class="box hidden">
+<h3>📢 NOTICE চেঞ্জ করো</h3>
+<textarea id="noticeText" rows="3">ULTRA TOP UP BD তে অর্ডার করলে ৫-১০ মিনিটে ডেলিভারি পাবেন | পেমেন্ট করার আগে 01837450067 নাম্বারটা চেক করুন | ফেক নাম্বার থেকে সাবধান</textarea>
+<button onclick="saveNotice()">NOTICE Save করো</button>
+<p id="noticeMsg" style="color:#39ff14;margin-top:8px"></p>
+<p style="color:#aaa;font-size:12px">Save করলে index.html এর NOTICE অটো চেঞ্জ হইবো (একই ব্রাউজারে)।</p>
+</div>
+
+<!-- PRICE -->
+<div id="tab-price" class="box hidden">
+<h3>💰 প্রাইস চেঞ্জ করো</h3>
+<div id="priceList"></div>
+<button onclick="savePrice()">প্রাইস Save করো</button>
+<p id="priceMsg" style="color:#39ff14;margin-top:8px"></p>
+</div>
+
+<!-- LINKS -->
+<div id="tab-links" class="box hidden">
+<h3>🔗 Telegram / YouTube / Instagram লিংক</h3>
+<label>Telegram Group</label><input id="linkGroup" value="https://t.me/+RvjUmMagUWwxZGZl">
+<label>Telegram Channel</label><input id="linkChannel" value="https://t.me/+Q6GAbYR_AusxMjE1">
+<label>YouTube Link</label><input id="linkYt" placeholder="পরে বসাইবা - https://youtube.com/...">
+<label>Instagram Link</label><input id="linkIg" placeholder="পরে বসাইবা - https://instagram.com/...">
+<label>WhatsApp Number</label><input id="linkWa" value="01837450067">
+<label>bKash / Nagad Number</label><input id="linkPay" value="01837450067">
+<button onclick="saveLinks()">Links Save করো</button>
+<p id="linkMsg" style="color:#39ff14;margin-top:8px"></p>
+</div>
+
+<!-- SETTINGS -->
+<div id="tab-settings" class="box hidden">
+<h3>⚙️ Admin Settings</h3>
+<label>নতুন Password</label><input id="newPass" placeholder="নতুন পাসওয়ার্ড দাও">
+<button onclick="changePass()">Password চেঞ্জ করো</button>
+<p id="passMsg" style="color:#39ff14;margin-top:8px"></p>
+<br>
+<button onclick="logout()" style="background:#ff3b30;color:#fff">Logout করো</button>
+</div>
+</div>
+
+<script>
+let ADMIN_PASS = localStorage.getItem('ultra_pass') || 'ultra123';
+let orders = JSON.parse(localStorage.getItem('ultra_orders') || '[]');
+if(orders.length==0){
+  orders=[
+    {uid:'123456789',pkg:'115 Diamond - 90 TK',pay:'bKash',trx:'9HX123ABC',status:'Pending',time:'আজ, ২:১০ PM'},
+    {uid:'987654321',pkg:'1K TikTok Follower - 150 TK',pay:'Nagad',trx:'9HY456DEF',status:'Pending',time:'আজ, ১:৪৫ PM'},
+    {uid:'555444333',pkg:'60 UC - 95 TK',pay:'bKash',trx:'9HZ789GHI',status:'Done',time:'গতকাল, ৮:২০ PM'},
+  ];
+}
+let prices = JSON.parse(localStorage.getItem('ultra_prices') || 'null') || {
+  '25 Diamond':'20','50 Diamond':'40','115 Diamond':'90','240 Diamond':'180','610 Diamond':'460','1240 Diamond':'920','Weekly Lite':'150','Weekly Membership':'170','Monthly Membership':'750','60 UC':'95','325 UC':'460','660 UC':'920','1K TikTok Follower':'150','1K TikTok Like':'80','1K FB Follower':'130','1K YT Subscribe':'250','1K IG Follower':'180','WhatsApp Channel Follow':'180','IMO Diamond 100':'150'
+};
+
+function login(){
+  let p=document.getElementById('pass').value;
+  if(p==ADMIN_PASS){document.getElementById('loginBox').classList.add('hidden');document.getElementById('dash').classList.remove('hidden');renderAll();}
+  else{document.getElementById('loginMsg').innerText='❌ ভুল পাসওয়ার্ড ভাই!';}
+}
+function logout(){location.reload();}
+function showTab(id,btn){
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  ['orders','notice','price','links','settings'].forEach(t=>document.getElementById('tab-'+t).classList.add('hidden'));
+  document.getElementById('tab-'+id).classList.remove('hidden');
+}
+function renderAll(){renderOrders();renderPrices();updateStats();}
+function updateStats(){
+  document.getElementById('totalOrder').innerText=orders.length;
+  let total=0; orders.forEach(o=>{let m=o.pkg.match(/(\d+) TK/); if(m) total+=parseInt(m[1]);});
+  document.getElementById('totalTk').innerText='৳'+total;
+  document.getElementById('pendingOrder').innerText=orders.filter(o=>o.status=='Pending').length;
+}
+function renderOrders(){
+  let q=(document.getElementById('searchOrder').value||'').toLowerCase();
+  let list=document.getElementById('orderList');list.innerHTML='';
+  orders.filter(o=>(o.uid+o.pkg+o.trx).toLowerCase().includes(q)).forEach((o,i)=>{
+    list.innerHTML+=`<div class="order-card"><div class="row"><b>${o.pkg}</b><span>${o.time}</span></div><div class="row"><span>UID: ${o.uid}</span><span>Trx: ${o.trx}</span></div><div class="row"><span>Pay: ${o.pay}</span><span>স্ট্যাটাস: ${o.status}</span></div><div class="btns"><button class="ok" onclick="setStatus(${i},'Done')">✅ Done</button><button class="wa" onclick="window.open('https://t.me/+RvjUmMagUWwxZGZl')">💬 Telegram</button><button class="no" onclick="delOrder(${i})">🗑️ Delete</button></div></div>`;
+  });
+  if(list.innerHTML=='') list.innerHTML='<p style="color:#aaa">কোনো অর্ডার নাই ভাই</p>';
+}
+function setStatus(i,s){orders[i].status=s;localStorage.setItem('ultra_orders',JSON.stringify(orders));renderAll();}
+function delOrder(i){if(confirm('ডিলিট করবা?')){orders.splice(i,1);localStorage.setItem('ultra_orders',JSON.stringify(orders));renderAll();}}
+function clearOrders(){if(confirm('সব ডিলিট?')){orders=[];localStorage.setItem('ultra_orders','[]');renderAll();}}
+function renderPrices(){
+  let el=document.getElementById('priceList');el.innerHTML='';
+  for(let k in prices){el.innerHTML+=`<div class="price-row"><span>${k}</span><input id="price-${k}" value="${prices[k]}"> TK</div>`;}
+}
+function savePrice(){
+  for(let k in prices){let v=document.getElementById('price-'+k).value; if(v) prices[k]=v;}
+  localStorage.setItem('ultra_prices',JSON.stringify(prices));
+  document.getElementById('priceMsg').innerText='✅ প্রাইস Save হইছে!';
+}
+function saveNotice(){
+  localStorage.setItem('ultra_notice',document.getElementById('noticeText').value);
+  document.getElementById('noticeMsg').innerText='✅ NOTICE Save হইছে! এখন index.html এ এই NOTICE দেখবো।';
+}
+function saveLinks(){
+  localStorage.setItem('ultra_links',JSON.stringify({group:document.getElementById('linkGroup').value,channel:document.getElementById('linkChannel').value,yt:document.getElementById('linkYt').value,ig:document.getElementById('linkIg').value,wa:document.getElementById('linkWa').value,pay:document.getElementById('linkPay').value}));
+  document.getElementById('linkMsg').innerText='✅ Links Save হইছে!';
+}
+function changePass(){
+  let np=document.getElementById('newPass').value;
+  if(!np){alert('পাসওয়ার্ড দাও');return;}
+  ADMIN_PASS=np;localStorage.setItem('ultra_pass',np);
+  document.getElementById('passMsg').innerText='✅ Password চেঞ্জ হইছে! নতুনটা মনে রাখো: '+np;
+}
+</script>
+</body>
+</html>
