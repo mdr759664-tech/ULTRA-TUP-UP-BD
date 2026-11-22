@@ -11,8 +11,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#fff;color:#111;padding-bottom:90px;overflow-x:hidden}
+#dots{position:fixed;inset:0;pointer-events:none;z-index:1}
 .topBar{position:sticky;top:0;z-index:50;background:#fff;padding:10px 12px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
 .topRow{display:flex;align-items:center;gap:8px}
 .logoImg{width:42px;height:42px;border-radius:10px;object-fit:cover}
@@ -20,12 +21,12 @@ body{background:#fff;color:#111;padding-bottom:90px;overflow-x:hidden}
 .bal{background:#00c853;color:#fff;padding:7px 12px;border-radius:20px;font-weight:900;font-size:13px;margin-left:auto;cursor:pointer}
 .loginBtn{background:#111;color:#fff;border:none;padding:7px 13px;border-radius:20px;font-weight:800;cursor:pointer}
 .installBtn{background:#00b0ff;color:#fff;border:none;padding:7px 10px;border-radius:20px;font-weight:800;font-size:12px;cursor:pointer}
-.search{margin-top:10px;background:#eef1f4;border-radius:12px;display:flex;align-items:center;padding:12px;gap:8px}
+.search{margin-top:10px;background:#eef1f4;border-radius:12px;display:flex;align-items:center;padding:12px;gap:8px;position:relative;z-index:2}
 .search input{border:none;outline:none;background:transparent;width:100%;font-size:15px}
-.cats{display:flex;gap:8px;padding:10px 12px;overflow-x:auto;white-space:nowrap}
+.cats{display:flex;gap:8px;padding:10px 12px;overflow-x:auto;white-space:nowrap;position:relative;z-index:2}
 .cats button{background:#fff;border:1px solid #e5e7eb;padding:8px 14px;border-radius:20px;cursor:pointer;font-size:13px}
 .cats button.on{background:#111;color:#fff}
-.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:0 12px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:0 12px;position:relative;z-index:2}
 .card{background:#fff;border:1px solid #eef0f2;border-radius:14px;overflow:hidden;cursor:pointer}
 .card:active{transform:scale(.96)}
 .card .logoBox{width:100%;height:95px;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;color:#fff;position:relative;overflow:hidden;background:linear-gradient(135deg,#00c853,#00b0ff)}
@@ -59,13 +60,20 @@ body{background:#fff;color:#111;padding-bottom:90px;overflow-x:hidden}
 .done{color:#15803d;background:#dcfce7;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
 .pend{color:#b45309;background:#fef3c7;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
 .support{position:fixed;right:14px;bottom:95px;width:50px;height:50px;background:linear-gradient(135deg,#00c853,#00b0ff);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;z-index:99;cursor:pointer}
-.refBox{background:#fff;border:1px dashed #00c853;border-radius:12px;padding:10px;margin:10px 12px;text-align:center;font-size:13px}
+.refBox{background:#fff;border:1px dashed #00c853;border-radius:12px;padding:10px;margin:10px 12px;text-align:center;font-size:13px;position:relative;z-index:2}
 .adminCard{background:#fff;border:1px solid #eee;border-radius:12px;padding:10px;margin:8px 0}
 .setRow{display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f6f7f9;border-radius:10px;margin:6px 0;cursor:pointer;font-weight:700}
 .minNote{font-size:12px;color:#e6005c;font-weight:800;text-align:center;margin-top:6px}
+.ripple{position:fixed;width:18px;height:18px;border-radius:50%;pointer-events:none;z-index:9999;animation:rip .7s ease-out forwards}
+@keyframes rip{to{transform:scale(7);opacity:0}}
+.spark{position:fixed;width:6px;height:6px;border-radius:50%;pointer-events:none;z-index:9999;animation:spark .8s ease-out forwards}
+@keyframes spark{to{transform:translate(var(--sx),var(--sy)) scale(0);opacity:0}}
+.star{position:fixed;width:4px;height:4px;border-radius:50%;pointer-events:none;z-index:9999;animation:starFall 1.2s ease-out forwards}
+@keyframes starFall{to{transform:translateY(80px) scale(0);opacity:0}}
 </style>
 </head>
 <body>
+<canvas id="dots"></canvas>
 <div id="toast" class="toast"></div>
 <div class="topBar">
 <div class="topRow"><img src="./logo.png" class="logoImg" onerror="this.style.display='none'"><div class="logo">ULTRA<br><span>TOP UP BD</span></div><span class="bal" onclick="openPay(100)">৳ <span id="myBal">0</span> + Add</span><button class="installBtn" id="installBtn" onclick="installApp()">📲 Install</button><button class="loginBtn" id="loginTopBtn" onclick="openLogin()">Login</button><img id="userAvatar" onclick="openSettings()" style="display:none;width:34px;height:34px;border-radius:50%;object-fit:cover;cursor:pointer" src=""></div>
@@ -82,9 +90,9 @@ body{background:#fff;color:#111;padding-bottom:90px;overflow-x:hidden}
 <div class="inputBox">🤖 <b>ROBOT:</b> <span id="robotText">রোবট অনলাইন আছে।</span><br><small>Order ID: <b id="previewOrderId">UT-</b></small></div>
 <button class="orderBtn" onclick="buyFromGamePage()">Order Confirm করো →</button>
 </div>
-<div style="margin:12px;background:#fff;border-radius:12px;padding:12px"><h3>🛍️ My Orders - Order ID সহ</h3><div id="myOrdersBox"><small>Login করলে তোমার অর্ডার + Order ID দেখবা</small></div></div>
-<div style="margin:12px;background:#fff;border-radius:12px;padding:12px"><h3>🛍️ Recent Orders <span style="color:#22c55e;font-size:12px">● Live</span></h3><div id="orders"></div></div>
-<div style="margin:12px;background:#fff;border-radius:12px;padding:12px;text-align:center"><b style="font-size:18px">01837450067</b><br><button onclick="openAdmin()" style="background:#111;color:#fff;border:none;padding:6px 12px;border-radius:8px;margin-top:8px;font-size:12px">🔐 Admin Panel</button></div>
+<div style="margin:12px;background:#fff;border-radius:12px;padding:12px;position:relative;z-index:2"><h3>🛍️ My Orders - Order ID সহ</h3><div id="myOrdersBox"><small>Login করলে তোমার অর্ডার + Order ID দেখবা</small></div></div>
+<div style="margin:12px;background:#fff;border-radius:12px;padding:12px;position:relative;z-index:2"><h3>🛍️ Recent Orders <span style="color:#22c55e;font-size:12px">● Live</span></h3><div id="orders"></div></div>
+<div style="margin:12px;background:#fff;border-radius:12px;padding:12px;text-align:center;position:relative;z-index:2"><b style="font-size:18px">01837450067</b><br><button onclick="openAdmin()" style="background:#111;color:#fff;border:none;padding:6px 12px;border-radius:8px;margin-top:8px;font-size:12px">🔐 Admin Panel</button></div>
 <div class="bottom"><div class="active" onclick="location.reload()">🏠<br>Home</div><div onclick="showMyOrders()">🛍️<br>Buy</div><div class="centerBtn" onclick="openPay(100)">+</div><div onclick="showMyOrders()">📦<br>Orders</div><div onclick="openSettings()">⚙️<br>Settings</div></div>
 <div class="support" onclick="window.open('https://t.me/+Q6GAbYR_AusxMjE1','_blank')">🎧</div>
 <div class="modal" id="loginModal"><div class="modalBox"><div style="padding:12px;display:flex;justify-content:space-between"><b>← ULTRA TOP UP BD</b><span onclick="closeModal('loginModal')" style="cursor:pointer">✕</span></div><div style="padding:14px"><h1 style="font-size:30px">Welcome<br><span style="color:#00c853">Back</span></h1><input id="l_name" placeholder="Username - যেমন Sakib123"><input id="l_phone" placeholder="Email - example@gmail.com"><input id="l_pass" type="password" placeholder="Password (কমপক্ষে 6 অক্ষর)"><input id="l_ref" placeholder="Refer Code (যদি থাকে - UT1234)"><button class="btnMain" onclick="doLogin()">Login / Sign Up →</button><p id="loginErr" style="color:red;text-align:center;margin-top:8px;font-size:12px"></p></div></div></div>
@@ -92,6 +100,19 @@ body{background:#fff;color:#111;padding-bottom:90px;overflow-x:hidden}
 <div class="modal" id="payModal"><div class="modalBox"><div style="padding:12px;display:flex;justify-content:space-between"><span onclick="closeModal('payModal')">←</span><b>💰 Payment</b><span>⋯</span></div><div style="padding:14px"><h2 style="text-align:center">৳ <span id="payAmtTop">100</span> - <span id="payItemName">Add Money</span></h2><p style="text-align:center;font-size:12px;color:#888" id="payItemUID"></p><p style="text-align:center;font-size:12px">Order ID: <b id="payOrderId">UT-</b></p><input id="addAmt" type="number" min="50" placeholder="Amount - সর্বনিম্ন ৫০" style="text-align:center;font-weight:900" oninput="changeAmt(this.value)"><p class="minNote">⚠️ সর্বনিম্ন ৫০ টাকা - ৫০ এর নিচে অর্ডার যাইবো না</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0"><button onclick="selectPay('bKash','01837450067','*247#')" id="btn-bKash" class="payBtn on">💗 bKash</button><button onclick="selectPay('Nagad','01837450067','*167#')" id="btn-Nagad" class="payBtn">🧡 নগদ</button><button onclick="selectPay('Rocket','01837450067','*322#')" id="btn-Rocket" class="payBtn">🚀 রকেট</button><button onclick="selectPay('Upay','01837450067','*268#')" id="btn-Upay" class="payBtn">🟡 উপায়</button></div><div class="payBox"><input id="trxId" placeholder="TrxID - যেমন 9AB1234567" style="margin-top:10px"><p style="margin-top:10px">• <span id="payName">bKash</span> অ্যাপ খুলুন</p><p>• নম্বর: <b style="color:#ffeb3b" id="payNumber">01837450067</b> <button onclick="copyPayNum()" style="background:#fff;color:#000;border:none;padding:5px 10px;border-radius:8px;font-weight:900">📋 কপি</button></p><p>• <span id="payCode">*247#</span></p></div><button class="btnMain" onclick="verifyPay()">🤖 Robot দিয়ে Verify করো</button><p id="payMsg" style="text-align:center;margin-top:8px;color:green;font-weight:700"></p></div><button onclick="verifyPay()" style="width:100%;padding:14px;background:#bcd6ff;border:none;font-weight:900;color:#0057ff">পে করুন ৳ <span id="payAmt">100.00</span></button></div></div>
 <div class="modal" id="adminModal"><div class="modalBox"><div style="padding:12px;display:flex;justify-content:space-between"><b>🔐 Admin Panel</b><span onclick="closeModal('adminModal')" style="cursor:pointer">✕</span></div><div style="padding:14px"><p>Admin Password: <b>admin123</b></p><input id="adminPass" type="password" placeholder="Admin Password দাও"><button class="btnMain" onclick="openAdminList()">Admin খুলো</button><div id="adminList"></div></div></div></div>
 <script>
+// ===== BACKGROUND - সাদা + উপর থেকে ফোঁটা পরবো - লাল নীল সবুজ কালো রেন্ডম =====
+const cv=document.getElementById('dots');const ctx=cv.getContext('2d');let W,H;
+function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;}resize();addEventListener('resize',resize);
+let COLORS=["#ff2d55","#007aff","#00c853","#111111","#ffcc00","#00b0ff","#ff00aa","#a020f0"];
+let parts=[];
+for(let i=0;i<90;i++){parts.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*3+1.5,s:Math.random()*1.8+0.6,c:COLORS[Math.floor(Math.random()*COLORS.length)],o:Math.random()*0.7+0.3,tw:Math.random()*0.05});}
+function drawDots(){ctx.clearRect(0,0,W,H);parts.forEach(p=>{p.o+=Math.sin(Date.now()/300+p.x)*0.005;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.c;ctx.globalAlpha=Math.max(0.2,Math.min(0.9,p.o));ctx.shadowBlur=10;ctx.shadowColor=p.c;ctx.fill();ctx.shadowBlur=0;p.y+=p.s;p.x+=Math.sin(p.y/60)*0.4;if(p.y>H+10){p.y=-10;p.x=Math.random()*W;p.c=COLORS[Math.floor(Math.random()*COLORS.length)];p.r=Math.random()*3+1.5;p.s=Math.random()*1.8+0.6;}});ctx.globalAlpha=1;requestAnimationFrame(drawDots);}drawDots();
+// ===== TOUCH করলে ঐখানে অ্যানিমেশন ফুটবো =====
+document.addEventListener('click',e=>{
+  let d=document.createElement('div');d.className='ripple';d.style.background=COLORS[Math.floor(Math.random()*COLORS.length)];d.style.left=(e.clientX-9)+'px';d.style.top=(e.clientY-9)+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),700);
+  for(let i=0;i<10;i++){let s=document.createElement('div');s.className='spark';s.style.background=COLORS[Math.floor(Math.random()*COLORS.length)];s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';let ang=Math.random()*Math.PI*2;let dist=40+Math.random()*60;s.style.setProperty('--sx',Math.cos(ang)*dist+'px');s.style.setProperty('--sy',Math.sin(ang)*dist+'px');document.body.appendChild(s);setTimeout(()=>s.remove(),800);}
+  for(let i=0;i<4;i++){let st=document.createElement('div');st.className='star';st.style.background=COLORS[Math.floor(Math.random()*COLORS.length)];st.style.left=(e.clientX-10+Math.random()*20)+'px';st.style.top=(e.clientY-10+Math.random()*20)+'px';st.style.boxShadow='0 0 8px '+st.style.background;document.body.appendChild(st);setTimeout(()=>st.remove(),1200);}
+});
 const MIN_ORDER=50;
 const GAMES=[
 {id:"freefire",name:"Free Fire",cat:"Games",img:"https://www.pngmart.com/files/22/Garena-Free-Fire-Logo-PNG-HD-Isolated.png"},
@@ -207,10 +228,7 @@ whatsapp:[{name:"1K Channel Follow",price:266},{name:"1K Telegram Member",price:
 };
 let deferredPrompt=null;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
-function installApp(){
-  if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted'){showToast("✅ Install হইতাছে!");}deferredPrompt=null;});}
-  else{alert("📲 এইটা WhatsApp/Facebook এর ভিতর দিয়া খুলছো - এইখানে Install আসবো না!\n\n১. লিংক কপি করো\n২. Chrome অ্যাপ খুলো\n৩. লিংক Paste কইরা খুলো\n৪. Chrome Menu (⋮) → Add to Home Screen / Install App চাপ দাও\n\nVercel এ manifest.json + sw.js + logo.png থাকতে হইবো।");}
-}
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted'){showToast("✅ Install হইতাছে!");}deferredPrompt=null;});}else{alert("📲 WhatsApp/Facebook এর ভিতর দিয়া খুলছো - এইখানে Install আসবো না!\n\n১. লিংক কপি করো\n২. Chrome অ্যাপ খুলো\n৩. লিংক Paste কইরা খুলো\n৪. Chrome Menu (⋮) → Add to Home Screen / Install App চাপ দাও");}}
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{});});}
 function showToast(t){let el=document.getElementById('toast');el.innerText=t;el.style.display='block';setTimeout(()=>el.style.display='none',3000);}
 let curCat="All",curPrice=100,curItem="Add Money",curGameName="Free Fire",curPayMethod="bKash",curPayNumber="01837450067",curGameId="freefire",curPkgIndex=0,searchText="",curUID="",curServer="Bangladesh",curOrderId="UT"+Date.now();
@@ -228,14 +246,7 @@ function changeAmt(v){if(v>0){curPrice=parseInt(v);document.getElementById("payA
 function openPay(amt){curPrice=amt||curPrice;if(curPrice<MIN_ORDER){curPrice=MIN_ORDER;}curOrderId="UT"+Date.now();document.getElementById("payOrderId").innerText=curOrderId;document.getElementById("payAmt").innerText=curPrice+".00";document.getElementById("payAmtTop").innerText=curPrice;document.getElementById("payItemName").innerText=curItem||"Add Money";document.getElementById("payItemUID").innerText=curUID?("UID: "+curUID+" | Game: "+curGameName+" | Server: "+curServer):"Server: "+curServer;document.getElementById("addAmt").value=curPrice;document.getElementById("payModal").style.display="block";selectPay('bKash','01837450067','*247#');}
 function selectPay(m,num,code){curPayMethod=m;curPayNumber=num;document.getElementById("payName").innerText=m;document.getElementById("payNumber").innerText=num;document.getElementById("payCode").innerText=code;["bKash","Upay","Rocket","Nagad"].forEach(x=>{document.getElementById("btn-"+x).classList.toggle("on",x===m)});}
 function copyPayNum(){navigator.clipboard.writeText(curPayNumber);alert("✅ কপি হইছে: "+curPayNumber);}
-function verifyPay(){
-  let u=getUser();if(!u){alert("আগে Login করো!");openLogin();return;}
-  if(curPrice<MIN_ORDER){alert("❌ সর্বনিম্ন ৫০ টাকা লাগবো! তুমি দিছো "+curPrice+" টাকা");return;}
-  let trx=document.getElementById("trxId").value.trim().toUpperCase();if(trx.length<8){alert("❌ সঠিক TrxID দাও!");return;}
-  let used=getUsedTrx();if(used.includes(trx)){alert("❌ এই TrxID আগেই ব্যবহার হইছে!");return;}
-  document.getElementById("payMsg").innerText="🤖 Robot Check করতাছে...";
-  setTimeout(()=>{if(!/^[A-Z0-9]{8,12}$/.test(trx)){alert("❌ ভুল TrxID ফরম্যাট!");document.getElementById("payMsg").innerText="";return;}used.push(trx);localStorage.setItem("ut_used_trx",JSON.stringify(used));let order={id:curOrderId,game:curGameName,gameId:curGameId,item:curItem,price:curPrice,uid:curUID,server:curServer,pay:curPayMethod,trx:trx,status:"Pending",user:u.phone,name:u.name,time:new Date().toLocaleString('bn-BD'),refBy:u.referredBy||null};let orders=getOrders();orders.unshift(order);localStorage.setItem("ut_orders",JSON.stringify(orders));document.getElementById("payMsg").innerText="✅ Verify হইছে! Order ID: "+curOrderId;setTimeout(()=>{closeModal("payModal");document.getElementById("trxId").value="";showToast("✅ অর্ডার জমা হইছে! ID: "+curOrderId);renderMyOrders();updateUser();},1200);},1200);
-}
+function verifyPay(){let u=getUser();if(!u){alert("আগে Login করো!");openLogin();return;}if(curPrice<MIN_ORDER){alert("❌ সর্বনিম্ন ৫০ টাকা লাগবো! তুমি দিছো "+curPrice+" টাকা");return;}let trx=document.getElementById("trxId").value.trim().toUpperCase();if(trx.length<8){alert("❌ সঠিক TrxID দাও!");return;}let used=getUsedTrx();if(used.includes(trx)){alert("❌ এই TrxID আগেই ব্যবহার হইছে!");return;}document.getElementById("payMsg").innerText="🤖 Robot Check করতাছে...";setTimeout(()=>{if(!/^[A-Z0-9]{8,12}$/.test(trx)){alert("❌ ভুল TrxID ফরম্যাট!");document.getElementById("payMsg").innerText="";return;}used.push(trx);localStorage.setItem("ut_used_trx",JSON.stringify(used));let order={id:curOrderId,game:curGameName,gameId:curGameId,item:curItem,price:curPrice,uid:curUID,server:curServer,pay:curPayMethod,trx:trx,status:"Pending",user:u.phone,name:u.name,time:new Date().toLocaleString('bn-BD'),refBy:u.referredBy||null};let orders=getOrders();orders.unshift(order);localStorage.setItem("ut_orders",JSON.stringify(orders));document.getElementById("payMsg").innerText="✅ Verify হইছে! Order ID: "+curOrderId;setTimeout(()=>{closeModal("payModal");document.getElementById("trxId").value="";showToast("✅ অর্ডার জমা হইছে! ID: "+curOrderId);renderMyOrders();updateUser();},1200);},1200);}
 function addReferCommission(order){if(!order.refBy) return;let comm=Math.floor(order.price*0.05);if(comm<=0) return;let refBal=parseInt(localStorage.getItem("ut_comm_"+order.refBy)||"0")+comm;localStorage.setItem("ut_comm_"+order.refBy,refBal);let refCount=parseInt(localStorage.getItem("ut_refcount_"+order.refBy)||"0")+1;localStorage.setItem("ut_refcount_"+order.refBy,refCount);let me=getUser();if(me && me.code===order.refBy){localStorage.setItem("ut_my_comm",refBal);updateUser();}}
 function openLogin(){let u=getUser();if(u){openSettings();return;}document.getElementById("loginModal").style.display="block";}
 function openSettings(){let u=getUser();if(!u){openLogin();return;}document.getElementById("setName").innerText=u.name||"User";document.getElementById("setEmail").innerText=u.phone||"";document.getElementById("setCode").innerText=u.code||"-";document.getElementById("setBal").innerText=localStorage.getItem("ut_bal")||"0";document.getElementById("setPhoto").src=u.photo||"./logo.png";document.getElementById("userAvatar").src=u.photo||"./logo.png";document.getElementById("setComm").innerText=localStorage.getItem("ut_my_comm")||localStorage.getItem("ut_comm_"+u.code)||"0";document.getElementById("setRefCount").innerText=localStorage.getItem("ut_refcount_"+u.code)||"0";document.getElementById("verifyBadge").innerText=u.verified?"✅ Verified":"›";document.getElementById("settingsModal").style.display="block";}
@@ -262,4 +273,4 @@ let params=new URLSearchParams(location.search);if(params.get("ref")){document.g
 document.getElementById("gameServer").addEventListener("change",e=>{curServer=e.target.value;document.getElementById("robotText").innerText="রোবট অনলাইন আছে। Server: "+curServer;});
 </script>
 </body>
-  </html>
+</html>
