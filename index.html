@@ -112,7 +112,7 @@ function setLang(l){LANG=l;localStorage.setItem("ut_lang",l);renderGames();updat
 const WA_NUMBER="01837450067";const WA_LINK="8801837450067";
 const ULTRA_API={API_URL:"",API_KEY:"",API_ENABLED:false,SELLER_NUMBER:WA_NUMBER};
 const PAY_NUMBERS={bKash:WA_NUMBER,Nagad:WA_NUMBER,Rocket:WA_NUMBER,Upay:WA_NUMBER};
-async function callUltraAPI(o){if(!ULTRA_API.API_ENABLED||!ULTRA_API.API_URL)return{success:false,mode:"manual"};try{let r=await fetch(ULTRA_API.API_URL,{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+ULTRA_API.API_KEY},body:JSON.stringify(o)});let d=await r.json();return{success:true,mode:"api",data:d}}catch(e){return{success:false,[STRIPPED]
+async function callUltraAPI(o){if(!ULTRA_API.API_ENABLED||!ULTRA_API.API_URL)return{success:false,mode:"manual"};try{let r=await fetch(ULTRA_API.API_URL,{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+ULTRA_API.API_KEY},body:JSON.stringify(o)});let d=await r.json();return{success:true,mode:"api",data:d}}catch(e){return{success:false,mode:"manual"}}}
 function openTelegram(){window.open('https://t.me/+Q6GAbYR_AusxMjE1','_blank')}
 function openWhatsAppSupport(msg){window.open('https://wa.me/'+WA_LINK+'?text='+encodeURIComponent(msg||'Hello, I need help'),'_blank')}
 function toggleWaPop(){document.getElementById('waPop').classList.toggle('open')}
@@ -123,7 +123,6 @@ function drawBg(){bgX.clearRect(0,0,bgW,bgH);let g=bgX.createLinearGradient(0,0,
 const tc=document.getElementById('touchCanvas'),tx=tc.getContext('2d');function resizeTouch(){tc.width=window.innerWidth;tc.height=window.innerHeight;}resizeTouch();window.addEventListener('resize',resizeTouch);let bursts=[];
 document.addEventListener('pointerdown',e=>{let colors=['#00e5a0','#00b0ff','#ffeb3b','#ff2d55','#a855f7'];for(let i=0;i<22;i++){let a=Math.random()*Math.PI*2,s=Math.random()*4+1;bursts.push({x:e.clientX,y:e.clientY,vx:Math.cos(a)*s,vy:Math.sin(a)*s,r:Math.random()*4+2,life:1,c:colors[Math.floor(Math.random()*colors.length)]});}bursts.push({x:e.clientX,y:e.clientY,vx:0,vy:0,r:5,life:1,ring:true});});
 function drawTouch(){tx.clearRect(0,0,tc.width,tc.height);bursts=bursts.filter(b=>b.life>0);bursts.forEach(b=>{b.x+=b.vx;b.y+=b.vy;b.vy+=0.05;b.life-=0.02;if(b.ring){tx.beginPath();tx.arc(b.x,b.y,(1-b.life)*70+5,0,Math.PI*2);tx.strokeStyle='rgba(0,229,160,'+b.life+')';tx.lineWidth=2;tx.stroke();}else{tx.beginPath();tx.arc(b.x,b.y,b.r,0,Math.PI*2);tx.fillStyle=b.c;tx.globalAlpha=b.life;tx.shadowColor=b.c;tx.shadowBlur=8;tx.fill();tx.globalAlpha=1;tx.shadowBlur=0;}});requestAnimationFrame(drawTouch);}drawTouch();
-// 68 GAME - ওদের সাইটের মতো, লোগো সহ, inputType ফিক্স
 const GAMES=[
 {id:1,name:"Free Fire",cat:"Games",itunes:"Free Fire",emoji:"🔥",badge:"HOT",unit:"Diamonds",inputType:"uid",inputLabel:"Enter Free Fire UID",pkgs:[[100,75],[210,150],[310,220],[520,365],[1060,730],[2180,1450]]},
 {id:2,name:"PUBG Mobile",cat:"Games",itunes:"PUBG Mobile",emoji:"🎯",badge:"HOT",unit:"UC",inputType:"uid",inputLabel:"Enter PUBG UID",pkgs:[[60,75],[325,365],[660,730],[1800,1900]]},
@@ -242,4 +241,4 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').cat
 renderCats();renderGames();setBal(getBal());updateRefer();loadRealIcons();
 </script>
 </body>
-  </html>
+</html>
