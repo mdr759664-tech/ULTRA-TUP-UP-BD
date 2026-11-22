@@ -1,27 +1,9 @@
 {
   "name": "ULTRA TOP UP BD",
-  "short_name": "ULTRA TOP UP",
-  "description": "Fastest Free Fire Top Up BD",
-  "id": "./index.html",
+  "short_name": "ULTRA",
   "start_url": "./index.html",
-  "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#00c853",
-  "categories": ["games", "entertainment"],
-  "icons": [
-    {
-      "src": "./logo.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./logo.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
+  "icons": [{"src": "./logo.png","sizes": "512x512","type": "image/png"}]
 }
