@@ -1,148 +1,102 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Login - ULTRA TOP UP BD</title>
+<title>ULTRA - Admin Panel</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#000;color:#fff;padding:15px}
-h1{font-size:24px;transition:color .8s;text-shadow:0 0 15px currentColor}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0b0f1a;color:#fff;padding:14px;padding-bottom:80px}
+h1{font-size:22px}h1 span{color:#00c853}
+.card{background:#fff;color:#111;border-radius:14px;padding:14px;margin-top:12px}
+input{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-top:10px}
+button{width:100%;background:#00c853;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:900;margin-top:10px}
+button.red{background:#ff2d55}button.black{background:#111}
+.order{border:1px solid #eee;border-radius:10px;padding:10px;margin-top:10px}
+.order b{color:#00c853}
+small{color:#666}
 .top{display:flex;justify-content:space-between;align-items:center}
-.box{background:#111;border:2px solid #39ff14;border-radius:12px;padding:15px;margin:12px 0;transition:border-color .8s}
-.box h3{margin-bottom:10px;transition:color .8s}
-input,select{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#000;color:#fff;border:1px solid #39ff14}
-button{width:100%;padding:12px;background:#39ff14;border:none;border-radius:10px;font-weight:bold;margin-top:6px;transition:background .8s;cursor:pointer}
-table{width:100%;border-collapse:collapse;font-size:13px}
-td,th{border:1px solid #333;padding:8px;text-align:left}
-.colorBtns{display:flex;gap:8px;flex-wrap:wrap}
-.colorBtns button{width:40px;height:40px;border-radius:50%;padding:0}
-.loginBox{max-width:400px;margin:60px auto;text-align:center;border:2px solid #39ff14;border-radius:16px;padding:25px;background:#111}
-.loginBox h2{margin-bottom:5px;transition:color .8s}
+.badge{background:#00c853;color:#fff;padding:4px 10px;border-radius:20px;font-size:12px}
 </style>
 </head>
 <body>
-
-<!-- LOGIN SCREEN - আগে এইটা আসবো -->
-<div id="loginScreen" class="loginBox">
-<h2 id="loginTitle">🔐 ADMIN LOGIN</h2>
-<p style="color:#aaa;font-size:13px;margin-bottom:12px">ULTRA TOP UP BD - শুধু Admin ঢুকতে পারবো</p>
-<input id="adminEmail" placeholder="Admin Gmail দাও">
-<input id="adminPass" type="password" placeholder="Admin Password দাও">
-<button onclick="adminLogin()">Login করো</button>
-<p id="loginError" style="color:#ff3b30;margin-top:10px"></p>
-<p style="color:#555;font-size:12px;margin-top:10px">ভুল Gmail / Password দিলে ঢুকবো না</p>
-</div>
-
-<!-- ADMIN PANEL - Login হইলে এইটা দেখবো -->
-<div id="adminPanel" style="display:none">
-<div class="top"><h1 id="adminTitle">ULTRA TOP UP BD - ADMIN</h1><button onclick="adminLogout()" style="width:auto;padding:8px 16px;background:#ff3b30;color:#fff">Logout</button></div>
-
-<div class="box">
-<h3>🎨 সাইটের নামের কালার কন্ট্রোল</h3>
-<button id="colorToggle" onclick="toggleColor()">🌈 Random Color: ON</button>
-<p style="margin-top:8px">নিজে কালার বাছো:</p>
-<div class="colorBtns">
-<button style="background:#39ff14" onclick="setFixedColor('#39ff14')"></button>
-<button style="background:#ff004d" onclick="setFixedColor('#ff004d')"></button>
-<button style="background:#00e5ff" onclick="setFixedColor('#00e5ff')"></button>
-<button style="background:#ffe600" onclick="setFixedColor('#ffe600')"></button>
-<button style="background:#ff6a00" onclick="setFixedColor('#ff6a00')"></button>
-<button style="background:#a020f0" onclick="setFixedColor('#a020f0')"></button>
-<button style="background:#ff2d95" onclick="setFixedColor('#ff2d95')"></button>
-<button style="background:#00ff88" onclick="setFixedColor('#00ff88')"></button>
+<div id="loginBox">
+<h1>ULTRA <span>TOP UP BD</span><br>Admin Panel</h1>
+<p style="color:#aaa;margin-top:6px">Only Admin - 01837450067</p>
+<div class="card">
+<input id="adminPass" type="password" placeholder="Admin Password">
+<button onclick="login()">Login →</button>
+<p style="font-size:12px;color:#666;margin-top:8px">Default Password: 123456</p>
 </div>
 </div>
 
-<div class="box">
-<h3>💰 দাম চেঞ্জ করো - prices.json</h3>
-<select id="priceItem"></select>
-<input id="priceVal" type="number" placeholder="নতুন দাম">
-<button onclick="savePrice()">দাম Save করো</button>
-<p id="priceMsg" style="color:#39ff14;margin-top:6px"></p>
-</div>
+<div id="adminBox" style="display:none">
+<div class="top"><h1>ULTRA <span>Admin</span></h1><span class="badge">● Live</span></div>
+<p style="color:#aaa;margin-top:6px">Total Orders: <b id="totalOrders" style="color:#fff">0</b> | Total Sale: <b id="totalSale" style="color:#00e5a0">Tk 0</b></p>
 
-<div class="box">
-<h3>📦 অর্ডার লিস্ট</h3>
-<table><tr><th>UID</th><th>প্যাকেজ</th><th>TrxID</th><th>Status</th></tr><tbody id="orderList"></tbody></table>
-</div>
+<div class="card"><h3>🛍️ All Orders</h3><div id="ordersList"></div><button class="black" onclick="loadData()">🔄 Refresh</button></div>
 
-<div class="box">
-<h3>📢 Notice চেঞ্জ করো</h3>
-<input id="noticeInput" placeholder="নতুন Notice লিখো">
-<button onclick="saveNotice()">Notice Save করো</button>
+<div class="card"><h3>👑 Reseller Requests</h3><div id="resellerList"></div></div>
+
+<div class="card"><h3>⚙️ Admin Tools</h3>
+<button onclick="copySiteLink()">📋 Copy Site Link</button>
+<button onclick="copyReferLink()">📋 Copy My Refer Link</button>
+<button class="red" onclick="clearOrders()">🗑️ Clear All Orders</button>
+<button class="black" onclick="logout()">Logout</button>
 </div>
 </div>
 
 <script>
-// ===== ADMIN LOGIN - তোর Gmail / Password =====
-const ADMIN_EMAIL = "ultratupup@2026gmail.com";
-const ADMIN_PASS = "ultratupup2026";
+function login(){
+  if(document.getElementById('adminPass').value==="123456"){
+    localStorage.setItem("ut_admin","1");
+    showAdmin();
+  } else alert("Wrong Password!");
+}
+function showAdmin(){
+  document.getElementById('loginBox').style.display='none';
+  document.getElementById('adminBox').style.display='block';
+  loadData();
+}
+function logout(){localStorage.removeItem("ut_admin");location.reload();}
+function loadData(){
+  let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");
+  let total=orders.reduce((s,o)=>s+(parseInt(o.price)||0),0);
+  document.getElementById('totalOrders').innerText=orders.length;
+  document.getElementById('totalSale').innerText="Tk "+total;
+  document.getElementById('ordersList').innerHTML=orders.length?orders.map((o,i)=>`
+  <div class="order">
+  <b>${o.game} - ${o.pkg}</b> - Tk ${o.price}<br>
+  <small>UID: ${o.pid||''} | Pay: ${o.pay||''} | Trx: ${o.trx||''}<br>
+  Phone: ${o.phone||''} | ${o.time||''} | Status: ${o.status||'Pending'}</small><br>
+  <button onclick="markDone(${i})">✅ Mark Done</button>
+  </div>`).join(''):'<p>No Order Yet</p>';
 
-function adminLogin(){
-  let e = document.getElementById('adminEmail').value.trim();
-  let p = document.getElementById('adminPass').value.trim();
-  if(e === ADMIN_EMAIL && p === ADMIN_PASS){
-    localStorage.setItem('ultra_admin','yes');
-    showPanel();
-  } else {
-    document.getElementById('loginError').innerText = '❌ ভুল Gmail বা Password! আবার চেষ্টা করো।';
-  }
+  let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");
+  document.getElementById('resellerList').innerHTML=reqs.length?reqs.map(r=>`
+  <div class="order">
+  <b>${r.name}</b> - ${r.phone}<br>
+  <small>Shop: ${r.shop} | Spent: Tk ${r.totalSpent} | ${r.status}</small><br>
+  ${r.status==='Pending'?`<button onclick="approve('${r.user}')">✅ Approve Reseller</button>`:''}
+  </div>`).join(''):'<p>No Reseller Request</p>';
 }
-function showPanel(){
-  document.getElementById('loginScreen').style.display='none';
-  document.getElementById('adminPanel').style.display='block';
-  load();
+function markDone(i){
+  let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");
+  orders[i].status="Done";
+  localStorage.setItem("ut_orders",JSON.stringify(orders));
+  loadData(); alert("✅ Order Done!");
 }
-function adminLogout(){
-  localStorage.removeItem('ultra_admin');
-  location.reload();
+function approve(phone){
+  localStorage.setItem("ut_is_reseller_"+phone,"1");
+  let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");
+  reqs=reqs.map(r=>r.user===phone?{...r,status:'Approved'}:r);
+  localStorage.setItem("ut_reseller_req",JSON.stringify(reqs));
+  loadData(); alert("✅ Reseller Approved: "+phone);
 }
-if(localStorage.getItem('ultra_admin')==='yes'){ showPanel(); }
-
-// ===== RANDOM COLOR =====
-let ALL_COLORS=['#39ff14','#ff004d','#00e5ff','#ffe600','#ff6a00','#a020f0','#ff2d95','#00ff88','#ff0000','#00ff00','#0000ff','#ffff00','#ff00ff','#00ffff','#ff8000','#ff0080','#80ff00','#0080ff','#ff4040','#40ff40','#ffcc00','#cc00ff','#00ffcc','#ff6600'];
-let randomOn = localStorage.getItem('ultra_color_random') !== 'off';
-let fixedColor = localStorage.getItem('ultra_fixed_color') || '#39ff14';
-function applyColor(c){
-  let t=document.getElementById('adminTitle'); if(t) t.style.color=c;
-  let lt=document.getElementById('loginTitle'); if(lt) lt.style.color=c;
-  document.querySelectorAll('.box').forEach(el=>el.style.borderColor=c);
-  document.querySelectorAll('.box h3').forEach(el=>el.style.color=c);
-  document.querySelectorAll('#adminPanel button').forEach(el=>{ if(el.style.background!=='rgb(255, 59, 48)') el.style.background=c; });
-}
-function toggleColor(){
-  randomOn=!randomOn;
-  localStorage.setItem('ultra_color_random', randomOn?'on':'off');
-  document.getElementById('colorToggle').innerText = randomOn ? '🌈 Random Color: ON' : '⏸️ Random Color: OFF';
-  if(!randomOn) applyColor(fixedColor);
-}
-function setFixedColor(c){
-  fixedColor=c; randomOn=false;
-  localStorage.setItem('ultra_fixed_color',c);
-  localStorage.setItem('ultra_color_random','off');
-  document.getElementById('colorToggle').innerText='⏸️ Random Color: OFF';
-  applyColor(c);
-  alert('✅ কালার ফিক্সড হইছে: '+c);
-}
-if(!randomOn){ let b=document.getElementById('colorToggle'); if(b) b.innerText='⏸️ Random Color: OFF'; }
-applyColor(fixedColor);
-setInterval(()=>{ if(randomOn){ let c=ALL_COLORS[Math.floor(Math.random()*ALL_COLORS.length)]; applyColor(c); } },1200);
-
-// ===== PRICE + ORDER =====
-let PRICES={};
-async function load(){
-  try{let r=await fetch('prices.json');PRICES=await r.json();}
-  catch(e){PRICES={"25 Diamond":20,"50 Diamond":40,"115 Diamond":90,"60 UC":95};}
-  let s=document.getElementById('priceItem'); s.innerHTML='';
-  for(let k in PRICES){ if(PRICES[k]==0) continue; s.innerHTML+=`<option value="${k}">${k} - ${PRICES[k]} TK</option>`; }
-  s.onchange=()=>{ document.getElementById('priceVal').value=PRICES[s.value]; };
-  document.getElementById('priceVal').value=PRICES[s.value]||0;
-  let orders=JSON.parse(localStorage.getItem('ultra_orders')||'[]');
-  document.getElementById('orderList').innerHTML=orders.map(o=>`<tr><td>${o.uid}</td><td>${o.pkg}</td><td>${o.trx}</td><td>${o.status}</td></tr>`).join('')||'<tr><td colspan=4>কোনো অর্ডার নাই</td></tr>';
-}
-function savePrice(){ document.getElementById('priceMsg').innerText='✅ দাম সেভ হইছে! prices.json ফাইলেও এই দামটা বসাই দিও।'; }
-function saveNotice(){ let t=document.getElementById('noticeInput').value; localStorage.setItem('ultra_notice',t); alert('✅ Notice সেভ হইছে!'); }
+function clearOrders(){if(confirm("Sob order delete korba?")){localStorage.removeItem("ut_orders");loadData();}}
+function copySiteLink(){navigator.clipboard.writeText('https://ultra-tup-up-bd.vercel.app/');alert("✅ Site Link Copied!")}
+function copyReferLink(){navigator.clipboard.writeText('https://ultra-tup-up-bd.vercel.app/?ref=UTILCOM');alert("✅ Refer Link Copied!")}
+if(localStorage.getItem("ut_admin")==="1") showAdmin();
 </script>
 </body>
 </html>
