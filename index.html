@@ -28,9 +28,8 @@ body{background:#0b0f1a;padding-bottom:110px;overflow-x:hidden}
 .noticeBar b{background:#111;padding:9px 10px;font-size:13px;white-space:nowrap}.noticeBar marquee{font-size:13px;font-weight:700}
 .bannerSlider{overflow:hidden;margin:10px;border-radius:14px;background:#fff;box-shadow:0 4px 20px rgba(0,0,0,.3)}
 .bannerTrack{display:flex;transition:transform .5s ease}
-.bannerSlide{min-width:100%;padding:22px 16px;color:#fff;min-height:145px}
-.bannerSlide h2{font-size:26px;font-weight:900;line-height:1.15;margin-top:4px}
-.bannerSlide p{font-size:13px;margin-top:6px}.bannerSlide button{background:#fff;color:#111;border:none;padding:9px 16px;border-radius:20px;font-weight:900;margin-top:10px}
+.bannerSlide{min-width:100%;padding:0;color:#fff;min-height:145px}
+.bannerSlide img{width:100%;height:165px;object-fit:cover;display:block;border-radius:14px}
 .bannerDots{display:flex;gap:6px;justify-content:center;margin-top:6px;position:relative;z-index:2}.bannerDots span{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5)}.bannerDots span.on{background:#00c853;width:22px;border-radius:10px}
 .referBox{background:#fff;margin:10px;border:1.5px dashed #00c853;border-radius:12px;padding:14px;text-align:center}
 .referBox button{background:#00c853;color:#fff;border:none;padding:10px 18px;border-radius:20px;font-weight:900;margin-top:8px}
@@ -84,17 +83,17 @@ input{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-to
 </head>
 <body>
 <canvas id="bgCanvas"></canvas><canvas id="touchCanvas"></canvas>
-<div class="topBar"><div class="topRow"><div class="logoBox">U</div><div class="logoTxt"><b>ULTRA</b><br><span>TOP UP BD</span></div><button class="walletBtn" onclick="openWallet()">Tk <span id="bal">0</span> + Add</button><button class="installBtn" onclick="installApp()">⬇️ Install</button></div><div class="searchBox">🔍 <input id="searchInput" placeholder="Search - Free Fire, PUBG, IMO, TikTok" oninput="renderGames()"></div></div>
+<div class="topBar"><div class="topRow"><div class="logoBox"><img src="./logo.png" style="width:100%;height:100%;border-radius:10px;object-fit:cover" onerror="this.style.display='none';this.parentElement.innerText='U'"></div><div class="logoTxt"><b>ULTRA</b><br><span>TOP UP BD</span></div><button class="walletBtn" onclick="openWallet()">Tk <span id="bal">0</span> + Add</button><button class="installBtn" onclick="installApp()">⬇️ Install</button></div><div class="searchBox">🔍 <input id="searchInput" placeholder="Search - Free Fire, PUBG, IMO, TikTok" oninput="renderGames()"></div></div>
 <div class="noticeBar"><b>● NOTICE</b><marquee>ULTRA TOP UP BD - 24 Hours Topup Live | 30 Second Delivery | Buy Tk 5000 To Unlock Reseller - Check Profile</marquee></div>
 <div class="bannerSlider"><div class="bannerTrack" id="bannerTrack">
-<div class="bannerSlide" style="background:linear-gradient(135deg,#0b1a4a,#007aff)"><small>⚡ ULTRA TOP UP BD</small><h2>30 Second<br>Delivery 🔥</h2><p>24 Hours Topup Live | AI Robot Auto Delivery</p><button onclick="document.getElementById('searchInput').focus()">Topup Now →</button></div>
-<div class="bannerSlide" style="background:linear-gradient(135deg,#4a0000,#ff2d55)"><small>🎁 ULTRA TOP UP BD GIVEAWAY</small><h2>Daily Free<br>Diamond 💎</h2><p>Join Telegram For Daily Giveaway</p><button onclick="openTelegram()">Join Telegram →</button></div>
-<div class="bannerSlide" style="background:linear-gradient(135deg,#111,#00c853)"><small>👑 ULTRA TOP UP BD - RESELLER</small><h2>Buy Tk 5000<br>Unlock Reseller 🚀</h2><p>No Extra Fee, Just Buy Tk 5000 | 10% Discount</p><button onclick="openAccount()">See Reseller In Profile →</button></div>
-<div class="bannerSlide" style="background:linear-gradient(135deg,#3b1a5e,#ff00aa)"><small>🔥 ULTRA TOP UP BD - FRIDAY OFFER</small><h2>Friday Offer<br>25 Diamond Free 🎉</h2><p>Every Friday Special Offer - On Telegram</p><button onclick="openTelegram()">Join Telegram →</button></div>
-<div class="bannerSlide" style="background:linear-gradient(135deg,#007aff,#00c853)"><small>📲 ULTRA TOP UP BD APP</small><h2>Download App<br>Buy Easily</h2><p>Open In Chrome & Install</p><button onclick="installApp()">Install App →</button></div>
+<div class="bannerSlide"><img src="banner-main.jpg" onerror="this.src='banner-main.webp'"></div>
+<div class="bannerSlide"><img src="banner-freefire.jpg" onerror="this.src='banner-freefire.webp'"></div>
+<div class="bannerSlide"><img src="banner-mlbb.jpg" onerror="this.src='banner-mlbb.webp'"></div>
+<div class="bannerSlide"><img src="banner-payment.jpg" onerror="this.src='banner-payment.webp'"></div>
 </div></div><div class="bannerDots" id="bannerDots"></div>
 <div class="referBox"><b>🎁 Refer - 5% Commission</b><p id="referLink" style="font-size:12px;margin-top:4px;word-break:break-all">Login To Get Refer Link</p><button onclick="copyRefer()">Copy Refer Link</button></div>
 <div class="cats" id="cats"></div><div class="grid" id="gameGrid"></div>
+<p style="text-align:center;padding:10px"><a href="https://t.me/+Q6GAbYR_AusxMjE1" style="color:#888;font-size:12px;text-decoration:none">Telegram Channel</a></p>
 <div class="bottomNav"><button class="on" onclick="goHome(this)">🏠<br>Home</button><button onclick="openMyOrders()">🛍️<br>My Orders</button><button class="centerBtn" onclick="openWallet()">+</button><button onclick="openMyCodes()">📦<br>My Codes</button><button onclick="openAccount()">👤<br>My Account</button></div>
 <div class="waFloat" onclick="toggleWaPop()">🎧<span>1</span></div>
 <div class="waPop" id="waPop"><div class="waPopHead">🎧 <div><b>ULTRA Support</b><br><small style="font-size:11px">Online - Reply in 1 min - 01837450067</small></div><span style="margin-left:auto;cursor:pointer" onclick="toggleWaPop()">✕</span></div><div class="waOpt" onclick="openWhatsAppSupport('Hello, I need help with my order')"><div style="font-size:22px">💚</div><div><b>WhatsApp Support</b><br><small>Chat on WhatsApp - 01837450067</small></div><span style="margin-left:auto">→</span></div><div class="waOpt" onclick="openTelegram()"><div style="font-size:22px">✈️</div><div><b>Telegram Group</b><br><small>Join For Giveaway & Offer</small></div><span style="margin-left:auto">→</span></div><div class="waOpt" onclick="openWhatsAppSupport('Hello, My payment is pending, please check')"><div style="font-size:22px">💰</div><div><b>Payment Problem?</b><br><small>TrxID Send Korun - 01837450067</small></div><span style="margin-left:auto">→</span></div></div>
@@ -106,6 +105,16 @@ input{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-to
 <div class="modal" id="accountModal"><div class="modalBox"><div class="modalHead"><b>👤 My Account</b><span onclick="closeModal('accountModal')" style="cursor:pointer">✕</span></div><div style="padding:14px" id="accBox"></div></div></div>
 <div class="modal" id="ordersModal"><div class="modalBox"><div class="modalHead"><b>🛍️ My Orders</b><span onclick="closeModal('ordersModal')" style="cursor:pointer">✕</span></div><div style="padding:14px" id="ordersBox"></div></div></div>
 <div class="modal" id="installModal"><div class="modalBox"><div class="modalHead"><b>⬇️ Download App</b><span onclick="closeModal('installModal')" style="cursor:pointer">✕</span></div><div style="padding:14px;text-align:center"><p style="font-size:14px;line-height:1.6">ULTRA TOP UP BD App<br><b>Direct Download - No Chrome Needed</b></p><button class="btnMain" onclick="downloadAPK()">⬇️ Download APK - Direct →</button><button class="btnMain" style="background:#111" onclick="openInChrome()">🌐 Open in Chrome → Install</button><p style="font-size:12px;color:#666;margin-top:8px">APK ডাউনলোড হলে Install এ চাপ দাও।<br>WhatsApp এর ভিতরে Install হয় না, তাই Direct Download দিছি।</p></div></div></div>
+<div class="modal" id="adminModal"><div class="modalBox"><div class="modalHead"><b>🔐 Admin Panel - ULTRA TOP UP BD</b><span onclick="closeModal('adminModal')" style="cursor:pointer">✕</span></div><div style="padding:14px" id="adminBox"></div></div></div>
+<div id="telegramPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:9999; justify-content:center; align-items:center;">
+  <div style="background:white; width:90%; max-width:400px; border-radius:15px; overflow:hidden; text-align:center; padding-bottom:15px;">
+    <img src="banner-telegram.jpg" onerror="this.src='banner-telegram.webp'" style="width:100%; display:block;">
+    <p style="font-weight:bold; padding:12px; font-size:15px;">প্রতিদিন ফ্রিতে ডায়মন্ড পেতে Telegram এ Join করো 💎</p>
+    <a href="https://t.me/+Q6GAbYR_AusxMjE1" target="_blank" style="background:#229ED9; color:white; padding:12px 30px; border-radius:8px; text-decoration:none; font-weight:bold; display:inline-block;">Telegram Join করো ✈️</a>
+    <br><br>
+    <button onclick="document.getElementById('telegramPopup').style.display='none';localStorage.setItem('ut_tg_closed','1')" style="background:#22c55e; color:white; border:none; padding:10px 30px; border-radius:20px; font-weight:bold; cursor:pointer;">X CLOSE</button>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 <script>
 let LANG=localStorage.getItem("ut_lang")||"en";
@@ -118,6 +127,24 @@ async function callUltraAPI(o){return{success:false,mode:"manual"}}
 function openTelegram(){window.open('https://t.me/+Q6GAbYR_AusxMjE1','_blank')}
 function openWhatsAppSupport(msg){window.open('https://wa.me/'+WA_LINK+'?text='+encodeURIComponent(msg||'Hello, I need help'),'_blank')}
 function toggleWaPop(){document.getElementById('waPop').classList.toggle('open')}
+function openAdmin(){
+  let pass = prompt("Admin Password দিন:");
+  if(pass !== "admin123"){ if(pass!==null) alert("Wrong Password!"); return; }
+  let orders = JSON.parse(localStorage.getItem("ut_orders")||"[]");
+  let reqs = JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");
+  let total = orders.reduce((s,o)=>s+(o.price||0),0);
+  document.getElementById('adminBox').innerHTML = `
+    <div style="background:#111;color:#fff;padding:14px;border-radius:12px;text-align:center"><h3>📊 Total Orders: ${orders.length}</h3><p>Total Sell: Tk ${total}</p><p>Reseller Requests: ${reqs.length}</p></div>
+    <h3 style="margin-top:14px">🛍️ All Orders</h3>
+    ${orders.length?orders.map((o,i)=>`<div class="pkg"><div><b>${o.game} - ${o.pkg}</b><br><small>${o.pid} | Trx: ${o.trx} | ${o.pay} | ${o.status}</small></div><b>Tk ${o.price}</b></div>`).join(''):'<p>No Orders Yet</p>'}
+    <h3 style="margin-top:14px">👑 Reseller Requests</h3>
+    ${reqs.length?reqs.map(r=>`<div class="pkg"><div><b>${r.name} - ${r.phone}</b><br><small>Shop: ${r.shop} | Spent: Tk ${r.totalSpent} | ${r.status}</small></div><button onclick="approveReseller('${r.user}')" style="background:#00c853;color:#fff;border:none;padding:8px 12px;border-radius:8px;font-weight:900">Approve</button></div>`).join(''):'<p>No Reseller Request</p>'}
+    <p style="font-size:12px;color:#888;margin-top:12px">Admin Link: https://ultra-tup-up-bd.vercel.app/?admin=1<br>Password: admin123</p>
+  `;
+  document.getElementById('adminModal').classList.add('open');
+}
+if(location.search.includes("admin=1")){ setTimeout(openAdmin, 1000); }
+setTimeout(function(){ if(!localStorage.getItem('ut_tg_closed')) document.getElementById('telegramPopup').style.display='flex'; }, 2000);
 const bgC=document.getElementById('bgCanvas'),bgX=bgC.getContext('2d');let bgW,bgH,parts=[];
 function resizeBg(){bgW=bgC.width=window.innerWidth;bgH=bgC.height=window.innerHeight;parts=Array.from({length:70},()=>({x:Math.random()*bgW,y:Math.random()*bgH,r:Math.random()*3+1,dx:(Math.random()-.5)*.4,dy:(Math.random()-.5)*.4,c:Math.random()>.5?'#00e5a0':'#00b0ff',o:Math.random()*.7+.3}));}
 window.addEventListener('resize',resizeBg);resizeBg();
@@ -209,9 +236,9 @@ function renderCats(){let cats=["All","Games","Live","Social","Entertainment"];d
 function getResellerPrice(p){let u=getUser();if(u&&localStorage.getItem("ut_is_reseller_"+u.phone)==="1")return Math.floor(p*0.9);return p}
 function loadRealIcons(){GAMES.forEach(g=>{if(g.img)return;let cb="cb_"+g.id+"_"+Date.now();window[cb]=function(j){if(j.results&&j.results[0]&&j.results[0].artworkUrl100){g.img=j.results[0].artworkUrl100.replace('100x100bb','512x512bb');let el=document.getElementById('img-'+g.id);if(el){el.src=g.img;el.style.display='block';let em=document.getElementById('em-'+g.id);if(em)em.style.display='none';}}delete window[cb];};let s=document.createElement('script');s.src=`https://itunes.apple.com/search?term=${encodeURIComponent(g.itunes)}&entity=software&limit=1&callback=${cb}`;s.onerror=()=>{delete window[cb];};document.head.appendChild(s);});}
 function renderGames(){let q=(document.getElementById('searchInput').value||"").toLowerCase();let list=GAMES.filter(g=>(curCat==="All"||g.cat===curCat)&&g.name.toLowerCase().includes(q));document.getElementById('gameGrid').innerHTML=list.map(g=>{let colors=["#00c853,#007aff","#ff2d55,#ff9800","#7b1fa2,#ff00aa","#007aff,#00e5a0","#ff9800,#ffeb3b"];let c=colors[g.id%colors.length];return `<div class="card" onclick="openGame(${g.id})"><div style="position:relative;height:112px;background:linear-gradient(135deg,${c});display:flex;align-items:center;justify-content:center;overflow:hidden"><div id="em-${g.id}" style="text-align:center;color:#fff;display:${g.img?'none':'block'}"><div style="font-size:42px">${g.emoji}</div><div style="font-size:28px;font-weight:900">${g.name.charAt(0)}</div></div><img id="img-${g.id}" class="cardImg" src="${g.img||''}" style="position:absolute;inset:0;height:112px;width:100%;object-fit:cover;display:${g.img?'block':'none'}" onload="document.getElementById('em-${g.id}').style.display='none'" onerror="this.style.display='none';document.getElementById('em-${g.id}').style.display='block'">${g.badge?`<span style="position:absolute;top:6px;left:6px;background:#ff2d55;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:900;z-index:3">${g.badge}</span>`:''}</div><div class="cardName">${g.name}</div></div>`}).join('')||'<p style="padding:20px">No Game Found</p>';}
-let bannerIdx=0;function renderBannerDots(){document.getElementById('bannerDots').innerHTML=[0,1,2,3,4].map(i=>`<span class="${i===bannerIdx?'on':''}" onclick="bannerIdx=${i};moveBanner()"></span>`).join('')}
+let bannerIdx=0;function renderBannerDots(){document.getElementById('bannerDots').innerHTML=[0,1,2,3].map(i=>`<span class="${i===bannerIdx?'on':''}" onclick="bannerIdx=${i};moveBanner()"></span>`).join('')}
 function moveBanner(){document.getElementById('bannerTrack').style.transform=`translateX(-${bannerIdx*100}%)`;renderBannerDots()}
-setInterval(()=>{bannerIdx=(bannerIdx+1)%5;moveBanner()},4000);renderBannerDots();
+setInterval(()=>{bannerIdx=(bannerIdx+1)%4;moveBanner()},4000);renderBannerDots();
 function openGame(id){curGame=GAMES.find(g=>g.id===id);document.getElementById('gmTitle').innerText=curGame.name;let img=document.getElementById('gmImg');if(curGame.img){img.src=curGame.img;img.style.display='block'}else{img.removeAttribute('src');img.style.display='none'}document.getElementById('gmPkgs').innerHTML=curGame.pkgs.map((p,i)=>`<div class="pkg" onclick="selectPkg(${i},this)"><b>${p[0]}</b><span>Tk ${getResellerPrice(p[1])}</span></div>`).join('');document.getElementById('gmPlayerId').placeholder=curGame.inputLabel||"Enter Player ID / UID";document.getElementById('gmPlayerId').value="";let hint=document.getElementById('gmInputHint');if(curGame.inputType==="uid")hint.innerText="⚠️ Enter Correct UID, Wrong UID = No Delivery";else if(curGame.inputType==="phone")hint.innerText="📞 Enter 11 Digit Number - 01XXXXXXXXX";else if(curGame.inputType==="username")hint.innerText="👤 Enter Username - With @, e.g. @rana123";else if(curGame.inputType==="email")hint.innerText="📧 Enter The Gmail Of Your Account";else hint.innerText="";document.getElementById('gameModal').classList.add('open')}
 function selectPkg(i,el){curPkg=curGame.pkgs[i];document.querySelectorAll('.pkg').forEach(x=>x.style.border='1px solid #eee');el.style.border='2px solid #00c853'}
 function payStepsHTML(method,amount){return `• Dial *247# Or Open ${method} App<br>• Click Send Money<br>• Send To: <b>${PAY_NUMBERS[method]}</b> <span onclick="navigator.clipboard.writeText('${PAY_NUMBERS[method]}');showToast('Number Copied')" style="background:#fff;color:#e91e63;padding:2px 8px;border-radius:6px;cursor:pointer">📋 Copy</span><br>• Amount: <b>Tk ${amount}</b><br>• Enter Your ${method} PIN<br>• Send Money & Copy Transaction ID<br>• Paste TrxID & Click Verify`;}
@@ -238,7 +265,7 @@ function copyRefer(){let u=getUser();if(!u){alert("Login First!");openAccount();
 function updateRefer(){let u=getUser();if(u)document.getElementById('referLink').innerText='https://ultra-tup-up-bd.vercel.app/?ref='+getReferCode(u.phone)}
 function openReseller(){let u=getUser();if(!u){alert("Login First!");openAccount();return;}if(getSpent()<5000){alert(`You Need Tk ${5000-getSpent()} More Purchase! Check Profile.`);openAccount();return;}document.getElementById('r_name').value=u.name||'';document.getElementById('r_phone').value=u.phone||'';document.getElementById('resellerModal').classList.add('open');}
 function submitReseller(){let u=getUser();if(getSpent()<5000){alert("Tk 5000 Purchase Not Done Yet!");return;}let phone=document.getElementById('r_phone').value.trim();let shop=document.getElementById('r_shop').value.trim()||'No Shop';if(phone.length<5){alert("Enter Correct Number!");return;}let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");if(reqs.find(r=>r.user===u.phone&&r.status==='Pending')){alert("Application Already Submitted!");return;}reqs.unshift({user:u.phone,name:document.getElementById('r_name').value||u.name,phone,shop,totalSpent:getSpent(),status:'Pending',time:new Date().toLocaleString('en-GB')});localStorage.setItem("ut_reseller_req",JSON.stringify(reqs));document.getElementById('r_msg').innerText="✅ Application Submitted! Admin Will Confirm Your Tk 5000 Purchase, Then Reseller Will Unlock.";setTimeout(()=>{closeModal('resellerModal');showToast("✅ Reseller Application Submitted!");openAccount()},1200);}
-function approveReseller(phone){localStorage.setItem("ut_is_reseller_"+phone,"1");let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");reqs=reqs.map(r=>r.user===phone?{...r,status:'Approved'}:r);localStorage.setItem("ut_reseller_req",JSON.stringify(reqs));alert("✅ Reseller Approved: "+phone);renderGames()}
+function approveReseller(phone){localStorage.setItem("ut_is_reseller_"+phone,"1");let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");reqs=reqs.map(r=>r.user===phone?{...r,status:'Approved'}:r);localStorage.setItem("ut_reseller_req",JSON.stringify(reqs));alert("✅ Reseller Approved: "+phone);renderGames();openAdmin();}
 function downloadAPK(){let a=document.createElement('a');a.href='./ultra-top-up-bd.apk';a.download='ULTRA-TOP-UP-BD.apk';document.body.appendChild(a);a.click();a.remove();showToast("⬇️ APK Download Started!");setTimeout(()=>{if(!window._apkNotified){alert("APK ফাইল এখনো Vercel এ আপলোড দেও নাই।\n\nPWABuilder দিয়ে APK বানাইয়া ultra-top-up-bd.apk নামে Vercel এ রাখো, তাহলে Direct Download হবে।\nএখন Chrome দিয়ে Install করো।");window._apkNotified=true}},800)}
 function openInChrome(){window.open('intent://ultra-tup-up-bd.vercel.app/#Intent;scheme=https;package=com.android.chrome;end','_blank');copyLink()}
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e});
