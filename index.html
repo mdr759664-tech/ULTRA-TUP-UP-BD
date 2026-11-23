@@ -4,38 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ULTRA TOP UP BD</title>
+<meta name="google-site-verification" content="toIDvIiHnfJHkhbznHAPLBK3No0vzck-ADveEeF_zZA" />
 <meta name="description" content="ULTRA TOP UP BD - Free Fire, PUBG, IMO, TikTok Top Up in Bangladesh. 30 Second Delivery, 24 Hours Live.">
 <link rel="canonical" href="https://ultra-tup-up-bd.vercel.app/" />
-<link rel="icon" href="https://i.ibb.co/DDmdVS2L/IMG-20261123-WA0003.jpg">
+<link rel="icon" href="./logo.png">
 <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#00c853">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#0b0f1a;padding-bottom:110px;overflow-x:hidden}
 #bgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+#touchCanvas{position:fixed;inset:0;z-index:999;pointer-events:none}
 .topBar,.noticeBar,.bannerSlider,.referBox,.cats,.grid,.bottomNav,.redeemBox{position:relative;z-index:2}
-.topBar{position:sticky;top:0;z-index:50;background:#fff;padding:8px 10px;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.topBar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);padding:8px 10px;box-shadow:0 2px 10px rgba(0,0,0,.2)}
 .topRow{display:flex;align-items:center;gap:7px}
-/* LOGO FIX - আগে ULTRA লেখা ডাবল হইতো, এখন লোগোর ভিতরেই সব */
-.logoBox{width:112px;height:46px;min-width:112px;border-radius:10px;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1.5px solid #00c853}
-.logoBox img{width:100%;height:100%;object-fit:contain;background:#000}
+.logoBox{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#00c853,#007aff);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900}
+.logoTxt b{font-size:17px}.logoTxt span{font-size:11px;color:#00c853;font-weight:900}
 .walletBtn{margin-left:auto;background:#00c853;color:#fff;border:none;padding:8px 12px;border-radius:20px;font-weight:800;font-size:13px}
 .installBtn{background:#0091ea;color:#fff;border:none;padding:8px 11px;border-radius:20px;font-weight:800;font-size:13px}
 .searchBox{margin-top:8px;background:#f0f0f0;border-radius:20px;padding:10px 12px;display:flex;gap:6px}
 .searchBox input{border:none;background:transparent;outline:none;width:100%;font-size:14px}
 .noticeBar{background:#e91e63;color:#fff;display:flex;align-items:center;margin:10px;border-radius:8px;overflow:hidden}
 .noticeBar b{background:#111;padding:9px 10px;font-size:13px;white-space:nowrap}.noticeBar marquee{font-size:13px;font-weight:700}
-/* BANNER FIX - আগে 16/9 অনেক বড় ছিলো, এখন 21/9 চিকন সুন্দর */
-.bannerSlider{overflow:hidden;margin:10px;border-radius:14px;background:#000;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.bannerSlider{overflow:hidden;margin:10px;border-radius:14px;background:#fff;box-shadow:0 4px 20px rgba(0,0,0,.3)}
 .bannerTrack{display:flex;transition:transform .5s ease}
-.bannerSlide{min-width:100%;position:relative;background:#000}
-.bannerSlide img{width:100%;aspect-ratio:21/9;object-fit:cover;display:block;border-radius:14px;max-height:155px}
-.bannerBtn{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:#229ED9;color:#fff;border:none;padding:8px 18px;border-radius:25px;font-weight:900;font-size:12px;white-space:nowrap}
-.bannerBtn.green{background:#00c853}
-.bannerDots{display:flex;gap:6px;justify-content:center;margin-top:6px}.bannerDots span{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5)}.bannerDots span.on{background:#00c853;width:22px;border-radius:10px}
+.bannerSlide{min-width:100%;padding:22px 16px;color:#fff;min-height:145px}
+.bannerSlide h2{font-size:26px;font-weight:900;line-height:1.15;margin-top:4px}
+.bannerSlide p{font-size:13px;margin-top:6px}.bannerSlide button{background:#fff;color:#111;border:none;padding:9px 16px;border-radius:20px;font-weight:900;margin-top:10px}
+.bannerDots{display:flex;gap:6px;justify-content:center;margin-top:6px;position:relative;z-index:2}.bannerDots span{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5)}.bannerDots span.on{background:#00c853;width:22px;border-radius:10px}
 .referBox{background:#fff;margin:10px;border:1.5px dashed #00c853;border-radius:12px;padding:14px;text-align:center}
 .referBox button{background:#00c853;color:#fff;border:none;padding:10px 18px;border-radius:20px;font-weight:900;margin-top:8px}
-/* REDEEM BOX - নতুন */
 .redeemBox{background:#fff;margin:10px;border-radius:12px;padding:14px;display:flex;gap:8px;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 .redeemBox input{margin:0;flex:1}
 .redeemBox button{background:#ff9800;color:#fff;border:none;padding:12px 16px;border-radius:10px;font-weight:900;white-space:nowrap}
@@ -43,6 +41,7 @@ body{background:#0b0f1a;padding-bottom:110px;overflow-x:hidden}
 .cats button{border:1px solid #ddd;background:#fff;padding:8px 14px;border-radius:20px;white-space:nowrap;font-weight:700}.cats button.on{background:#111;color:#fff}
 .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;padding:10px}
 .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer}
+.cardImg{width:100%;height:112px;object-fit:cover;display:block}
 .cardName{padding:8px 8px 10px;font-size:12.5px;font-weight:800;line-height:1.25;min-height:38px}
 .bottomNav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0 10px;box-shadow:0 -2px 12px rgba(0,0,0,.2);z-index:60}
 .bottomNav button{border:none;background:none;font-size:12px;color:#666}.bottomNav button.on{color:#00c853;font-weight:900}
@@ -62,7 +61,7 @@ input{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-to
 .paySteps{background:#e91e63;color:#fff;border-radius:12px;padding:14px;margin-top:12px;font-size:13px;line-height:1.9}
 .paySteps b{color:#ffeb3b}
 .profHead{background:linear-gradient(180deg,#eaf4ff,#fff);border-radius:16px;padding:20px 14px;text-align:center}
-.profAvatar{width:92px;height:92px;border-radius:50%;background:linear-gradient(135deg,#00c853,#007aff);color:#fff;font-size:44px;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;position:relative;border:4px solid #fff}
+.profAvatar{width:92px;height:92px;border-radius:50%;background:linear-gradient(135deg,#00c853,#007aff);color:#fff;font-size:44px;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;position:relative;border:4px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.15)}
 .onlineDot{position:absolute;bottom:6px;right:6px;width:16px;height:16px;background:#00c853;border:3px solid #fff;border-radius:50%}
 .verified{background:#e8fff0;color:#00a651;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:900}
 .rankBox{background:#fff;border-radius:12px;padding:12px;margin-top:12px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:left}
@@ -75,60 +74,57 @@ input{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-to
 .resellerLock button:disabled{background:#888;color:#fff}
 .progressBar{background:rgba(255,255,255,.3);height:10px;border-radius:10px;margin-top:10px;overflow:hidden}
 .progressBar i{display:block;height:100%;background:#ffeb3b}
-.waFloat{position:fixed;right:14px;bottom:96px;z-index:80;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#00c853,#00a651);display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 6px 18px rgba(0,200,83,.5);cursor:pointer;border:3px solid #fff}
+.waFloat{position:fixed;right:14px;bottom:96px;z-index:80;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#00c853,#00a651);display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 6px 18px rgba(0,200,83,.5);cursor:pointer;border:3px solid #fff;animation:waPulse 2s infinite}
 .waFloat span{position:absolute;top:-4px;right:-2px;background:#ff2d55;color:#fff;font-size:10px;font-weight:900;padding:2px 6px;border-radius:10px}
+@keyframes waPulse{0%{box-shadow:0 0 0 0 rgba(0,200,83,.5)}70%{box-shadow:0 0 0 14px rgba(0,200,83,0)}100%{box-shadow:0 0 0 0 rgba(0,200,83,0)}}
 .waPop{display:none;position:fixed;right:14px;bottom:168px;z-index:90;background:#fff;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);width:260px;overflow:hidden}
 .waPop.open{display:block}
 .waPopHead{background:#25D366;color:#fff;padding:12px;display:flex;gap:8px;align-items:center}
+.waPopHead b{font-size:14px}
 .waOpt{padding:12px;border-bottom:1px solid #eee;cursor:pointer;display:flex;gap:10px;align-items:center}
 .waOpt b{font-size:13px}.waOpt small{color:#666;font-size:11px}
-.gameIconBox{height:105px;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;position:relative}
-.gameIconBox .emoji{font-size:50px;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.4))}
 </style>
 </head>
 <body>
-<canvas id="bgCanvas"></canvas>
-<div class="topBar"><div class="topRow"><div class="logoBox"><img id="appLogo" src="https://i.ibb.co/DDmdVS2L/IMG-20261123-WA0003.jpg" onerror="this.src='https://i.ibb.co/DDmdVS2L/IMG-20261123-WA0003.jpg'"></div><button class="walletBtn" onclick="openWallet()">Tk <span id="bal">0</span> + Add</button><button class="installBtn" onclick="installApp()">⬇️ Install</button></div><div class="searchBox">🔍 <input id="searchInput" placeholder="Search - Free Fire, PUBG, IMO, TikTok" oninput="renderGames()"></div></div>
+<canvas id="bgCanvas"></canvas><canvas id="touchCanvas"></canvas>
+<div class="topBar"><div class="topRow"><div class="logoBox">U</div><div class="logoTxt"><b>ULTRA</b><br><span>TOP UP BD</span></div><button class="walletBtn" onclick="openWallet()">Tk <span id="bal">0</span> + Add</button><button class="installBtn" onclick="installApp()">⬇️ Install</button></div><div class="searchBox">🔍 <input id="searchInput" placeholder="Search - Free Fire, PUBG, IMO, TikTok" oninput="renderGames()"></div></div>
 <div class="noticeBar"><b>● NOTICE</b><marquee>ULTRA TOP UP BD - 24 Hours Topup Live | 30 Second Delivery | Buy Tk 5000 To Unlock Reseller - Check Profile</marquee></div>
 <div class="bannerSlider"><div class="bannerTrack" id="bannerTrack">
-<div class="bannerSlide"><img id="bannerMain" src=""><button class="bannerBtn green" onclick="window.scrollTo({top:350,behavior:'smooth'})">⚡ Topup Now →</button></div>
-<div class="bannerSlide"><img id="bannerFreefire" src=""></div>
-<div class="bannerSlide"><img id="bannerMlbb" src=""></div>
-<div class="bannerSlide"><img id="bannerPayment" src=""></div>
-<div class="bannerSlide"><img id="bannerTelegram" src=""><button class="bannerBtn" onclick="openTelegram()">✈️ Telegram Join করো</button></div>
+<div class="bannerSlide" style="background:linear-gradient(135deg,#0b1a4a,#007aff)"><small>⚡ ULTRA TOP UP BD</small><h2>30 Second<br>Delivery 🔥</h2><p>24 Hours Topup Live | AI Robot Auto Delivery</p><button onclick="document.getElementById('searchInput').focus()">Topup Now →</button></div>
+<div class="bannerSlide" style="background:linear-gradient(135deg,#4a0000,#ff2d55)"><small>🎁 ULTRA TOP UP BD GIVEAWAY</small><h2>Daily Free<br>Diamond 💎</h2><p>Join Telegram For Daily Giveaway</p><button onclick="openTelegram()">Join Telegram →</button></div>
+<div class="bannerSlide" style="background:linear-gradient(135deg,#111,#00c853)"><small>👑 ULTRA TOP UP BD - RESELLER</small><h2>Buy Tk 5000<br>Unlock Reseller 🚀</h2><p>No Extra Fee, Just Buy Tk 5000 | 10% Discount</p><button onclick="openAccount()">See Reseller In Profile →</button></div>
+<div class="bannerSlide" style="background:linear-gradient(135deg,#3b1a5e,#ff00aa)"><small>🔥 ULTRA TOP UP BD - FRIDAY OFFER</small><h2>Friday Offer<br>25 Diamond Free 🎉</h2><p>Every Friday Special Offer - On Telegram</p><button onclick="openTelegram()">Join Telegram →</button></div>
+<div class="bannerSlide" style="background:linear-gradient(135deg,#007aff,#00c853)"><small>📲 ULTRA TOP UP BD APP</small><h2>Download App<br>Buy Easily</h2><p>Open In Chrome & Install</p><button onclick="installApp()">Install App →</button></div>
 </div></div><div class="bannerDots" id="bannerDots"></div>
-<div class="referBox"><b>🎁 Refer - 5% Commission</b><p id="referLink" style="font-size:12px;margin-top:4px;word-break:break-all">Login To Get Refer Link</p><button onclick="copyRefer()">Copy Refer Link</button></div>
-<!-- REDEEM CODE - নতুন -->
+<!-- REDEEM - BANNER ER NICHE, REFER ER UPORE -->
 <div class="redeemBox"><div style="font-size:28px">🎁</div><div style="flex:1"><b style="font-size:13px">Redeem Code</b><br><small style="color:#666">Code বসাইয়া ফ্রি Balance নাও</small></div></div>
 <div class="redeemBox" style="margin-top:-4px"><input id="redeemInput" placeholder="Enter Redeem Code - e.g. ULTRA50"><button onclick="redeemCode()">Redeem →</button></div>
+<div class="referBox"><b>🎁 Refer - 5% Commission</b><p id="referLink" style="font-size:12px;margin-top:4px;word-break:break-all">Login To Get Refer Link</p><button onclick="copyRefer()">Copy Refer Link</button></div>
 <div class="cats" id="cats"></div><div class="grid" id="gameGrid"></div>
-<p style="text-align:center;padding:10px"><a href="https://t.me/+Q6GAbYR_AusxMjE1" style="color:#888;font-size:12px;text-decoration:none">Telegram Channel</a></p>
 <div class="bottomNav"><button class="on" onclick="goHome(this)">🏠<br>Home</button><button onclick="openMyOrders()">🛍️<br>My Orders</button><button class="centerBtn" onclick="openWallet()">+</button><button onclick="openRedeemModal()">🎁<br>Redeem</button><button onclick="openAccount()">👤<br>My Account</button></div>
 <div class="waFloat" onclick="toggleWaPop()">🎧<span>1</span></div>
 <div class="waPop" id="waPop"><div class="waPopHead">🎧 <div><b>ULTRA Support</b><br><small style="font-size:11px">Online - Reply in 1 min - 01837450067</small></div><span style="margin-left:auto;cursor:pointer" onclick="toggleWaPop()">✕</span></div><div class="waOpt" onclick="openWhatsAppSupport('Hello, I need help with my order')"><div style="font-size:22px">💚</div><div><b>WhatsApp Support</b><br><small>Chat on WhatsApp - 01837450067</small></div><span style="margin-left:auto">→</span></div><div class="waOpt" onclick="openTelegram()"><div style="font-size:22px">✈️</div><div><b>Telegram Group</b><br><small>Join For Giveaway & Offer</small></div><span style="margin-left:auto">→</span></div><div class="waOpt" onclick="openWhatsAppSupport('Hello, My payment is pending, please check')"><div style="font-size:22px">💰</div><div><b>Payment Problem?</b><br><small>TrxID Send Korun - 01837450067</small></div><span style="margin-left:auto">→</span></div></div>
-<div class="modal" id="gameModal"><div class="modalBox"><div class="modalHead"><b id="gmTitle">Game</b><span onclick="closeModal('gameModal')" style="cursor:pointer;font-size:20px">✕</span></div><div style="padding:14px"><div id="gmIconBox" style="width:100%;height:130px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:65px;color:#fff"></div><div id="gmPkgs"></div><input id="gmPlayerId" placeholder="Enter Player ID / UID"><p id="gmInputHint" style="font-size:12px;color:#666;margin-top:6px"></p><button class="btnMain" onclick="goPay()">Pay Now →</button></div></div></div>
-<div class="modal" id="payModal"><div class="modalBox"><div class="modalHead"><b>Secure Payment</b><span onclick="closeModal('payModal')" style="cursor:pointer">✕</span></div><div style="padding:14px"><p id="paySummary"></p><p style="font-weight:900;margin-top:10px">Mobile Banking</p><div class="payGrid"><div class="payCard on" id="pay-bKash" onclick="setPay('bKash')">bKash <small>Send Money</small></div><div class="payCard" id="pay-Nagad" onclick="setPay('Nagad')">Nagad <small>Send Money</small></div><div class="payCard" id="pay-Rocket" onclick="setPay('Rocket')">Rocket <small>Send Money</small></div><div class="payCard" id="pay-Upay" onclick="setPay('Upay')">Upay <small>Send Money</small></div></div><div class="paySteps" id="paySteps"></div><input id="payTrx" placeholder="Enter Transaction ID"><button class="btnMain" onclick="submitOrder()">Verify →</button></div></div></div>
-<div class="modal" id="walletModal"><div class="modalBox"><div class="modalHead"><b>Add Money</b><span onclick="closeModal('walletModal')" style="cursor:pointer">✕</span></div><div style="padding:14px"><h3>Wallet Balance</h3><h2>Tk <span id="bal2">0</span></h2><input id="addAmt" type="number" placeholder="Amount"><button class="btnMain" onclick="goAddMoneyPay()">Click Here To Add Money →</button></div></div></div>
-<div class="modal" id="addPayModal"><div class="modalBox"><div class="modalHead"><b>Secure Payment</b><span onclick="closeModal('addPayModal')" style="cursor:pointer">✕</span></div><div style="padding:14px"><p id="addPaySummary"></p><div class="payGrid"><div class="payCard on" id="add-bKash" onclick="setAddPay('bKash')">bKash <small>Send Money</small></div><div class="payCard" id="add-Nagad" onclick="setAddPay('Nagad')">Nagad <small>Send Money</small></div><div class="payCard" id="add-Rocket" onclick="setAddPay('Rocket')">Rocket <small>Send Money</small></div><div class="payCard" id="add-Upay" onclick="setAddPay('Upay')">Upay <small>Send Money</small></div></div><div class="paySteps" id="addPaySteps"></div><input id="addTrx" placeholder="Enter Transaction ID"><button class="btnMain" onclick="addMoney()">Verify →</button></div></div></div>
-<div class="modal" id="resellerModal"><div class="modalBox"><div class="modalHead"><b>👑 Reseller Application - Free</b><span onclick="closeModal('resellerModal')" style="cursor:pointer">✕</span></div><div style="padding:14px"><input id="r_name" placeholder="Your Name"><input id="r_phone" placeholder="WhatsApp Number"><input id="r_shop" placeholder="Shop / Page Name"><button class="btnMain" onclick="submitReseller()">Send Free Application →</button><p id="r_msg" style="text-align:center;color:green;font-weight:700;margin-top:8px"></p></div></div></div>
+<div class="modal" id="gameModal"><div class="modalBox"><div class="modalHead"><b id="gmTitle">Game</b><span onclick="closeModal('gameModal')" style="cursor:pointer;font-size:20px">✕</span></div><div style="padding:14px"><img id="gmImg" style="width:100%;height:150px;object-fit:cover;border-radius:12px"><div id="gmPkgs"></div><input id="gmPlayerId" placeholder="Enter Player ID / UID"><p id="gmInputHint" style="font-size:12px;color:#666;margin-top:6px"></p><button class="btnMain" onclick="goPay()">Pay Now →</button></div></div></div>
+<div class="modal" id="payModal"><div class="modalBox"><div class="modalHead"><b>Secure Payment</b><span onclick="closeModal('payModal')" style="cursor:pointer">✕</span></div><div style="padding:14px"><p id="paySummary"></p><p style="font-weight:900;margin-top:10px">Mobile Banking</p><div class="payGrid"><div class="payCard on" id="pay-bKash" onclick="setPay('bKash')">bKash <small>Send Money</small></div><div class="payCard" id="pay-Nagad" onclick="setPay('Nagad')">Nagad <small>Send Money</small></div><div class="payCard" id="pay-Rocket" onclick="setPay('Rocket')">Rocket <small>Send Money</small></div><div class="payCard" id="pay-Upay" onclick="setPay('Upay')">Upay <small>Send Money</small></div></div><div class="paySteps" id="paySteps"></div><input id="payTrx" placeholder="Enter Transaction ID"><button class="btnMain" onclick="submitOrder()">Verify →</button><p style="font-size:12px;text-align:center;margin-top:8px">After Send Money, Copy TrxID & Verify</p></div></div></div>
+<div class="modal" id="walletModal"><div class="modalBox"><div class="modalHead"><b>Add Money</b><span onclick="closeModal('walletModal')" style="cursor:pointer">✕</span></div><div style="padding:14px"><h3>Wallet Balance</h3><h2>Tk <span id="bal2">0</span></h2><p style="font-weight:700;margin-top:12px">Enter the amount</p><input id="addAmt" type="number" placeholder="Amount"><button class="btnMain" onclick="goAddMoneyPay()">Click Here To Add Money →</button><p style="margin-top:10px;font-weight:700">How to add money</p><p style="font-size:13px;color:#666">Select bKash / Nagad / Rocket / Upay → Send Money → Copy TrxID → Verify</p></div></div></div>
+<div class="modal" id="addPayModal"><div class="modalBox"><div class="modalHead"><b>Secure Payment</b><span onclick="closeModal('addPayModal')" style="cursor:pointer">✕</span></div><div style="padding:14px"><p id="addPaySummary"></p><p style="font-weight:900;margin-top:10px">Mobile Banking</p><div class="payGrid"><div class="payCard on" id="add-bKash" onclick="setAddPay('bKash')">bKash <small>Send Money</small></div><div class="payCard" id="add-Nagad" onclick="setAddPay('Nagad')">Nagad <small>Send Money</small></div><div class="payCard" id="add-Rocket" onclick="setAddPay('Rocket')">Rocket <small>Send Money</small></div><div class="payCard" id="add-Upay" onclick="setAddPay('Upay')">Upay <small>Send Money</small></div></div><div class="paySteps" id="addPaySteps"></div><input id="addTrx" placeholder="Enter Transaction ID"><button class="btnMain" onclick="addMoney()">Verify →</button></div></div></div>
+<div class="modal" id="resellerModal"><div class="modalBox"><div class="modalHead"><b>👑 Reseller Application - Free</b><span onclick="closeModal('resellerModal')" style="cursor:pointer">✕</span></div><div style="padding:14px"><div style="background:#111;color:#fff;padding:14px;border-radius:12px;text-align:center"><h2>🎉 You Unlocked!</h2><p>You bought more than Tk 5000. Now apply <b>Free</b> for Reseller.</p></div><input id="r_name" placeholder="Your Name"><input id="r_phone" placeholder="WhatsApp Number"><input id="r_shop" placeholder="Shop / Page Name"><button class="btnMain" onclick="submitReseller()">Send Free Application →</button><p id="r_msg" style="text-align:center;color:green;font-weight:700;margin-top:8px"></p></div></div></div>
 <div class="modal" id="accountModal"><div class="modalBox"><div class="modalHead"><b>👤 My Account</b><span onclick="closeModal('accountModal')" style="cursor:pointer">✕</span></div><div style="padding:14px" id="accBox"></div></div></div>
 <div class="modal" id="ordersModal"><div class="modalBox"><div class="modalHead"><b>🛍️ My Orders</b><span onclick="closeModal('ordersModal')" style="cursor:pointer">✕</span></div><div style="padding:14px" id="ordersBox"></div></div></div>
-<div class="modal" id="redeemModal"><div class="modalBox"><div class="modalHead"><b>🎁 Redeem Code</b><span onclick="closeModal('redeemModal')" style="cursor:pointer">✕</span></div><div style="padding:14px"><p style="font-size:13px;color:#666">Telegram / Facebook থেকে Code পাইলে এখানে বসাও। Balance এ টাকা যোগ হইবো।</p><input id="redeemInput2" placeholder="Enter Redeem Code"><button class="btnMain" onclick="redeemCode2()">Redeem Now →</button><div id="redeemList" style="margin-top:12px"></div><p style="font-size:12px;color:#888;margin-top:10px">Demo Codes: ULTRA50 = Tk 50, ULTRA100 = Tk 100, FREE10 = Tk 10<br>Admin চাইলে এই Code গুলা বদলাইতে পারবা।</p></div></div></div>
-<div class="modal" id="installModal"><div class="modalBox"><div class="modalHead"><b>⬇️ Download App</b><span onclick="closeModal('installModal')" style="cursor:pointer">✕</span></div><div style="padding:14px;text-align:center"><button class="btnMain" onclick="downloadAPK()">⬇️ Download APK - Direct →</button><button class="btnMain" style="background:#111" onclick="openInChrome()">🌐 Open in Chrome → Install</button></div></div></div>
+<div class="modal" id="redeemModal"><div class="modalBox"><div class="modalHead"><b>🎁 Redeem Code</b><span onclick="closeModal('redeemModal')" style="cursor:pointer">✕</span></div><div style="padding:14px"><p style="font-size:13px;color:#666">Telegram / Facebook থেকে Code পাইলে এখানে বসাও। Balance এ টাকা যোগ হইবো।</p><input id="redeemInput2" placeholder="Enter Redeem Code"><button class="btnMain" onclick="redeemCode2()">Redeem Now →</button><div id="redeemList" style="margin-top:12px"></div><p style="font-size:12px;color:#888;margin-top:10px">Demo Codes: ULTRA50 = Tk 50, ULTRA100 = Tk 100, FREE10 = Tk 10</p></div></div></div>
+<div class="modal" id="installModal"><div class="modalBox"><div class="modalHead"><b>⬇️ Download App</b><span onclick="closeModal('installModal')" style="cursor:pointer">✕</span></div><div style="padding:14px;text-align:center"><p style="font-size:14px;line-height:1.6">ULTRA TOP UP BD App<br><b>Direct Download - No Chrome Needed</b></p><button class="btnMain" onclick="downloadAPK()">⬇️ Download APK - Direct →</button><button class="btnMain" style="background:#111" onclick="openInChrome()">🌐 Open in Chrome → Install</button><p style="font-size:12px;color:#666;margin-top:8px">APK ডাউনলোড হলে Install এ চাপ দাও।<br>WhatsApp এর ভিতরে Install হয় না, তাই Direct Download দিছি।</p></div></div></div>
 <div class="modal" id="adminModal"><div class="modalBox"><div class="modalHead"><b>🔐 Admin Panel</b><span onclick="closeModal('adminModal')" style="cursor:pointer">✕</span></div><div style="padding:14px" id="adminBox"></div></div></div>
-<!-- GG Bazar Style Telegram Popup - FIXED: localStorage দিয়া আর আটকাবো না -->
 <div id="telegramPopup" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.65);z-index:9999;justify-content:center;align-items:center;padding:15px">
   <div style="position:relative;width:100%;max-width:400px">
     <div style="background:#fff;border-radius:12px;overflow:hidden;text-align:left;padding-bottom:28px">
-      <img id="bannerTelegramPopup" src="https://i.ibb.co/MkXJHqq6/IMG-20261123-WA0001.jpg" style="width:100%;aspect-ratio:16/7;object-fit:cover;display:block">
+      <img src="https://i.ibb.co/MkXJHqq6/IMG-20261123-WA0001.jpg" style="width:100%;aspect-ratio:16/7;object-fit:cover;display:block">
       <p style="font-weight:700;padding:14px 16px 10px;font-size:16px;line-height:1.5;color:#111">প্রতিদিন ফ্রিতে ডায়মন্ড পেতে আমাদের Telegram চ্যানেলে Join করুন</p>
       <a href="https://t.me/+Q6GAbYR_AusxMjE1" target="_blank" style="background:#2196F3;color:#fff;padding:10px 22px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block;margin-left:16px">ক্লিক করুন</a>
     </div>
-    <button onclick="closeTgPopup()" style="position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);background:#00c853;color:#fff;border:none;padding:13px 32px;border-radius:30px;font-weight:900;font-size:16px;cursor:pointer;box-shadow:0 6px 16px rgba(0,200,83,.5);white-space:nowrap">✕ CLOSE</button>
+    <button onclick="closeTgPopup()" style="position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);background:#00c853;color:#fff;border:none;padding:13px 32px;border-radius:30px;font-weight:900;font-size:16px;cursor:pointer;white-space:nowrap">✕ CLOSE</button>
   </div>
 </div>
 <div class="toast" id="toast"></div>
-<script src="banners.js"></script>
 <script>
 let LANG=localStorage.getItem("ut_lang")||"en";
 const T={en:{welcome:"Welcome",balance:"Balance",totalBuy:"Total Purchase",referCode:"Refer Code",walletBal:"Wallet Balance",addMoney:"Add Money",reseller:"Reseller Panel",locked:"Locked",apply:"Apply For Reseller - Free",pending:"Application Pending",active:"Reseller Active",logout:"Logout",copyRefer:"Copy Refer Link",lang:"Language"},bn:{welcome:"স্বাগতম",balance:"ব্যালেন্স",totalBuy:"মোট কেনাকাটা",referCode:"রেফার কোড",walletBal:"ওয়ালেট ব্যালেন্স",addMoney:"টাকা যোগ করো",reseller:"রিসেলার প্যানেল",locked:"লক",apply:"রিসেলার আবেদন করো - ফ্রি",pending:"আবেদন পেন্ডিং",active:"রিসেলার চালু",logout:"লগআউট",copyRefer:"রেফার লিংক কপি করো",lang:"ভাষা"}};
@@ -141,111 +137,90 @@ function openTelegram(){window.open('https://t.me/+Q6GAbYR_AusxMjE1','_blank')}
 function openWhatsAppSupport(msg){window.open('https://wa.me/'+WA_LINK+'?text='+encodeURIComponent(msg||'Hello, I need help'),'_blank')}
 function toggleWaPop(){document.getElementById('waPop').classList.toggle('open')}
 function closeTgPopup(){document.getElementById('telegramPopup').style.display='none';sessionStorage.setItem('ut_tg_closed','1');}
-// PP FIX: আগে localStorage ছিলো তাই আর আসতো না, এখন sessionStorage - পেজ বন্ধ করলে আবার আসবো
 setTimeout(function(){ if(!sessionStorage.getItem('ut_tg_closed')) document.getElementById('telegramPopup').style.display='flex'; }, 2500);
-function openAdmin(){
-  let pass = prompt("Admin Password দিন:");
-  if(pass !== "admin123"){ if(pass!==null) alert("Wrong Password!"); return; }
-  let orders = JSON.parse(localStorage.getItem("ut_orders")||"[]");
-  let reqs = JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");
-  let total = orders.reduce((s,o)=>s+(o.price||0),0);
-  document.getElementById('adminBox').innerHTML = `<div style="background:#111;color:#fff;padding:14px;border-radius:12px;text-align:center"><h3>📊 Total Orders: ${orders.length}</h3><p>Total Sell: Tk ${total}</p><p>Reseller Requests: ${reqs.length}</p></div><h3 style="margin-top:14px">🛍️ All Orders</h3>${orders.length?orders.map((o,i)=>`<div class="pkg"><div><b>${o.game} - ${o.pkg}</b><br><small>${o.pid} | Trx: ${o.trx} | ${o.pay} | ${o.status}</small></div><b>Tk ${o.price}</b></div>`).join(''):'<p>No Orders Yet</p>'}`;
-  document.getElementById('adminModal').classList.add('open');
-}
-if(location.search.includes("admin=1")){ setTimeout(openAdmin, 1000); }
-const bgC=document.getElementById('bgCanvas'),bgX=bgC.getContext('2d');let bgW,bgH,parts=[];
-function resizeBg(){bgW=bgC.width=window.innerWidth;bgH=bgC.height=window.innerHeight;parts=Array.from({length:30},()=>({x:Math.random()*bgW,y:Math.random()*bgH,r:Math.random()*2+1,dx:(Math.random()-.5)*.3,dy:(Math.random()-.5)*.3,c:Math.random()>.5?'#00e5a0':'#00b0ff',o:Math.random()*.4+.2}));}
-window.addEventListener('resize',resizeBg);resizeBg();
-function drawBg(){bgX.clearRect(0,0,bgW,bgH);let g=bgX.createLinearGradient(0,0,0,bgH);g.addColorStop(0,'#0b0f1a');g.addColorStop(1,'#0a1a2e');bgX.fillStyle=g;bgX.fillRect(0,0,bgW,bgH);parts.forEach(p=>{p.x+=p.dx;p.y+=p.dy;if(p.x<0||p.x>bgW)p.dx*=-1;if(p.y<0||p.y>bgH)p.dy*=-1;bgX.beginPath();bgX.arc(p.x,p.y,p.r,0,Math.PI*2);bgX.fillStyle=p.c;bgX.globalAlpha=p.o;bgX.fill();bgX.globalAlpha=1;});requestAnimationFrame(drawBg);}drawBg();
-// REDEEM SYSTEM
+function openAdmin(){let pass=prompt("Admin Password দিন:");if(pass!=="admin123"){if(pass!==null)alert("Wrong Password!");return;}let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");let total=orders.reduce((s,o)=>s+(o.price||0),0);document.getElementById('adminBox').innerHTML=`<div style="background:#111;color:#fff;padding:14px;border-radius:12px;text-align:center"><h3>📊 Total Orders: ${orders.length}</h3><p>Total Sell: Tk ${total}</p><p>Reseller Requests: ${reqs.length}</p></div><h3 style="margin-top:14px">🛍️ All Orders</h3>${orders.length?orders.map((o,i)=>`<div class="pkg"><div><b>${o.game} - ${o.pkg}</b><br><small>${o.pid} | Trx: ${o.trx} | ${o.pay} | ${o.status}</small></div><b>Tk ${o.price}</b></div>`).join(''):'<p>No Orders Yet</p>'}`;document.getElementById('adminModal').classList.add('open');}
+if(location.search.includes("admin=1")){setTimeout(openAdmin,1000);}
 const REDEEM_CODES={"ULTRA50":50,"ULTRA100":100,"FREE10":10,"ULTRA200":200,"WELCOME20":20};
 function redeemCode(){let v=document.getElementById('redeemInput').value.trim().toUpperCase();doRedeem(v);}
 function redeemCode2(){let v=document.getElementById('redeemInput2').value.trim().toUpperCase();doRedeem(v);}
-function doRedeem(code){
-  if(!code){alert("Code লিখো!");return}
-  let used=JSON.parse(localStorage.getItem("ut_used_codes")||"[]");
-  if(used.includes(code)){alert("এই Code আগেই ব্যবহার হইছে!");return}
-  if(!REDEEM_CODES[code]){alert("ভুল Code! Telegram এ সঠিক Code দেখো।");return}
-  let amt=REDEEM_CODES[code];
-  used.push(code);localStorage.setItem("ut_used_codes",JSON.stringify(used));
-  setBal(getBal()+amt);showToast("🎉 Tk "+amt+" Redeem হইছে!");
-  document.getElementById('redeemInput').value="";let i2=document.getElementById('redeemInput2');if(i2)i2.value="";
-  closeModal('redeemModal');
-}
-function openRedeemModal(){
-  let used=JSON.parse(localStorage.getItem("ut_used_codes")||"[]");
-  document.getElementById('redeemList').innerHTML = used.length?`<p style="font-weight:700">✅ Used Codes:</p>`+used.map(c=>`<div class="pkg"><b>${c}</b><span>Tk ${REDEEM_CODES[c]||0}</span></div>`).join(''):'<p style="color:#888">এখনো কোনো Code Redeem করো নাই।</p>';
-  document.getElementById('redeemModal').classList.add('open');
-}
+function doRedeem(code){if(!code){alert("Code লিখো!");return}let used=JSON.parse(localStorage.getItem("ut_used_codes")||"[]");if(used.includes(code)){alert("এই Code আগেই ব্যবহার হইছে!");return}if(!REDEEM_CODES[code]){alert("ভুল Code! Telegram এ সঠিক Code দেখো।");return}let amt=REDEEM_CODES[code];used.push(code);localStorage.setItem("ut_used_codes",JSON.stringify(used));setBal(getBal()+amt);showToast("🎉 Tk "+amt+" Redeem হইছে!");let r1=document.getElementById('redeemInput');if(r1)r1.value="";let r2=document.getElementById('redeemInput2');if(r2)r2.value="";closeModal('redeemModal');}
+function openRedeemModal(){let used=JSON.parse(localStorage.getItem("ut_used_codes")||"[]");document.getElementById('redeemList').innerHTML=used.length?`<p style="font-weight:700">✅ Used Codes:</p>`+used.map(c=>`<div class="pkg"><b>${c}</b><span>Tk ${REDEEM_CODES[c]||0}</span></div>`).join(''):'<p style="color:#888">এখনো কোনো Code Redeem করো নাই।</p>';document.getElementById('redeemModal').classList.add('open');}
+const bgC=document.getElementById('bgCanvas'),bgX=bgC.getContext('2d');let bgW,bgH,parts=[];
+function resizeBg(){bgW=bgC.width=window.innerWidth;bgH=bgC.height=window.innerHeight;parts=Array.from({length:70},()=>({x:Math.random()*bgW,y:Math.random()*bgH,r:Math.random()*3+1,dx:(Math.random()-.5)*.4,dy:(Math.random()-.5)*.4,c:Math.random()>.5?'#00e5a0':'#00b0ff',o:Math.random()*.7+.3}));}
+window.addEventListener('resize',resizeBg);resizeBg();
+function drawBg(){bgX.clearRect(0,0,bgW,bgH);let g=bgX.createLinearGradient(0,0,0,bgH);g.addColorStop(0,'#0b0f1a');g.addColorStop(1,'#0a1a2e');bgX.fillStyle=g;bgX.fillRect(0,0,bgW,bgH);parts.forEach(p=>{p.x+=p.dx;p.y+=p.dy;if(p.x<0||p.x>bgW)p.dx*=-1;if(p.y<0||p.y>bgH)p.dy*=-1;bgX.beginPath();bgX.arc(p.x,p.y,p.r,0,Math.PI*2);bgX.fillStyle=p.c;bgX.globalAlpha=p.o;bgX.shadowColor=p.c;bgX.shadowBlur=10;bgX.fill();bgX.globalAlpha=1;bgX.shadowBlur=0;});requestAnimationFrame(drawBg);}drawBg();
+const tc=document.getElementById('touchCanvas'),tx=tc.getContext('2d');function resizeTouch(){tc.width=window.innerWidth;tc.height=window.innerHeight;}resizeTouch();window.addEventListener('resize',resizeTouch);let bursts=[];
+document.addEventListener('pointerdown',e=>{let colors=['#00e5a0','#00b0ff','#ffeb3b','#ff2d55','#a855f7'];for(let i=0;i<22;i++){let a=Math.random()*Math.PI*2,s=Math.random()*4+1;bursts.push({x:e.clientX,y:e.clientY,vx:Math.cos(a)*s,vy:Math.sin(a)*s,r:Math.random()*4+2,life:1,c:colors[Math.floor(Math.random()*colors.length)]});}bursts.push({x:e.clientX,y:e.clientY,vx:0,vy:0,r:5,life:1,ring:true});});
+function drawTouch(){tx.clearRect(0,0,tc.width,tc.height);bursts=bursts.filter(b=>b.life>0);bursts.forEach(b=>{b.x+=b.vx;b.y+=b.vy;b.vy+=0.05;b.life-=0.02;if(b.ring){tx.beginPath();tx.arc(b.x,b.y,(1-b.life)*70+5,0,Math.PI*2);tx.strokeStyle='rgba(0,229,160,'+b.life+')';tx.lineWidth=2;tx.stroke();}else{tx.beginPath();tx.arc(b.x,b.y,b.r,0,Math.PI*2);tx.fillStyle=b.c;tx.globalAlpha=b.life;tx.shadowColor=b.c;tx.shadowBlur=8;tx.fill();tx.globalAlpha=1;tx.shadowBlur=0;}});requestAnimationFrame(drawTouch);}drawTouch();
 const GAMES=[
-{id:1,name:"Free Fire",cat:"Games",emoji:"🔥",badge:"HOT",inputType:"uid",inputLabel:"Enter Free Fire UID",pkgs:[["25 Diamond",21],["50 Diamond",36],["100 Diamonds",75],["115 Diamond",78],["210 Diamonds",150],["240 Diamond",156],["310 Diamonds",220],["355 Diamond",234],["505 Diamond",333],["520 Diamonds",365],["610 Diamond",400],["850 Diamond",558],["1060 Diamonds",730],["1090 Diamond",712],["1240 Diamond",820],["1720 Diamond",1132],["2090 Diamond",1376],["2180 Diamonds",1450],["2530 Diamond",1600],["5060 Diamond",3220],["10120 Diamond",6440],["Weekly",155],["Monthly",780],["Weekly Lite",42]]},
-{id:2,name:"PUBG Mobile",cat:"Games",emoji:"🎯",badge:"HOT",inputType:"uid",inputLabel:"Enter PUBG UID",pkgs:[["60 UC",115],["120 UC",230],["180 UC",345],["240 UC",460],["325 UC",580],["660 UC",1150],["985 UC",1700]]},
-{id:3,name:"Mobile Legends",cat:"Games",emoji:"⚔️",badge:"",inputType:"uid",inputLabel:"Enter MLBB ID + Server",pkgs:[["86 Diamonds",87],["172 Diamonds",174],["257 Diamonds",260],["515 Diamonds",520]]},
-{id:4,name:"Delta Force",cat:"Games",emoji:"🎖️",badge:"NEW",inputType:"uid",inputLabel:"Enter Delta Force UID",pkgs:[["100 Coins",74],["500 Coins",345],["1000 Coins",690]]},
-{id:5,name:"Genshin Impact",cat:"Games",emoji:"✨",badge:"",inputType:"uid",inputLabel:"Enter Genshin UID",pkgs:[["60 Crystals",87],["300 Crystals",460],["980 Crystals",1380]]},
-{id:6,name:"Honkai Star Rail",cat:"Games",emoji:"🚀",badge:"",inputType:"uid",inputLabel:"Enter HSR UID",pkgs:[["60 Shards",87],["300 Shards",460],["980 Shards",1380]]},
-{id:7,name:"Yalla Ludo",cat:"Games",emoji:"🎲",badge:"",inputType:"uid",inputLabel:"Enter Yalla Ludo UID",pkgs:[["100 Diamonds",87],["500 Diamonds",435],["1000 Diamonds",870]]},
-{id:8,name:"Bigo Live",cat:"Live",emoji:"📺",badge:"",inputType:"uid",inputLabel:"Enter Bigo ID / UID",pkgs:[["40 Diamonds",45],["210 Diamonds",235],["420 Diamonds",460]]},
-{id:9,name:"Poppo Live",cat:"Live",emoji:"💜",badge:"",inputType:"uid",inputLabel:"Enter Poppo UID",pkgs:[["100 Coins",100],["500 Coins",500],["1000 Coins",1000]]},
-{id:10,name:"8 Ball Pool",cat:"Games",emoji:"🎱",badge:"",inputType:"uid",inputLabel:"Enter 8 Ball Pool UID",pkgs:[["50 Cash",55],["100 Cash",104],["500 Cash",478]]},
-{id:11,name:"Crunchyroll Premium",cat:"Entertainment",emoji:"🍊",badge:"",inputType:"email",inputLabel:"Enter Crunchyroll Gmail",pkgs:[["1 Month",200],["3 Months",550]]},
-{id:12,name:"Sniper Duels",cat:"Games",emoji:"🎯",badge:"",inputType:"uid",inputLabel:"Enter Sniper Duels UID",pkgs:[["100 Gold",90],["500 Gold",435]]},
-{id:13,name:"Amazon Prime",cat:"Entertainment",emoji:"📦",badge:"",inputType:"email",inputLabel:"Enter Amazon Gmail",pkgs:[["1 Month",160],["3 Months",435]]},
-{id:14,name:"Valorant Points",cat:"Games",emoji:"🔴",badge:"",inputType:"username",inputLabel:"Enter Riot ID - Name#Tag",pkgs:[["475 VP",402],["950 VP",805],["2050 VP",1695]]},
-{id:15,name:"Legend of Neverland",cat:"Games",emoji:"🌿",badge:"",inputType:"uid",inputLabel:"Enter Neverland UID",pkgs:[["60 Crystals",74],["300 Crystals",345]]},
-{id:16,name:"Legend of the Phoenix",cat:"Games",emoji:"🔥",badge:"",inputType:"uid",inputLabel:"Enter Phoenix UID",pkgs:[["60 Ingots",74],["300 Ingots",345]]},
-{id:17,name:"Marvel Rivals",cat:"Games",emoji:"🦸",badge:"NEW",inputType:"uid",inputLabel:"Enter Marvel Rivals UID",pkgs:[["500 Lattice",402],["1000 Lattice",805]]},
-{id:18,name:"Bleach: Soul Resonance",cat:"Games",emoji:"⚔️",badge:"",inputType:"uid",inputLabel:"Enter Bleach UID",pkgs:[["60 Jade",74],["300 Jade",345]]},
-{id:19,name:"Soul Land: New World",cat:"Games",emoji:"🐉",badge:"",inputType:"uid",inputLabel:"Enter Soul Land UID",pkgs:[["60 Diamonds",74],["300 Diamonds",345]]},
-{id:20,name:"Honor of Kings",cat:"Games",emoji:"👑",badge:"",inputType:"uid",inputLabel:"Enter HoK UID",pkgs:[["80 Tokens",90],["400 Tokens",435],["800 Tokens",870]]},
-{id:21,name:"Onmyoji Arena",cat:"Games",emoji:"🌙",badge:"",inputType:"uid",inputLabel:"Enter Onmyoji UID",pkgs:[["60 Jade",74],["300 Jade",345]]},
-{id:22,name:"Crystal of Atlan",cat:"Games",emoji:"💎",badge:"",inputType:"uid",inputLabel:"Enter Atlan UID",pkgs:[["60 Prisms",74],["300 Prisms",345]]},
-{id:23,name:"Love and Deepspace",cat:"Games",emoji:"💖",badge:"",inputType:"uid",inputLabel:"Enter Deepspace UID",pkgs:[["60 Diamonds",90],["300 Diamonds",460]]},
-{id:24,name:"Telegram Stars",cat:"Social",emoji:"⭐",badge:"",inputType:"username",inputLabel:"Enter Telegram Username - @username",pkgs:[["50 Stars",99],["100 Stars",189],["500 Stars",940],["1000 Stars",1840]]},
-{id:25,name:"Acecraft",cat:"Games",emoji:"🎮",badge:"",inputType:"uid",inputLabel:"Enter Acecraft UID",pkgs:[["60 Coins",74],["300 Coins",345]]},
-{id:26,name:"Jaco Live",cat:"Live",emoji:"💜",badge:"",inputType:"uid",inputLabel:"Enter Jaco UID",pkgs:[["100 Coins",100],["500 Coins",500]]},
-{id:27,name:"Migo Live",cat:"Live",emoji:"📺",badge:"",inputType:"uid",inputLabel:"Enter Migo UID",pkgs:[["100 Coins",100],["500 Coins",500]]},
-{id:28,name:"Oxide Survival Island",cat:"Games",emoji:"🏝️",badge:"",inputType:"uid",inputLabel:"Enter Oxide UID",pkgs:[["60 Coins",74],["300 Coins",345]]},
-{id:29,name:"Age of Magic",cat:"Games",emoji:"🧙",badge:"",inputType:"uid",inputLabel:"Enter Age of Magic UID",pkgs:[["60 Gold",74],["300 Gold",345]]},
-{id:30,name:"Once Human",cat:"Games",emoji:"👽",badge:"",inputType:"uid",inputLabel:"Enter Once Human UID",pkgs:[["60 Crystgin",74],["300 Crystgin",345]]},
-{id:31,name:"Etheria Restart",cat:"Games",emoji:"🌸",badge:"",inputType:"uid",inputLabel:"Enter Etheria UID",pkgs:[["60 Crystals",74],["300 Crystals",345]]},
-{id:32,name:"Racing Master",cat:"Games",emoji:"🏎️",badge:"",inputType:"uid",inputLabel:"Enter Racing Master UID",pkgs:[["60 Diamonds",74],["300 Diamonds",345]]},
-{id:33,name:"Ludus Strategy PVP",cat:"Games",emoji:"⚔️",badge:"",inputType:"uid",inputLabel:"Enter Ludus UID",pkgs:[["60 Gold",74],["300 Gold",345]]},
-{id:34,name:"Garena Undawn",cat:"Games",emoji:"🧟",badge:"",inputType:"uid",inputLabel:"Enter Undawn UID",pkgs:[["60 RC",74],["300 RC",345]]},
-{id:35,name:"Overmortal Idle",cat:"Games",emoji:"🐉",badge:"",inputType:"uid",inputLabel:"Enter Overmortal UID",pkgs:[["60 Jade",74],["300 Jade",345]]},
-{id:36,name:"Growtopia",cat:"Games",emoji:"🌱",badge:"",inputType:"username",inputLabel:"Enter Growtopia Username",pkgs:[["60 Gems",74],["300 Gems",345]]},
-{id:37,name:"Bullet Echo",cat:"Games",emoji:"🔫",badge:"",inputType:"uid",inputLabel:"Enter Bullet Echo UID",pkgs:[["60 Gold",74],["300 Gold",345]]},
-{id:38,name:"Ghost Story: Love Destiny",cat:"Games",emoji:"👻",badge:"",inputType:"uid",inputLabel:"Enter Ghost Story UID",pkgs:[["60 Jade",74],["300 Jade",345]]},
-{id:39,name:"CATS: Crash Arena",cat:"Games",emoji:"🐱",badge:"",inputType:"uid",inputLabel:"Enter CATS UID",pkgs:[["60 Gems",74],["300 Gems",345]]},
-{id:40,name:"Legends of Runeterra",cat:"Games",emoji:"🃏",badge:"",inputType:"username",inputLabel:"Enter Riot ID - Name#Tag",pkgs:[["60 Coins",74],["300 Coins",345]]},
-{id:41,name:"Pixel Gun 3D",cat:"Games",emoji:"🔫",badge:"",inputType:"uid",inputLabel:"Enter Pixel Gun UID",pkgs:[["60 Gems",74],["300 Gems",345]]},
-{id:42,name:"Eggy Party",cat:"Games",emoji:"🥚",badge:"",inputType:"uid",inputLabel:"Enter Eggy Party UID",pkgs:[["60 Coins",74],["300 Coins",345]]},
-{id:43,name:"Haikyu!! Fly High",cat:"Games",emoji:"🏐",badge:"",inputType:"uid",inputLabel:"Enter Haikyu UID",pkgs:[["60 Diamonds",74],["300 Diamonds",345]]},
-{id:44,name:"MICO Coins",cat:"Live",emoji:"🪙",badge:"",inputType:"uid",inputLabel:"Enter MICO UID",pkgs:[["100 Coins",100],["500 Coins",500]]},
-{id:45,name:"Harry Potter: Magic Awakened",cat:"Games",emoji:"🧙",badge:"",inputType:"uid",inputLabel:"Enter HP UID",pkgs:[["60 Gems",74],["300 Gems",345]]},
-{id:46,name:"League of Legends",cat:"Games",emoji:"⚔️",badge:"",inputType:"username",inputLabel:"Enter Riot ID - Name#Tag",pkgs:[["60 Cores",74],["300 Cores",345]]},
-{id:47,name:"Patti Game",cat:"Games",emoji:"🃏",badge:"",inputType:"uid",inputLabel:"Enter Patti UID",pkgs:[["100 Chips",90],["500 Chips",435]]},
-{id:48,name:"TikTok Coins",cat:"Social",emoji:"🎵",badge:"HOT",inputType:"username",inputLabel:"Enter TikTok Username - @username",pkgs:[["70 Coins",99],["350 Coins",468],["700 Coins",898]]},
-{id:49,name:"IMO Diamonds",cat:"Social",emoji:"💎",badge:"",inputType:"phone",inputLabel:"Enter IMO Number - 01XXXXXXXXX",pkgs:[["100 Diamonds",100],["500 Diamonds",500]]},
-{id:50,name:"Free Fire MAX",cat:"Games",emoji:"🔥",badge:"NEW",inputType:"uid",inputLabel:"Enter Free Fire MAX UID",pkgs:[["100 Diamonds",75],["310 Diamonds",220],["520 Diamonds",365]]},
-{id:51,name:"Call of Duty Mobile",cat:"Games",emoji:"🔫",badge:"HOT",inputType:"uid",inputLabel:"Enter CODM UID",pkgs:[["80 CP",90],["400 CP",435],["800 CP",870]]},
-{id:52,name:"Roblox Robux",cat:"Games",emoji:"🧊",badge:"HOT",inputType:"username",inputLabel:"Enter Roblox Username",pkgs:[["80 Robux",90],["400 Robux",435],["800 Robux",870]]},
-{id:53,name:"Ludo King",cat:"Games",emoji:"🎲",badge:"",inputType:"uid",inputLabel:"Enter Ludo King UID",pkgs:[["100 Diamonds",90],["500 Diamonds",435],["1000 Diamonds",870]]},
-{id:54,name:"Clash of Clans",cat:"Games",emoji:"⚔️",badge:"",inputType:"uid",inputLabel:"Enter COC Player Tag - #XXXX",pkgs:[["1 Gold Pass",99],["3 Gold Pass",288]]},
-{id:55,name:"Carrom Pool",cat:"Games",emoji:"🎯",badge:"",inputType:"uid",inputLabel:"Enter Carrom Pool UID",pkgs:[["50 Coins",55],["100 Coins",104],["500 Coins",478]]},
-{id:56,name:"Teen Patti Gold",cat:"Games",emoji:"🃏",badge:"HOT",inputType:"uid",inputLabel:"Enter Teen Patti UID",pkgs:[["100 Chips",90],["500 Chips",435],["1000 Chips",870],["5000 Chips",4300]]},
-{id:57,name:"Teen Patti Master",cat:"Games",emoji:"🃏",badge:"",inputType:"uid",inputLabel:"Enter Teen Patti UID",pkgs:[["100 Chips",90],["500 Chips",435],["1000 Chips",870]]},
-{id:58,name:"CapCut Premium",cat:"Entertainment",emoji:"✂️",badge:"HOT",inputType:"email",inputLabel:"Enter CapCut Gmail",pkgs:[["7 Days",160],["30 Days",402],["365 Days",3120]]},
-{id:59,name:"Canva Pro",cat:"Entertainment",emoji:"🎨",badge:"",inputType:"email",inputLabel:"Enter Canva Gmail",pkgs:[["30 Days",312],["365 Days",2245]]},
-{id:60,name:"Netflix Premium",cat:"Entertainment",emoji:"🎬",badge:"HOT",inputType:"email",inputLabel:"Enter Netflix Gmail",pkgs:[["30 Days",402],["90 Days",1070]]},
-{id:61,name:"Spotify Premium",cat:"Entertainment",emoji:"🎵",badge:"",inputType:"email",inputLabel:"Enter Spotify Gmail",pkgs:[["30 Days",312],["90 Days",805]]},
-{id:62,name:"YouTube Premium",cat:"Entertainment",emoji:"▶️",badge:"",inputType:"email",inputLabel:"Enter YouTube Gmail",pkgs:[["30 Days",340],["90 Days",898]]},
-{id:63,name:"Disney+ Hotstar",cat:"Entertainment",emoji:"✨",badge:"",inputType:"email",inputLabel:"Enter Disney+ Gmail",pkgs:[["30 Days",312]]},
-{id:64,name:"IMO Gold",cat:"Social",emoji:"💎",badge:"",inputType:"phone",inputLabel:"Enter IMO Number - 01XXXXXXXXX",pkgs:[["200 Diamonds",198],["1000 Diamonds",980]]},
-{id:65,name:"Bigo Gold",cat:"Live",emoji:"📺",badge:"",inputType:"uid",inputLabel:"Enter Bigo ID / UID",pkgs:[["1000 Diamonds",940],["5000 Diamonds",4680]]},
-{id:66,name:"TikTok Live Coins",cat:"Social",emoji:"🎵",badge:"",inputType:"username",inputLabel:"Enter TikTok Username - @username",pkgs:[["100 Coins",132],["1000 Coins",1285]]},
-{id:67,name:"Telegram Premium",cat:"Social",emoji:"⭐",badge:"",inputType:"username",inputLabel:"Enter Telegram Username - @username",pkgs:[["1 Month",492],["3 Months",1342],["12 Months",4920]]},
-{id:68,name:"PUBG UC Bonus",cat:"Games",emoji:"🎯",badge:"",inputType:"uid",inputLabel:"Enter PUBG UID",pkgs:[["120 UC",230],["600 UC",1060]]},
+{id:1,name:"Free Fire",cat:"Games",itunes:"Free Fire",emoji:"🔥",badge:"HOT",unit:"Diamonds",inputType:"uid",inputLabel:"Enter Free Fire UID",pkgs:[["25 Diamond",21],["50 Diamond",36],["100 Diamonds",75],["115 Diamond",78],["210 Diamonds",150],["240 Diamond",156],["310 Diamonds",220],["355 Diamond",234],["505 Diamond",333],["520 Diamonds",365],["610 Diamond",400],["850 Diamond",558],["1060 Diamonds",730],["1090 Diamond",712],["1240 Diamond",820],["1720 Diamond",1132],["2090 Diamond",1376],["2180 Diamonds",1450],["2530 Diamond",1600],["5060 Diamond",3220],["10120 Diamond",6440],["Weekly",155],["2X Weekly",310],["3X Weekly",465],["5X Weekly",780],["Monthly",780],["2X Monthly",1560],["1Weekly + 1Monthly",935],["4Weekly + 1Monthly",1404],["Weekly Lite",42],["2x Weekly Lite",84],["3x Weekly Lite",126],["4x Weekly Lite",168],["5x Weekly Lite",210],["Level Up - Level 6",40],["Level Up - Level 10",75],["Level Up - Level 15",75],["Level Up - Level 20",75],["Level Up - Level 25",75],["Level Up - Level 30",105]]},
+{id:2,name:"PUBG Mobile",cat:"Games",itunes:"PUBG Mobile",emoji:"🎯",badge:"HOT",unit:"UC",inputType:"uid",inputLabel:"Enter PUBG UID",pkgs:[["60 UC",115],["120 UC",230],["180 UC",345],["240 UC",460],["325 UC",580],["660 UC",1150],["985 UC",1700]]},
+{id:3,name:"Mobile Legends",cat:"Games",itunes:"Mobile Legends Bang Bang",emoji:"⚔️",badge:"",unit:"Diamonds",inputType:"uid",inputLabel:"Enter MLBB ID + Server",pkgs:[["86 Diamonds",87],["172 Diamonds",174],["257 Diamonds",260],["515 Diamonds",520]]},
+{id:4,name:"Delta Force",cat:"Games",itunes:"Delta Force",emoji:"🎖️",badge:"NEW",unit:"Coins",inputType:"uid",inputLabel:"Enter Delta Force UID",img:"https://upload.wikimedia.org/wikipedia/en/3/3c/Delta_Force_%282025_video_game%29_cover_art.jpg",pkgs:[["100 Coins",74],["500 Coins",345],["1000 Coins",690]]},
+{id:5,name:"Genshin Impact",cat:"Games",itunes:"Genshin Impact",emoji:"✨",badge:"",unit:"Genesis Crystals",inputType:"uid",inputLabel:"Enter Genshin UID",pkgs:[["60 Crystals",87],["300 Crystals",460],["980 Crystals",1380]]},
+{id:6,name:"Honkai Star Rail",cat:"Games",itunes:"Honkai Star Rail",emoji:"🚀",badge:"",unit:"Oneiric Shards",inputType:"uid",inputLabel:"Enter HSR UID",pkgs:[["60 Shards",87],["300 Shards",460],["980 Shards",1380]]},
+{id:7,name:"Yalla Ludo",cat:"Games",itunes:"Yalla Ludo",emoji:"🎲",badge:"",unit:"Diamonds",inputType:"uid",inputLabel:"Enter Yalla Ludo UID",pkgs:[["100 Diamonds",87],["500 Diamonds",435],["1000 Diamonds",870]]},
+{id:8,name:"Bigo Live",cat:"Live",itunes:"Bigo Live",emoji:"📺",badge:"",unit:"Diamonds",inputType:"uid",inputLabel:"Enter Bigo ID / UID",pkgs:[["40 Diamonds",45],["210 Diamonds",235],["420 Diamonds",460]]},
+{id:9,name:"Poppo Live",cat:"Live",itunes:"Poppo Live",emoji:"💜",badge:"",unit:"Coins",inputType:"uid",inputLabel:"Enter Poppo UID",pkgs:[["100 Coins",100],["500 Coins",500],["1000 Coins",1000]]},
+{id:10,name:"8 Ball Pool",cat:"Games",itunes:"8 Ball Pool",emoji:"🎱",badge:"",unit:"Cash",inputType:"uid",inputLabel:"Enter 8 Ball Pool UID",pkgs:[["50 Cash",55],["100 Cash",104],["500 Cash",478]]},
+{id:11,name:"Crunchyroll Premium",cat:"Entertainment",itunes:"Crunchyroll",emoji:"🍊",badge:"",unit:"Days",inputType:"email",inputLabel:"Enter Crunchyroll Gmail",pkgs:[["1 Month",200],["3 Months",550]]},
+{id:12,name:"Sniper Duels",cat:"Games",itunes:"Sniper Duels",emoji:"🎯",badge:"",unit:"Gold",inputType:"uid",inputLabel:"Enter Sniper Duels UID",pkgs:[["100 Gold",90],["500 Gold",435]]},
+{id:13,name:"Amazon Prime",cat:"Entertainment",itunes:"Amazon Prime Video",emoji:"📦",badge:"",unit:"Days",inputType:"email",inputLabel:"Enter Amazon Gmail",pkgs:[["1 Month",160],["3 Months",435]]},
+{id:14,name:"Valorant Points",cat:"Games",itunes:"Valorant",emoji:"🔴",badge:"",unit:"VP",inputType:"username",inputLabel:"Enter Riot ID - Name#Tag",img:"https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_pink_color_version.png",pkgs:[["475 VP",402],["950 VP",805],["2050 VP",1695]]},
+{id:15,name:"Legend of Neverland",cat:"Games",itunes:"Legend of Neverland",emoji:"🌿",badge:"",unit:"Crystals",inputType:"uid",inputLabel:"Enter Neverland UID",pkgs:[["60 Crystals",74],["300 Crystals",345]]},
+{id:16,name:"Legend of the Phoenix",cat:"Games",itunes:"Legend of the Phoenix",emoji:"🔥",badge:"",unit:"Ingots",inputType:"uid",inputLabel:"Enter Phoenix UID",pkgs:[["60 Ingots",74],["300 Ingots",345]]},
+{id:17,name:"Marvel Rivals",cat:"Games",itunes:"Marvel Rivals",emoji:"🦸",badge:"NEW",unit:"Lattice",inputType:"uid",inputLabel:"Enter Marvel Rivals UID",pkgs:[["500 Lattice",402],["1000 Lattice",805]]},
+{id:18,name:"Bleach: Soul Resonance",cat:"Games",itunes:"Bleach Soul Resonance",emoji:"⚔️",badge:"",unit:"Jade",inputType:"uid",inputLabel:"Enter Bleach UID",pkgs:[["60 Jade",74],["300 Jade",345]]},
+{id:19,name:"Soul Land: New World",cat:"Games",itunes:"Soul Land New World",emoji:"🐉",badge:"",unit:"Diamonds",inputType:"uid",inputLabel:"Enter Soul Land UID",pkgs:[["60 Diamonds",74],["300 Diamonds",345]]},
+{id:20,name:"Honor of Kings",cat:"Games",itunes:"Honor of Kings",emoji:"👑",badge:"",unit:"Tokens",inputType:"uid",inputLabel:"Enter HoK UID",pkgs:[["80 Tokens",90],["400 Tokens",435],["800 Tokens",870]]},
+{id:21,name:"Onmyoji Arena",cat:"Games",itunes:"Onmyoji Arena",emoji:"🌙",badge:"",unit:"Jade",inputType:"uid",inputLabel:"Enter Onmyoji UID",pkgs:[["60 Jade",74],["300 Jade",345]]},
+{id:22,name:"Crystal of Atlan",cat:"Games",itunes:"Crystal of Atlan",emoji:"💎",badge:"",unit:"Prisms",inputType:"uid",inputLabel:"Enter Atlan UID",pkgs:[["60 Prisms",74],["300 Prisms",345]]},
+{id:23,name:"Love and Deepspace",cat:"Games",itunes:"Love and Deepspace",emoji:"💖",badge:"",unit:"Diamonds",inputType:"uid",inputLabel:"Enter Deepspace UID",pkgs:[["60 Diamonds",90],["300 Diamonds",460]]},
+{id:24,name:"Telegram Stars",cat:"Social",itunes:"Telegram",emoji:"⭐",badge:"",unit:"Stars",inputType:"username",inputLabel:"Enter Telegram Username - @username",pkgs:[["50 Stars",99],["100 Stars",189],["500 Stars",940],["1000 Stars",1840]]},
+{id:25,name:"Acecraft",cat:"Games",itunes:"Acecraft",emoji:"🎮",badge:"",unit:"Coins",inputType:"uid",inputLabel:"Enter Acecraft UID",pkgs:[["60 Coins",74],["300 Coins",345]]},
+{id:26,name:"Jaco Live",cat:"Live",itunes:"Jaco Live",emoji:"💜",badge:"",unit:"Coins",inputType:"uid",inputLabel:"Enter Jaco UID",pkgs:[["100 Coins",100],["500 Coins",500]]},
+{id:27,name:"Migo Live",cat:"Live",itunes:"Migo Live",emoji:"📺",badge:"",unit:"Coins",inputType:"uid",inputLabel:"Enter Migo UID",pkgs:[["100 Coins",100],["500 Coins",500]]},
+{id:28,name:"Oxide Survival Island",cat:"Games",itunes:"Oxide Survival Island",emoji:"🏝️",badge:"",unit:"Oxide Coins",inputType:"uid",inputLabel:"Enter Oxide UID",pkgs:[["60 Coins",74],["300 Coins",345]]},
+{id:29,name:"Age of Magic",cat:"Games",itunes:"Age of Magic",emoji:"🧙",badge:"",unit:"Gold",inputType:"uid",inputLabel:"Enter Age of Magic UID",pkgs:[["60 Gold",74],["300 Gold",345]]},
+{id:30,name:"Once Human",cat:"Games",itunes:"Once Human",emoji:"👽",badge:"",unit:"Crystgin",inputType:"uid",inputLabel:"Enter Once Human UID",pkgs:[["60 Crystgin",74],["300 Crystgin",345]]},
+{id:31,name:"Etheria Restart",cat:"Games",itunes:"Etheria Restart",emoji:"🌸",badge:"",unit:"Hydra Crystals",inputType:"uid",inputLabel:"Enter Etheria UID",pkgs:[["60 Crystals",74],["300 Crystals",345]]},
+{id:32,name:"Racing Master",cat:"Games",itunes:"Racing Master",emoji:"🏎️",badge:"",unit:"Diamonds",inputType:"uid",inputLabel:"Enter Racing Master UID",pkgs:[["60 Diamonds",74],["300 Diamonds",345]]},
+{id:33,name:"Ludus Strategy PVP",cat:"Games",itunes:"Ludus Merge Arena",emoji:"⚔️",badge:"",unit:"Gold",inputType:"uid",inputLabel:"Enter Ludus UID",pkgs:[["60 Gold",74],["300 Gold",345]]},
+{id:34,name:"Garena Undawn",cat:"Games",itunes:"Undawn",emoji:"🧟",badge:"",unit:"RC",inputType:"uid",inputLabel:"Enter Undawn UID",pkgs:[["60 RC",74],["300 RC",345]]},
+{id:35,name:"Overmortal Idle",cat:"Games",itunes:"Overmortal",emoji:"🐉",badge:"",unit:"Jade",inputType:"uid",inputLabel:"Enter Overmortal UID",pkgs:[["60 Jade",74],["300 Jade",345]]},
+{id:36,name:"Growtopia",cat:"Games",itunes:"Growtopia",emoji:"🌱",badge:"",unit:"Gems",inputType:"username",inputLabel:"Enter Growtopia Username",pkgs:[["60 Gems",74],["300 Gems",345]]},
+{id:37,name:"Bullet Echo",cat:"Games",itunes:"Bullet Echo",emoji:"🔫",badge:"",unit:"Gold",inputType:"uid",inputLabel:"Enter Bullet Echo UID",pkgs:[["60 Gold",74],["300 Gold",345]]},
+{id:38,name:"Ghost Story: Love Destiny",cat:"Games",itunes:"Ghost Story Love Destiny",emoji:"👻",badge:"",unit:"Jade",inputType:"uid",inputLabel:"Enter Ghost Story UID",pkgs:[["60 Jade",74],["300 Jade",345]]},
+{id:39,name:"CATS: Crash Arena",cat:"Games",itunes:"CATS Crash Arena Turbo Stars",emoji:"🐱",badge:"",unit:"Gems",inputType:"uid",inputLabel:"Enter CATS UID",pkgs:[["60 Gems",74],["300 Gems",345]]},
+{id:40,name:"Legends of Runeterra",cat:"Games",itunes:"Legends of Runeterra",emoji:"🃏",badge:"",unit:"Coins",inputType:"username",inputLabel:"Enter Riot ID - Name#Tag",pkgs:[["60 Coins",74],["300 Coins",345]]},
+{id:41,name:"Pixel Gun 3D",cat:"Games",itunes:"Pixel Gun 3D",emoji:"🔫",badge:"",unit:"Gems",inputType:"uid",inputLabel:"Enter Pixel Gun UID",pkgs:[["60 Gems",74],["300 Gems",345]]},
+{id:42,name:"Eggy Party",cat:"Games",itunes:"Eggy Party",emoji:"🥚",badge:"",unit:"Eggy Coins",inputType:"uid",inputLabel:"Enter Eggy Party UID",pkgs:[["60 Coins",74],["300 Coins",345]]},
+{id:43,name:"Haikyu!! Fly High",cat:"Games",itunes:"Haikyu Fly High",emoji:"🏐",badge:"",unit:"Diamonds",inputType:"uid",inputLabel:"Enter Haikyu UID",pkgs:[["60 Diamonds",74],["300 Diamonds",345]]},
+{id:44,name:"MICO Coins",cat:"Live",itunes:"MICO",emoji:"🪙",badge:"",unit:"Coins",inputType:"uid",inputLabel:"Enter MICO UID",pkgs:[["100 Coins",100],["500 Coins",500]]},
+{id:45,name:"Harry Potter: Magic Awakened",cat:"Games",itunes:"Harry Potter Magic Awakened",emoji:"🧙",badge:"",unit:"Gems",inputType:"uid",inputLabel:"Enter HP UID",pkgs:[["60 Gems",74],["300 Gems",345]]},
+{id:46,name:"League of Legends",cat:"Games",itunes:"League of Legends Wild Rift",emoji:"⚔️",badge:"",unit:"Wild Cores",inputType:"username",inputLabel:"Enter Riot ID - Name#Tag",pkgs:[["60 Cores",74],["300 Cores",345]]},
+{id:47,name:"Patti Game",cat:"Games",itunes:"Patti",emoji:"🃏",badge:"",unit:"Chips",inputType:"uid",inputLabel:"Enter Patti UID",img:"https://upload.wikimedia.org/wikipedia/commons/5/5e/Playing_cards.jpg",pkgs:[["100 Chips",90],["500 Chips",435]]},
+{id:48,name:"TikTok Coins",cat:"Social",itunes:"TikTok",emoji:"🎵",badge:"HOT",unit:"Coins",inputType:"username",inputLabel:"Enter TikTok Username - @username",pkgs:[["70 Coins",99],["350 Coins",468],["700 Coins",898]]},
+{id:49,name:"IMO Diamonds",cat:"Social",itunes:"imo",emoji:"💎",badge:"",unit:"Diamonds",inputType:"phone",inputLabel:"Enter IMO Number - 01XXXXXXXXX",img:"https://upload.wikimedia.org/wikipedia/commons/9/9a/Imo_messenger_logo.png",pkgs:[["100 Diamonds",100],["500 Diamonds",500]]},
+{id:50,name:"Free Fire MAX",cat:"Games",itunes:"Free Fire MAX",emoji:"🔥",badge:"NEW",unit:"Diamonds",inputType:"uid",inputLabel:"Enter Free Fire MAX UID",pkgs:[["100 Diamonds",75],["310 Diamonds",220],["520 Diamonds",365]]},
+{id:51,name:"Call of Duty Mobile",cat:"Games",itunes:"Call of Duty Mobile",emoji:"🔫",badge:"HOT",unit:"CP",inputType:"uid",inputLabel:"Enter CODM UID",pkgs:[["80 CP",90],["400 CP",435],["800 CP",870]]},
+{id:52,name:"Roblox Robux",cat:"Games",itunes:"Roblox",emoji:"🧊",badge:"HOT",unit:"Robux",inputType:"username",inputLabel:"Enter Roblox Username",pkgs:[["80 Robux",90],["400 Robux",435],["800 Robux",870]]},
+{id:53,name:"Ludo King",cat:"Games",itunes:"Ludo King",emoji:"🎲",badge:"",unit:"Diamonds",inputType:"uid",inputLabel:"Enter Ludo King UID",pkgs:[["100 Diamonds",90],["500 Diamonds",435],["1000 Diamonds",870]]},
+{id:54,name:"Clash of Clans",cat:"Games",itunes:"Clash of Clans",emoji:"⚔️",badge:"",unit:"Gold Pass",inputType:"uid",inputLabel:"Enter COC Player Tag - #XXXX",pkgs:[["1 Gold Pass",99],["3 Gold Pass",288]]},
+{id:55,name:"Carrom Pool",cat:"Games",itunes:"Carrom Pool",emoji:"🎯",badge:"",unit:"Coins",inputType:"uid",inputLabel:"Enter Carrom Pool UID",pkgs:[["50 Coins",55],["100 Coins",104],["500 Coins",478]]},
+{id:56,name:"Teen Patti Gold",cat:"Games",itunes:"Teen Patti Gold",emoji:"🃏",badge:"HOT",unit:"Chips",inputType:"uid",inputLabel:"Enter Teen Patti UID",pkgs:[["100 Chips",90],["500 Chips",435],["1000 Chips",870],["5000 Chips",4300]]},
+{id:57,name:"Teen Patti Master",cat:"Games",itunes:"Teen Patti Master",emoji:"🃏",badge:"",unit:"Chips",inputType:"uid",inputLabel:"Enter Teen Patti UID",pkgs:[["100 Chips",90],["500 Chips",435],["1000 Chips",870]]},
+{id:58,name:"CapCut Premium",cat:"Entertainment",itunes:"CapCut",emoji:"✂️",badge:"HOT",unit:"Days",inputType:"email",inputLabel:"Enter CapCut Gmail",pkgs:[["7 Days",160],["30 Days",402],["365 Days",3120]]},
+{id:59,name:"Canva Pro",cat:"Entertainment",itunes:"Canva",emoji:"🎨",badge:"",unit:"Days",inputType:"email",inputLabel:"Enter Canva Gmail",pkgs:[["30 Days",312],["365 Days",2245]]},
+{id:60,name:"Netflix Premium",cat:"Entertainment",itunes:"Netflix",emoji:"🎬",badge:"HOT",unit:"Days",inputType:"email",inputLabel:"Enter Netflix Gmail",pkgs:[["30 Days",402],["90 Days",1070]]},
+{id:61,name:"Spotify Premium",cat:"Entertainment",itunes:"Spotify",emoji:"🎵",badge:"",unit:"Days",inputType:"email",inputLabel:"Enter Spotify Gmail",pkgs:[["30 Days",312],["90 Days",805]]},
+{id:62,name:"YouTube Premium",cat:"Entertainment",itunes:"YouTube",emoji:"▶️",badge:"",unit:"Days",inputType:"email",inputLabel:"Enter YouTube Gmail",pkgs:[["30 Days",340],["90 Days",898]]},
+{id:63,name:"Disney+ Hotstar",cat:"Entertainment",itunes:"Disney Plus",emoji:"✨",badge:"",unit:"Days",inputType:"email",inputLabel:"Enter Disney+ Gmail",pkgs:[["30 Days",312]]},
+{id:64,name:"IMO Gold",cat:"Social",itunes:"imo",emoji:"💎",badge:"",unit:"Diamonds",inputType:"phone",inputLabel:"Enter IMO Number - 01XXXXXXXXX",img:"https://upload.wikimedia.org/wikipedia/commons/9/9a/Imo_messenger_logo.png",pkgs:[["200 Diamonds",198],["1000 Diamonds",980]]},
+{id:65,name:"Bigo Gold",cat:"Live",itunes:"Bigo Live",emoji:"📺",badge:"",unit:"Diamonds",inputType:"uid",inputLabel:"Enter Bigo ID / UID",pkgs:[["1000 Diamonds",940],["5000 Diamonds",4680]]},
+{id:66,name:"TikTok Live Coins",cat:"Social",itunes:"TikTok",emoji:"🎵",badge:"",unit:"Coins",inputType:"username",inputLabel:"Enter TikTok Username - @username",pkgs:[["100 Coins",132],["1000 Coins",1285]]},
+{id:67,name:"Telegram Premium",cat:"Social",itunes:"Telegram",emoji:"⭐",badge:"",unit:"Months",inputType:"username",inputLabel:"Enter Telegram Username - @username",pkgs:[["1 Month",492],["3 Months",1342],["12 Months",4920]]},
+{id:68,name:"PUBG UC Bonus",cat:"Games",itunes:"PUBG Mobile",emoji:"🎯",badge:"",unit:"UC",inputType:"uid",inputLabel:"Enter PUBG UID",pkgs:[["120 UC",230],["600 UC",1060]]},
 ];
 let curCat="All",curGame=null,curPkg=null,curPay="bKash",curAddPay="bKash",curAddAmt=0,deferredPrompt=null;
 function getUser(){try{return JSON.parse(localStorage.getItem("ut_user")||"null")}catch(e){return null}}
@@ -257,13 +232,13 @@ function getReferCode(p){let c=(p||"").replace(/[^a-zA-Z0-9]/g,"");if(c.length<=
 function getRank(spent){if(spent>=10000)return{rank:"Gold Member",level:"Level 3"};if(spent>=5000)return{rank:"Silver Member",level:"Level 2"};if(spent>=1000)return{rank:"Bronze Member",level:"Level 1"};return{rank:"Silver Member",level:"Level 1 - Current Rank"}}
 function renderCats(){let cats=["All","Games","Live","Social","Entertainment"];document.getElementById('cats').innerHTML=cats.map(c=>`<button class="${c===curCat?'on':''}" onclick="curCat='${c}';renderCats();renderGames()">${c}</button>`).join('')}
 function getResellerPrice(p){let u=getUser();if(u&&localStorage.getItem("ut_is_reseller_"+u.phone)==="1")return Math.floor(p*0.9);return p}
-function loadRealIcons(){renderGames();}
-function renderGames(){let q=(document.getElementById('searchInput').value||"").toLowerCase();let list=GAMES.filter(g=>(curCat==="All"||g.cat===curCat)&&g.name.toLowerCase().includes(q));document.getElementById('gameGrid').innerHTML=list.map(g=>{let colors=["#00c853,#007aff","#ff2d55,#ff9800","#7b1fa2,#ff00aa","#007aff,#00e5a0","#ff9800,#ffeb3b","#00b0ff,#7b1fa2"];let c=colors[g.id%colors.length];return `<div class="card" onclick="openGame(${g.id})"><div class="gameIconBox" style="background:linear-gradient(135deg,${c})"><div class="emoji">${g.emoji}</div>${g.badge?`<span style="position:absolute;top:6px;left:6px;background:#ff2d55;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:900">${g.badge}</span>`:''}</div><div class="cardName">${g.name}</div></div>`}).join('')||'<p style="padding:20px;color:#fff">No Game Found</p>';}
+function loadRealIcons(){GAMES.forEach(g=>{if(g.img)return;let cb="cb_"+g.id+"_"+Date.now();window[cb]=function(j){if(j.results&&j.results[0]&&j.results[0].artworkUrl100){g.img=j.results[0].artworkUrl100.replace('100x100bb','512x512bb');let el=document.getElementById('img-'+g.id);if(el){el.src=g.img;el.style.display='block';let em=document.getElementById('em-'+g.id);if(em)em.style.display='none';}}delete window[cb];};let s=document.createElement('script');s.src=`https://itunes.apple.com/search?term=${encodeURIComponent(g.itunes)}&entity=software&limit=1&callback=${cb}`;s.onerror=()=>{delete window[cb];};document.head.appendChild(s);});}
+function renderGames(){let q=(document.getElementById('searchInput').value||"").toLowerCase();let list=GAMES.filter(g=>(curCat==="All"||g.cat===curCat)&&g.name.toLowerCase().includes(q));document.getElementById('gameGrid').innerHTML=list.map(g=>{let colors=["#00c853,#007aff","#ff2d55,#ff9800","#7b1fa2,#ff00aa","#007aff,#00e5a0","#ff9800,#ffeb3b"];let c=colors[g.id%colors.length];return `<div class="card" onclick="openGame(${g.id})"><div style="position:relative;height:112px;background:linear-gradient(135deg,${c});display:flex;align-items:center;justify-content:center;overflow:hidden"><div id="em-${g.id}" style="text-align:center;color:#fff;display:${g.img?'none':'block'}"><div style="font-size:42px">${g.emoji}</div><div style="font-size:28px;font-weight:900">${g.name.charAt(0)}</div></div><img id="img-${g.id}" class="cardImg" src="${g.img||''}" style="position:absolute;inset:0;height:112px;width:100%;object-fit:cover;display:${g.img?'block':'none'}" onload="document.getElementById('em-${g.id}').style.display='none'" onerror="this.style.display='none';document.getElementById('em-${g.id}').style.display='block'">${g.badge?`<span style="position:absolute;top:6px;left:6px;background:#ff2d55;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:900;z-index:3">${g.badge}</span>`:''}</div><div class="cardName">${g.name}</div></div>`}).join('')||'<p style="padding:20px">No Game Found</p>';}
 let bannerIdx=0;function renderBannerDots(){document.getElementById('bannerDots').innerHTML=[0,1,2,3,4].map(i=>`<span class="${i===bannerIdx?'on':''}" onclick="bannerIdx=${i};moveBanner()"></span>`).join('')}
 function moveBanner(){document.getElementById('bannerTrack').style.transform=`translateX(-${bannerIdx*100}%)`;renderBannerDots()}
 setInterval(()=>{bannerIdx=(bannerIdx+1)%5;moveBanner()},4000);renderBannerDots();
-function openGame(id){curGame=GAMES.find(g=>g.id===id);document.getElementById('gmTitle').innerText=curGame.name;let colors=["#00c853,#007aff","#ff2d55,#ff9800","#7b1fa2,#ff00aa","#007aff,#00e5a0"];let c=colors[curGame.id%colors.length];let box=document.getElementById('gmIconBox');box.style.background=`linear-gradient(135deg,${c})`;box.innerText=curGame.emoji;document.getElementById('gmPkgs').innerHTML=curGame.pkgs.map((p,i)=>`<div class="pkg" onclick="selectPkg(${i},this)"><b>${p[0]}</b><span>Tk ${getResellerPrice(p[1])}</span></div>`).join('');document.getElementById('gmPlayerId').placeholder=curGame.inputLabel||"Enter Player ID / UID";document.getElementById('gmPlayerId').value="";let hint=document.getElementById('gmInputHint');if(curGame.inputType==="uid")hint.innerText="⚠️ Enter Correct UID, Wrong UID = No Delivery";else if(curGame.inputType==="phone")hint.innerText="📞 Enter 11 Digit Number - 01XXXXXXXXX";else if(curGame.inputType==="username")hint.innerText="👤 Enter Username - With @, e.g. @rana123";else if(curGame.inputType==="email")hint.innerText="📧 Enter The Gmail Of Your Account";else hint.innerText="";document.getElementById('gameModal').classList.add('open')}
-function selectPkg(i,el){curPkg=curGame.pkgs[i];document.querySelectorAll('#gmPkgs .pkg').forEach(x=>x.style.border='1px solid #eee');el.style.border='2px solid #00c853'}
+function openGame(id){curGame=GAMES.find(g=>g.id===id);document.getElementById('gmTitle').innerText=curGame.name;let img=document.getElementById('gmImg');if(curGame.img){img.src=curGame.img;img.style.display='block'}else{img.removeAttribute('src');img.style.display='none'}document.getElementById('gmPkgs').innerHTML=curGame.pkgs.map((p,i)=>`<div class="pkg" onclick="selectPkg(${i},this)"><b>${p[0]}</b><span>Tk ${getResellerPrice(p[1])}</span></div>`).join('');document.getElementById('gmPlayerId').placeholder=curGame.inputLabel||"Enter Player ID / UID";document.getElementById('gmPlayerId').value="";let hint=document.getElementById('gmInputHint');if(curGame.inputType==="uid")hint.innerText="⚠️ Enter Correct UID, Wrong UID = No Delivery";else if(curGame.inputType==="phone")hint.innerText="📞 Enter 11 Digit Number - 01XXXXXXXXX";else if(curGame.inputType==="username")hint.innerText="👤 Enter Username - With @, e.g. @rana123";else if(curGame.inputType==="email")hint.innerText="📧 Enter The Gmail Of Your Account";else hint.innerText="";document.getElementById('gameModal').classList.add('open')}
+function selectPkg(i,el){curPkg=curGame.pkgs[i];document.querySelectorAll('.pkg').forEach(x=>x.style.border='1px solid #eee');el.style.border='2px solid #00c853'}
 function payStepsHTML(method,amount){return `• Dial *247# Or Open ${method} App<br>• Click Send Money<br>• Send To: <b>${PAY_NUMBERS[method]}</b> <span onclick="navigator.clipboard.writeText('${PAY_NUMBERS[method]}');showToast('Number Copied')" style="background:#fff;color:#e91e63;padding:2px 8px;border-radius:6px;cursor:pointer">📋 Copy</span><br>• Amount: <b>Tk ${amount}</b><br>• Enter Your ${method} PIN<br>• Send Money & Copy Transaction ID<br>• Paste TrxID & Click Verify`;}
 function goPay(){if(!curPkg){alert("Select A Package First!");return}let pid=document.getElementById('gmPlayerId').value.trim();if(!pid){alert(curGame.inputLabel||"Enter Player ID!");return}if(curGame.inputType==="phone"&& (pid.length<11||!pid.startsWith("01"))){alert("Enter Correct 11 Digit Number - 01XXXXXXXXX");return}if(curGame.inputType==="username"&&pid.length<3){alert("Enter Correct Username - @username");return}if(curGame.inputType==="email"&&!pid.includes("@")){alert("Enter Correct Gmail - @gmail.com");return}let price=getResellerPrice(curPkg[1]);document.getElementById('paySummary').innerHTML=`<b>${curGame.name}</b> - ${curPkg[0]} - <b>Tk ${price}</b><br>${curGame.inputLabel}: ${pid}`;document.getElementById('paySteps').innerHTML=payStepsHTML(curPay,price);closeModal('gameModal');document.getElementById('payModal').classList.add('open')}
 function setPay(m){curPay=m;["bKash","Nagad","Rocket","Upay"].forEach(x=>{let el=document.getElementById('pay-'+x);if(el)el.classList.toggle('on',x===m)});if(curGame&&curPkg)document.getElementById('paySteps').innerHTML=payStepsHTML(m,getResellerPrice(curPkg[1]));}
@@ -288,13 +263,13 @@ function copyRefer(){let u=getUser();if(!u){alert("Login First!");openAccount();
 function updateRefer(){let u=getUser();if(u)document.getElementById('referLink').innerText='https://ultra-tup-up-bd.vercel.app/?ref='+getReferCode(u.phone)}
 function openReseller(){let u=getUser();if(!u){alert("Login First!");openAccount();return;}if(getSpent()<5000){alert(`You Need Tk ${5000-getSpent()} More Purchase! Check Profile.`);openAccount();return;}document.getElementById('r_name').value=u.name||'';document.getElementById('r_phone').value=u.phone||'';document.getElementById('resellerModal').classList.add('open');}
 function submitReseller(){let u=getUser();if(getSpent()<5000){alert("Tk 5000 Purchase Not Done Yet!");return;}let phone=document.getElementById('r_phone').value.trim();let shop=document.getElementById('r_shop').value.trim()||'No Shop';if(phone.length<5){alert("Enter Correct Number!");return;}let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");if(reqs.find(r=>r.user===u.phone&&r.status==='Pending')){alert("Application Already Submitted!");return;}reqs.unshift({user:u.phone,name:document.getElementById('r_name').value||u.name,phone,shop,totalSpent:getSpent(),status:'Pending',time:new Date().toLocaleString('en-GB')});localStorage.setItem("ut_reseller_req",JSON.stringify(reqs));document.getElementById('r_msg').innerText="✅ Application Submitted! Admin Will Confirm Your Tk 5000 Purchase, Then Reseller Will Unlock.";setTimeout(()=>{closeModal('resellerModal');showToast("✅ Reseller Application Submitted!");openAccount()},1200);}
-function approveReseller(phone){localStorage.setItem("ut_is_reseller_"+phone,"1");let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");reqs=reqs.map(r=>r.user===phone?{...r,status:'Approved'}:r);localStorage.setItem("ut_reseller_req",JSON.stringify(reqs));alert("✅ Reseller Approved: "+phone);renderGames();openAdmin();}
-function downloadAPK(){let a=document.createElement('a');a.href='./ultra-top-up-bd.apk';a.download='ULTRA-TOP-UP-BD.apk';document.body.appendChild(a);a.click();a.remove();showToast("⬇️ APK Download Started!");}
+function approveReseller(phone){localStorage.setItem("ut_is_reseller_"+phone,"1");let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");reqs=reqs.map(r=>r.user===phone?{...r,status:'Approved'}:r);localStorage.setItem("ut_reseller_req",JSON.stringify(reqs));alert("✅ Reseller Approved: "+phone);renderGames()}
+function downloadAPK(){let a=document.createElement('a');a.href='./ultra-top-up-bd.apk';a.download='ULTRA-TOP-UP-BD.apk';document.body.appendChild(a);a.click();a.remove();showToast("⬇️ APK Download Started!");setTimeout(()=>{if(!window._apkNotified){alert("APK ফাইল এখনো Vercel এ আপলোড দেও নাই।\n\nPWABuilder দিয়ে APK বানাইয়া ultra-top-up-bd.apk নামে Vercel এ রাখো, তাহলে Direct Download হবে।\nএখন Chrome দিয়ে Install করো।");window._apkNotified=true}},800)}
 function openInChrome(){window.open('intent://ultra-tup-up-bd.vercel.app/#Intent;scheme=https;package=com.android.chrome;end','_blank');copyLink()}
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e});
-function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted')showToast("✅ Installing!");deferredPrompt=null})}else{document.getElementById('installModal').classList.add('open')}}
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted')showToast("✅ Installing!");deferredPrompt=null})}else{downloadAPK();document.getElementById('installModal').classList.add('open')}}
 if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}
 renderCats();renderGames();setBal(getBal());updateRefer();loadRealIcons();
 </script>
 </body>
-</html>
+                                                                                                                                                                                 </html>
