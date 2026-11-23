@@ -83,13 +83,14 @@ input{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-to
 </head>
 <body>
 <canvas id="bgCanvas"></canvas><canvas id="touchCanvas"></canvas>
-<div class="topBar"><div class="topRow"><div class="logoBox"><img src="./logo.png" style="width:100%;height:100%;border-radius:10px;object-fit:cover" onerror="this.style.display='none';this.parentElement.innerText='U'"></div><div class="logoTxt"><b>ULTRA</b><br><span>TOP UP BD</span></div><button class="walletBtn" onclick="openWallet()">Tk <span id="bal">0</span> + Add</button><button class="installBtn" onclick="installApp()">⬇️ Install</button></div><div class="searchBox">🔍 <input id="searchInput" placeholder="Search - Free Fire, PUBG, IMO, TikTok" oninput="renderGames()"></div></div>
+<div class="topBar"><div class="topRow"><div class="logoBox"><img id="appLogo" src="" style="width:100%;height:100%;border-radius:10px;object-fit:cover" onerror="this.style.display='none';this.parentElement.innerText='U'"></div><div class="logoTxt"><b>ULTRA</b><br><span>TOP UP BD</span></div><button class="walletBtn" onclick="openWallet()">Tk <span id="bal">0</span> + Add</button><button class="installBtn" onclick="installApp()">⬇️ Install</button></div><div class="searchBox">🔍 <input id="searchInput" placeholder="Search - Free Fire, PUBG, IMO, TikTok" oninput="renderGames()"></div></div>
 <div class="noticeBar"><b>● NOTICE</b><marquee>ULTRA TOP UP BD - 24 Hours Topup Live | 30 Second Delivery | Buy Tk 5000 To Unlock Reseller - Check Profile</marquee></div>
 <div class="bannerSlider"><div class="bannerTrack" id="bannerTrack">
-<div class="bannerSlide"><img src="banner-main.jpg" onerror="this.src='banner-main.webp'"></div>
-<div class="bannerSlide"><img src="banner-freefire.jpg" onerror="this.src='banner-freefire.webp'"></div>
-<div class="bannerSlide"><img src="banner-mlbb.jpg" onerror="this.src='banner-mlbb.webp'"></div>
-<div class="bannerSlide"><img src="banner-payment.jpg" onerror="this.src='banner-payment.webp'"></div>
+<div class="bannerSlide"><img id="bannerMain" src=""></div>
+<div class="bannerSlide"><img id="bannerFreefire" src=""></div>
+<div class="bannerSlide"><img id="bannerMlbb" src=""></div>
+<div class="bannerSlide"><img id="bannerPayment" src=""></div>
+<div class="bannerSlide"><img id="bannerTelegram" src=""></div>
 </div></div><div class="bannerDots" id="bannerDots"></div>
 <div class="referBox"><b>🎁 Refer - 5% Commission</b><p id="referLink" style="font-size:12px;margin-top:4px;word-break:break-all">Login To Get Refer Link</p><button onclick="copyRefer()">Copy Refer Link</button></div>
 <div class="cats" id="cats"></div><div class="grid" id="gameGrid"></div>
@@ -108,7 +109,7 @@ input{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-to
 <div class="modal" id="adminModal"><div class="modalBox"><div class="modalHead"><b>🔐 Admin Panel - ULTRA TOP UP BD</b><span onclick="closeModal('adminModal')" style="cursor:pointer">✕</span></div><div style="padding:14px" id="adminBox"></div></div></div>
 <div id="telegramPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:9999; justify-content:center; align-items:center;">
   <div style="background:white; width:90%; max-width:400px; border-radius:15px; overflow:hidden; text-align:center; padding-bottom:15px;">
-    <img src="banner-telegram.jpg" onerror="this.src='banner-telegram.webp'" style="width:100%; display:block;">
+    <img id="bannerTelegramPopup" src="" style="width:100%; display:block;">
     <p style="font-weight:bold; padding:12px; font-size:15px;">প্রতিদিন ফ্রিতে ডায়মন্ড পেতে Telegram এ Join করো 💎</p>
     <a href="https://t.me/+Q6GAbYR_AusxMjE1" target="_blank" style="background:#229ED9; color:white; padding:12px 30px; border-radius:8px; text-decoration:none; font-weight:bold; display:inline-block;">Telegram Join করো ✈️</a>
     <br><br>
@@ -116,6 +117,7 @@ input{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-to
   </div>
 </div>
 <div class="toast" id="toast"></div>
+<script src="banners.js"></script>
 <script>
 let LANG=localStorage.getItem("ut_lang")||"en";
 const T={en:{welcome:"Welcome",balance:"Balance",totalBuy:"Total Purchase",referCode:"Refer Code",walletBal:"Wallet Balance",addMoney:"Add Money",reseller:"Reseller Panel",locked:"Locked",apply:"Apply For Reseller - Free",pending:"Application Pending",active:"Reseller Active",logout:"Logout",copyRefer:"Copy Refer Link",lang:"Language"},bn:{welcome:"স্বাগতম",balance:"ব্যালেন্স",totalBuy:"মোট কেনাকাটা",referCode:"রেফার কোড",walletBal:"ওয়ালেট ব্যালেন্স",addMoney:"টাকা যোগ করো",reseller:"রিসেলার প্যানেল",locked:"লক",apply:"রিসেলার আবেদন করো - ফ্রি",pending:"আবেদন পেন্ডিং",active:"রিসেলার চালু",logout:"লগআউট",copyRefer:"রেফার লিংক কপি করো",lang:"ভাষা"}};
@@ -236,9 +238,9 @@ function renderCats(){let cats=["All","Games","Live","Social","Entertainment"];d
 function getResellerPrice(p){let u=getUser();if(u&&localStorage.getItem("ut_is_reseller_"+u.phone)==="1")return Math.floor(p*0.9);return p}
 function loadRealIcons(){GAMES.forEach(g=>{if(g.img)return;let cb="cb_"+g.id+"_"+Date.now();window[cb]=function(j){if(j.results&&j.results[0]&&j.results[0].artworkUrl100){g.img=j.results[0].artworkUrl100.replace('100x100bb','512x512bb');let el=document.getElementById('img-'+g.id);if(el){el.src=g.img;el.style.display='block';let em=document.getElementById('em-'+g.id);if(em)em.style.display='none';}}delete window[cb];};let s=document.createElement('script');s.src=`https://itunes.apple.com/search?term=${encodeURIComponent(g.itunes)}&entity=software&limit=1&callback=${cb}`;s.onerror=()=>{delete window[cb];};document.head.appendChild(s);});}
 function renderGames(){let q=(document.getElementById('searchInput').value||"").toLowerCase();let list=GAMES.filter(g=>(curCat==="All"||g.cat===curCat)&&g.name.toLowerCase().includes(q));document.getElementById('gameGrid').innerHTML=list.map(g=>{let colors=["#00c853,#007aff","#ff2d55,#ff9800","#7b1fa2,#ff00aa","#007aff,#00e5a0","#ff9800,#ffeb3b"];let c=colors[g.id%colors.length];return `<div class="card" onclick="openGame(${g.id})"><div style="position:relative;height:112px;background:linear-gradient(135deg,${c});display:flex;align-items:center;justify-content:center;overflow:hidden"><div id="em-${g.id}" style="text-align:center;color:#fff;display:${g.img?'none':'block'}"><div style="font-size:42px">${g.emoji}</div><div style="font-size:28px;font-weight:900">${g.name.charAt(0)}</div></div><img id="img-${g.id}" class="cardImg" src="${g.img||''}" style="position:absolute;inset:0;height:112px;width:100%;object-fit:cover;display:${g.img?'block':'none'}" onload="document.getElementById('em-${g.id}').style.display='none'" onerror="this.style.display='none';document.getElementById('em-${g.id}').style.display='block'">${g.badge?`<span style="position:absolute;top:6px;left:6px;background:#ff2d55;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:900;z-index:3">${g.badge}</span>`:''}</div><div class="cardName">${g.name}</div></div>`}).join('')||'<p style="padding:20px">No Game Found</p>';}
-let bannerIdx=0;function renderBannerDots(){document.getElementById('bannerDots').innerHTML=[0,1,2,3].map(i=>`<span class="${i===bannerIdx?'on':''}" onclick="bannerIdx=${i};moveBanner()"></span>`).join('')}
+let bannerIdx=0;function renderBannerDots(){document.getElementById('bannerDots').innerHTML=[0,1,2,3,4].map(i=>`<span class="${i===bannerIdx?'on':''}" onclick="bannerIdx=${i};moveBanner()"></span>`).join('')}
 function moveBanner(){document.getElementById('bannerTrack').style.transform=`translateX(-${bannerIdx*100}%)`;renderBannerDots()}
-setInterval(()=>{bannerIdx=(bannerIdx+1)%4;moveBanner()},4000);renderBannerDots();
+setInterval(()=>{bannerIdx=(bannerIdx+1)%5;moveBanner()},4000);renderBannerDots();
 function openGame(id){curGame=GAMES.find(g=>g.id===id);document.getElementById('gmTitle').innerText=curGame.name;let img=document.getElementById('gmImg');if(curGame.img){img.src=curGame.img;img.style.display='block'}else{img.removeAttribute('src');img.style.display='none'}document.getElementById('gmPkgs').innerHTML=curGame.pkgs.map((p,i)=>`<div class="pkg" onclick="selectPkg(${i},this)"><b>${p[0]}</b><span>Tk ${getResellerPrice(p[1])}</span></div>`).join('');document.getElementById('gmPlayerId').placeholder=curGame.inputLabel||"Enter Player ID / UID";document.getElementById('gmPlayerId').value="";let hint=document.getElementById('gmInputHint');if(curGame.inputType==="uid")hint.innerText="⚠️ Enter Correct UID, Wrong UID = No Delivery";else if(curGame.inputType==="phone")hint.innerText="📞 Enter 11 Digit Number - 01XXXXXXXXX";else if(curGame.inputType==="username")hint.innerText="👤 Enter Username - With @, e.g. @rana123";else if(curGame.inputType==="email")hint.innerText="📧 Enter The Gmail Of Your Account";else hint.innerText="";document.getElementById('gameModal').classList.add('open')}
 function selectPkg(i,el){curPkg=curGame.pkgs[i];document.querySelectorAll('.pkg').forEach(x=>x.style.border='1px solid #eee');el.style.border='2px solid #00c853'}
 function payStepsHTML(method,amount){return `• Dial *247# Or Open ${method} App<br>• Click Send Money<br>• Send To: <b>${PAY_NUMBERS[method]}</b> <span onclick="navigator.clipboard.writeText('${PAY_NUMBERS[method]}');showToast('Number Copied')" style="background:#fff;color:#e91e63;padding:2px 8px;border-radius:6px;cursor:pointer">📋 Copy</span><br>• Amount: <b>Tk ${amount}</b><br>• Enter Your ${method} PIN<br>• Send Money & Copy Transaction ID<br>• Paste TrxID & Click Verify`;}
@@ -274,4 +276,4 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').cat
 renderCats();renderGames();setBal(getBal());updateRefer();loadRealIcons();
 </script>
 </body>
-  </html>
+                                     </html>
