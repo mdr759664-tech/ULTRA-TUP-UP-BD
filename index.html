@@ -14,6 +14,7 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#f2f2f2;padding-bottom:110px;overflow-x:hidden}
 #bgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+#touchCanvas{position:fixed;inset:0;z-index:999;pointer-events:none}
 .topBar,.noticeBar,.bannerSlider,.referBox,.cats,.grid,.bottomNav,.redeemBox{position:relative;z-index:2}
 .topBar{position:sticky;top:0;z-index:50;background:#fff;padding:8px 10px;box-shadow:0 2px 10px rgba(0,0,0,.2)}
 .topRow{display:flex;align-items:center;gap:7px}
@@ -24,6 +25,9 @@ body{background:#f2f2f2;padding-bottom:110px;overflow-x:hidden}
 .installBtn{background:#0091ea;color:#fff;border:none;padding:8px 11px;border-radius:20px;font-weight:800;font-size:13px}
 .searchBox{margin-top:8px;background:#f0f0f0;border-radius:20px;padding:10px 12px;display:flex;gap:6px}
 .searchBox input{border:none;background:transparent;outline:none;width:100%;font-size:14px}
+.tgNotice{background:#fff9c4;color:#111;margin:10px;margin-bottom:0;border-radius:10px;padding:12px 12px;font-size:13px;line-height:1.5;position:relative;z-index:2;border:1px solid #ffe082;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.tgNotice b{color:#6a1b9a}
+.tgNotice button{background:#fff;border:1px solid #111;padding:7px 14px;border-radius:8px;font-weight:900;float:right;cursor:pointer}
 .noticeBar{background:#e91e63;color:#fff;display:flex;align-items:center;margin:10px;border-radius:8px;overflow:hidden}
 .noticeBar b{background:#111;padding:9px 10px;font-size:13px;white-space:nowrap}.noticeBar marquee{font-size:13px;font-weight:700}
 .bannerSlider{overflow:hidden;margin:10px;border-radius:14px;background:#fff;box-shadow:0 4px 20px rgba(0,0,0,.3)}
@@ -85,8 +89,10 @@ input{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-to
 </style>
 </head>
 <body>
-<canvas id="bgCanvas"></canvas>
+<canvas id="bgCanvas"></canvas><canvas id="touchCanvas"></canvas>
 <div class="topBar"><div class="topRow"><div class="logoBox"><img src="https://i.ibb.co/DDmdVS2L/IMG-20261123-WA0003.jpg" alt="ULTRA TOP UP BD"></div><div class="logoTxt"><b>ULTRA</b><br><span>TOP UP BD</span></div><button class="walletBtn" onclick="openWallet()">Tk <span id="bal">0</span> + Add</button><button class="installBtn" onclick="installApp()">⬇️ Install</button></div><div class="searchBox">🔍 <input id="searchInput" placeholder="Search - Free Fire, PUBG, IMO, TikTok" oninput="renderGames()"></div></div>
+<!-- TELEGRAM NOTICE - PROTIBAR DUKLE ASBO -->
+<div class="tgNotice" id="tgNoticeBar">Our Telegram support has changed.<br>Please message the new account from now on.<br><b>@UltraTopUpBD</b><button onclick="document.getElementById('tgNoticeBar').style.display='none'">Got it</button><div style="clear:both"></div></div>
 <div class="noticeBar"><b>● NOTICE</b><marquee>ULTRA TOP UP BD - 24 Hours Topup Live | 30 Second Delivery | Buy Tk 5000 To Unlock Reseller - Check Profile</marquee></div>
 <div class="bannerSlider"><div class="bannerTrack" id="bannerTrack">
 <div class="bannerSlide" style="background:linear-gradient(135deg,#0b1a4a,#007aff)"><small>⚡ ULTRA TOP UP BD</small><h2>30 Second<br>Delivery 🔥</h2><p>24 Hours Topup Live | AI Robot Auto Delivery</p><button onclick="document.getElementById('searchInput').focus()">Topup Now →</button></div>
@@ -112,19 +118,15 @@ input{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-to
 <div class="modal" id="redeemModal"><div class="modalBox"><div class="modalHead"><b>🎁 Redeem Code</b><span onclick="closeModal('redeemModal')" style="cursor:pointer">✕</span></div><div style="padding:14px"><p style="font-size:13px;color:#666">Telegram / Facebook থেকে Code পাইলে এখানে বসাও। Balance এ টাকা যোগ হইবো।</p><input id="redeemInput2" placeholder="Enter Redeem Code"><button class="btnMain" onclick="redeemCode2()">Redeem Now →</button><div id="redeemList" style="margin-top:12px"></div></div></div></div>
 <div class="modal" id="installModal"><div class="modalBox"><div class="modalHead"><b>⬇️ Download App</b><span onclick="closeModal('installModal')" style="cursor:pointer">✕</span></div><div style="padding:14px;text-align:center"><button class="btnMain" onclick="downloadAPK()">⬇️ Download APK - Direct →</button><button class="btnMain" style="background:#111" onclick="openInChrome()">🌐 Open in Chrome → Install</button></div></div></div>
 <div class="modal" id="adminModal"><div class="modalBox"><div class="modalHead"><b>🔐 Admin Panel</b><span onclick="closeModal('adminModal')" style="cursor:pointer">✕</span></div><div style="padding:14px" id="adminBox"></div></div></div>
-<!-- TELEGRAM POPUP - NOTUN SUNDOR DESIGN, BORO CHOBI NAI -->
-<div id="telegramPopup" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:9999;justify-content:center;align-items:center;padding:20px">
-  <div style="background:#fff;border-radius:20px;overflow:hidden;width:100%;max-width:340px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.4)">
-    <div style="background:linear-gradient(135deg,#229ED9,#007aff);padding:22px 16px;color:#fff">
-      <div style="width:62px;height:62px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto">✈️</div>
-      <h3 style="margin-top:12px;font-size:19px">Telegram Channel</h3>
-      <p style="font-size:13px;opacity:.9;margin-top:4px">Daily Giveaway & Offer</p>
+<!-- TELEGRAM POPUP - PROTIBAR ASBO, SESSIONSTORAGE NAI -->
+<div id="telegramPopup" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:9999;justify-content:center;align-items:center;padding:15px">
+  <div style="background:#fff;border-radius:16px;overflow:hidden;width:100%;max-width:380px;text-align:left;box-shadow:0 20px 50px rgba(0,0,0,.4)">
+    <img src="https://i.ibb.co/MkXJHqq6/IMG-20261123-WA0001.jpg" style="width:100%;aspect-ratio:16/7;object-fit:cover;display:block">
+    <div style="padding:16px">
+      <p style="font-weight:800;font-size:16px;line-height:1.5;color:#111">প্রতিদিন ফ্রিতে ডায়মন্ড পেতে আমাদের Telegram চ্যানেলে Join করুন</p>
+      <a href="https://t.me/+Q6GAbYR_AusxMjE1" target="_blank" style="display:inline-block;background:#229ED9;color:#fff;padding:11px 22px;border-radius:8px;text-decoration:none;font-weight:900;margin-top:12px">ক্লিক করুন</a>
     </div>
-    <div style="padding:18px 16px">
-      <p style="font-weight:800;font-size:16px;line-height:1.5;color:#111">প্রতিদিন ফ্রিতে ডায়মন্ড পেতে<br>Telegram এ Join করুন</p>
-      <a href="https://t.me/+Q6GAbYR_AusxMjE1" target="_blank" style="display:block;background:#229ED9;color:#fff;padding:13px;border-radius:12px;text-decoration:none;font-weight:900;margin-top:14px">✈️ Join Telegram →</a>
-      <button onclick="closeTgPopup()" style="background:#f0f0f0;border:none;width:100%;padding:11px;border-radius:12px;font-weight:800;margin-top:8px;cursor:pointer">পরে দেখবো ✕</button>
-    </div>
+    <button onclick="closeTgPopup()" style="display:block;width:100%;background:#00c853;color:#fff;border:none;padding:14px;font-weight:900;font-size:16px;cursor:pointer">✕ CLOSE</button>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -139,8 +141,9 @@ async function callUltraAPI(o){return{success:false,mode:"manual"}}
 function openTelegram(){window.open('https://t.me/+Q6GAbYR_AusxMjE1','_blank')}
 function openWhatsAppSupport(msg){window.open('https://wa.me/'+WA_LINK+'?text='+encodeURIComponent(msg||'Hello, I need help'),'_blank')}
 function toggleWaPop(){document.getElementById('waPop').classList.toggle('open')}
-function closeTgPopup(){document.getElementById('telegramPopup').style.display='none';sessionStorage.setItem('ut_tg_closed','1');}
-setTimeout(function(){ if(!sessionStorage.getItem('ut_tg_closed')) document.getElementById('telegramPopup').style.display='flex'; }, 2500);
+function closeTgPopup(){document.getElementById('telegramPopup').style.display='none';}
+// PROTIBAR ASBO - SESSIONSTORAGE BAD
+setTimeout(function(){ document.getElementById('telegramPopup').style.display='flex'; }, 2500);
 function openAdmin(){let pass=prompt("Admin Password দিন:");if(pass!=="admin123"){if(pass!==null)alert("Wrong Password!");return;}let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");let total=orders.reduce((s,o)=>s+(o.price||0),0);document.getElementById('adminBox').innerHTML=`<div style="background:#111;color:#fff;padding:14px;border-radius:12px;text-align:center"><h3>📊 Total Orders: ${orders.length}</h3><p>Total Sell: Tk ${total}</p></div><h3 style="margin-top:14px">🛍️ All Orders</h3>${orders.length?orders.map((o)=>`<div class="pkg"><div><b>${o.game} - ${o.pkg}</b><br><small>${o.pid} | Trx: ${o.trx} | ${o.pay} | ${o.status}</small></div><b>Tk ${o.price}</b></div>`).join(''):'<p>No Orders Yet</p>'}`;document.getElementById('adminModal').classList.add('open');}
 if(location.search.includes("admin=1")){setTimeout(openAdmin,1000);}
 const REDEEM_CODES={"ULTRA50":50,"ULTRA100":100,"FREE10":10,"ULTRA200":200,"WELCOME20":20};
@@ -152,63 +155,68 @@ const bgC=document.getElementById('bgCanvas'),bgX=bgC.getContext('2d');let bgW,b
 function resizeBg(){bgW=bgC.width=window.innerWidth;bgH=bgC.height=window.innerHeight;parts=Array.from({length:20},()=>({x:Math.random()*bgW,y:Math.random()*bgH,r:Math.random()*2+1,dx:(Math.random()-.5)*.3,dy:(Math.random()-.5)*.3,c:Math.random()>.5?'#00e5a0':'#00b0ff',o:Math.random()*.3+.2}));}
 window.addEventListener('resize',resizeBg);resizeBg();
 function drawBg(){bgX.clearRect(0,0,bgW,bgH);bgX.fillStyle='#f2f2f2';bgX.fillRect(0,0,bgW,bgH);parts.forEach(p=>{p.x+=p.dx;p.y+=p.dy;if(p.x<0||p.x>bgW)p.dx*=-1;if(p.y<0||p.y>bgH)p.dy*=-1;bgX.beginPath();bgX.arc(p.x,p.y,p.r,0,Math.PI*2);bgX.fillStyle=p.c;bgX.globalAlpha=p.o;bgX.fill();bgX.globalAlpha=1;});requestAnimationFrame(drawBg);}drawBg();
-// 55 TA GAME - SUDHU 55 TA
+// TOUCH ANIMATION - JE KONO JAIGAI TAS KORLE ASBO
+const tc=document.getElementById('touchCanvas'),tx=tc.getContext('2d');function resizeTouch(){tc.width=window.innerWidth;tc.height=window.innerHeight;}resizeTouch();window.addEventListener('resize',resizeTouch);let bursts=[];
+document.addEventListener('pointerdown',e=>{let colors=['#00e5a0','#00b0ff','#ffeb3b','#ff2d55','#a855f7'];for(let i=0;i<22;i++){let a=Math.random()*Math.PI*2,s=Math.random()*4+1;bursts.push({x:e.clientX,y:e.clientY,vx:Math.cos(a)*s,vy:Math.sin(a)*s,r:Math.random()*4+2,life:1,c:colors[Math.floor(Math.random()*colors.length)]});}bursts.push({x:e.clientX,y:e.clientY,vx:0,vy:0,r:5,life:1,ring:true});});
+function drawTouch(){tx.clearRect(0,0,tc.width,tc.height);bursts=bursts.filter(b=>b.life>0);bursts.forEach(b=>{b.x+=b.vx;b.y+=b.vy;b.vy+=0.05;b.life-=0.02;if(b.ring){tx.beginPath();tx.arc(b.x,b.y,(1-b.life)*70+5,0,Math.PI*2);tx.strokeStyle='rgba(0,229,160,'+b.life+')';tx.lineWidth=2;tx.stroke();}else{tx.beginPath();tx.arc(b.x,b.y,b.r,0,Math.PI*2);tx.fillStyle=b.c;tx.globalAlpha=b.life;tx.shadowColor=b.c;tx.shadowBlur=8;tx.fill();tx.globalAlpha=1;tx.shadowBlur=0;}});requestAnimationFrame(drawTouch);}drawTouch();
+// DAM: FREE FIRE + PUBG AGERTAI, BAKI SOB +10%
 const GAMES=[
 {id:1,name:"Free Fire",cat:"Games",itunes:"Free Fire",inputType:"uid",inputLabel:"Enter Free Fire UID",pkgs:[["25 Diamond",21],["50 Diamond",36],["100 Diamonds",75],["115 Diamond",78],["210 Diamonds",150],["310 Diamonds",220],["505 Diamond",333],["610 Diamond",400],["1060 Diamonds",730],["Weekly",155],["Monthly",780],["Weekly Lite",42]]},
 {id:2,name:"PUBG Mobile",cat:"Games",itunes:"PUBG Mobile",inputType:"uid",inputLabel:"Enter PUBG UID",pkgs:[["60 UC",115],["120 UC",230],["325 UC",580],["660 UC",1150],["985 UC",1700]]},
-{id:3,name:"Mobile Legends",cat:"Games",itunes:"Mobile Legends Bang Bang",inputType:"uid",inputLabel:"Enter MLBB ID + Server",pkgs:[["86 Diamonds",87],["172 Diamonds",174],["257 Diamonds",260],["515 Diamonds",520]]},
-{id:4,name:"Delta Force",cat:"Games",itunes:"Delta Force",inputType:"uid",inputLabel:"Enter Delta Force UID",pkgs:[["100 Coins",74],["500 Coins",345],["1000 Coins",690]]},
-{id:5,name:"Genshin Impact",cat:"Games",itunes:"Genshin Impact",inputType:"uid",inputLabel:"Enter Genshin UID",pkgs:[["60 Crystals",87],["300 Crystals",460],["980 Crystals",1380]]},
-{id:6,name:"Honkai Star Rail",cat:"Games",itunes:"Honkai Star Rail",inputType:"uid",inputLabel:"Enter HSR UID",pkgs:[["60 Shards",87],["300 Shards",460],["980 Shards",1380]]},
-{id:7,name:"Yalla Ludo",cat:"Games",itunes:"Yalla Ludo",inputType:"uid",inputLabel:"Enter Yalla Ludo UID",pkgs:[["100 Diamonds",87],["500 Diamonds",435],["1000 Diamonds",870]]},
-{id:8,name:"Bigo Live",cat:"Live",itunes:"Bigo Live",inputType:"uid",inputLabel:"Enter Bigo ID / UID",pkgs:[["40 Diamonds",45],["210 Diamonds",235],["420 Diamonds",460]]},
-{id:9,name:"Poppo Live",cat:"Live",itunes:"Poppo Live",inputType:"uid",inputLabel:"Enter Poppo UID",pkgs:[["100 Coins",100],["500 Coins",500],["1000 Coins",1000]]},
-{id:10,name:"8 Ball Pool",cat:"Games",itunes:"8 Ball Pool",inputType:"uid",inputLabel:"Enter 8 Ball Pool UID",pkgs:[["50 Cash",55],["100 Cash",104],["500 Cash",478]]},
-{id:11,name:"Crunchyroll Premium",cat:"Entertainment",itunes:"Crunchyroll",inputType:"email",inputLabel:"Enter Crunchyroll Gmail",pkgs:[["1 Month",200],["3 Months",550]]},
-{id:12,name:"Sniper Duels",cat:"Games",itunes:"Sniper Duels",inputType:"uid",inputLabel:"Enter Sniper Duels UID",pkgs:[["100 Gold",90],["500 Gold",435]]},
-{id:13,name:"Amazon Prime",cat:"Entertainment",itunes:"Amazon Prime Video",inputType:"email",inputLabel:"Enter Amazon Gmail",pkgs:[["1 Month",160],["3 Months",435]]},
-{id:14,name:"Valorant Points",cat:"Games",itunes:"Valorant",inputType:"username",inputLabel:"Enter Riot ID - Name#Tag",pkgs:[["475 VP",402],["950 VP",805],["2050 VP",1695]]},
-{id:15,name:"Legend of Neverland",cat:"Games",itunes:"Legend of Neverland",inputType:"uid",inputLabel:"Enter Neverland UID",pkgs:[["60 Crystals",74],["300 Crystals",345]]},
-{id:16,name:"Legend of the Phoenix",cat:"Games",itunes:"Legend of the Phoenix",inputType:"uid",inputLabel:"Enter Phoenix UID",pkgs:[["60 Ingots",74],["300 Ingots",345]]},
-{id:17,name:"Marvel Rivals",cat:"Games",itunes:"Marvel Rivals",inputType:"uid",inputLabel:"Enter Marvel Rivals UID",pkgs:[["500 Lattice",402],["1000 Lattice",805]]},
-{id:18,name:"Bleach: Soul Resonance",cat:"Games",itunes:"Bleach Soul Resonance",inputType:"uid",inputLabel:"Enter Bleach UID",pkgs:[["60 Jade",74],["300 Jade",345]]},
-{id:19,name:"Soul Land: New World",cat:"Games",itunes:"Soul Land New World",inputType:"uid",inputLabel:"Enter Soul Land UID",pkgs:[["60 Diamonds",74],["300 Diamonds",345]]},
-{id:20,name:"Honor of Kings",cat:"Games",itunes:"Honor of Kings",inputType:"uid",inputLabel:"Enter HoK UID",pkgs:[["80 Tokens",90],["400 Tokens",435],["800 Tokens",870]]},
-{id:21,name:"Onmyoji Arena",cat:"Games",itunes:"Onmyoji Arena",inputType:"uid",inputLabel:"Enter Onmyoji UID",pkgs:[["60 Jade",74],["300 Jade",345]]},
-{id:22,name:"Crystal of Atlan",cat:"Games",itunes:"Crystal of Atlan",inputType:"uid",inputLabel:"Enter Atlan UID",pkgs:[["60 Prisms",74],["300 Prisms",345]]},
-{id:23,name:"Love and Deepspace",cat:"Games",itunes:"Love and Deepspace",inputType:"uid",inputLabel:"Enter Deepspace UID",pkgs:[["60 Diamonds",90],["300 Diamonds",460]]},
-{id:24,name:"Telegram Stars",cat:"Social",itunes:"Telegram",inputType:"username",inputLabel:"Enter Telegram Username - @username",pkgs:[["50 Stars",99],["100 Stars",189],["500 Stars",940],["1000 Stars",1840]]},
-{id:25,name:"Acecraft",cat:"Games",itunes:"Acecraft",inputType:"uid",inputLabel:"Enter Acecraft UID",pkgs:[["60 Coins",74],["300 Coins",345]]},
-{id:26,name:"Jaco Live",cat:"Live",itunes:"Jaco Live",inputType:"uid",inputLabel:"Enter Jaco UID",pkgs:[["100 Coins",100],["500 Coins",500]]},
-{id:27,name:"Migo Live",cat:"Live",itunes:"Migo Live",inputType:"uid",inputLabel:"Enter Migo UID",pkgs:[["100 Coins",100],["500 Coins",500]]},
-{id:28,name:"Oxide Survival Island",cat:"Games",itunes:"Oxide Survival Island",inputType:"uid",inputLabel:"Enter Oxide UID",pkgs:[["60 Coins",74],["300 Coins",345]]},
-{id:29,name:"Age of Magic",cat:"Games",itunes:"Age of Magic",inputType:"uid",inputLabel:"Enter Age of Magic UID",pkgs:[["60 Gold",74],["300 Gold",345]]},
-{id:30,name:"Once Human",cat:"Games",itunes:"Once Human",inputType:"uid",inputLabel:"Enter Once Human UID",pkgs:[["60 Crystgin",74],["300 Crystgin",345]]},
-{id:31,name:"Etheria Restart",cat:"Games",itunes:"Etheria Restart",inputType:"uid",inputLabel:"Enter Etheria UID",pkgs:[["60 Crystals",74],["300 Crystals",345]]},
-{id:32,name:"Racing Master",cat:"Games",itunes:"Racing Master",inputType:"uid",inputLabel:"Enter Racing Master UID",pkgs:[["60 Diamonds",74],["300 Diamonds",345]]},
-{id:33,name:"Ludus Strategy PVP",cat:"Games",itunes:"Ludus Merge Arena",inputType:"uid",inputLabel:"Enter Ludus UID",pkgs:[["60 Gold",74],["300 Gold",345]]},
-{id:34,name:"Garena Undawn",cat:"Games",itunes:"Undawn",inputType:"uid",inputLabel:"Enter Undawn UID",pkgs:[["60 RC",74],["300 RC",345]]},
-{id:35,name:"Overmortal Idle",cat:"Games",itunes:"Overmortal",inputType:"uid",inputLabel:"Enter Overmortal UID",pkgs:[["60 Jade",74],["300 Jade",345]]},
-{id:36,name:"Growtopia",cat:"Games",itunes:"Growtopia",inputType:"username",inputLabel:"Enter Growtopia Username",pkgs:[["60 Gems",74],["300 Gems",345]]},
-{id:37,name:"Bullet Echo",cat:"Games",itunes:"Bullet Echo",inputType:"uid",inputLabel:"Enter Bullet Echo UID",pkgs:[["60 Gold",74],["300 Gold",345]]},
-{id:38,name:"Ghost Story: Love Destiny",cat:"Games",itunes:"Ghost Story Love Destiny",inputType:"uid",inputLabel:"Enter Ghost Story UID",pkgs:[["60 Jade",74],["300 Jade",345]]},
-{id:39,name:"CATS: Crash Arena",cat:"Games",itunes:"CATS Crash Arena Turbo Stars",inputType:"uid",inputLabel:"Enter CATS UID",pkgs:[["60 Gems",74],["300 Gems",345]]},
-{id:40,name:"Legends of Runeterra",cat:"Games",itunes:"Legends of Runeterra",inputType:"username",inputLabel:"Enter Riot ID - Name#Tag",pkgs:[["60 Coins",74],["300 Coins",345]]},
-{id:41,name:"Pixel Gun 3D",cat:"Games",itunes:"Pixel Gun 3D",inputType:"uid",inputLabel:"Enter Pixel Gun UID",pkgs:[["60 Gems",74],["300 Gems",345]]},
-{id:42,name:"Eggy Party",cat:"Games",itunes:"Eggy Party",inputType:"uid",inputLabel:"Enter Eggy Party UID",pkgs:[["60 Coins",74],["300 Coins",345]]},
-{id:43,name:"Haikyu!! Fly High",cat:"Games",itunes:"Haikyu Fly High",inputType:"uid",inputLabel:"Enter Haikyu UID",pkgs:[["60 Diamonds",74],["300 Diamonds",345]]},
-{id:44,name:"MICO Coins",cat:"Live",itunes:"MICO",inputType:"uid",inputLabel:"Enter MICO UID",pkgs:[["100 Coins",100],["500 Coins",500]]},
-{id:45,name:"Harry Potter: Magic Awakened",cat:"Games",itunes:"Harry Potter Magic Awakened",inputType:"uid",inputLabel:"Enter HP UID",pkgs:[["60 Gems",74],["300 Gems",345]]},
-{id:46,name:"League of Legends",cat:"Games",itunes:"League of Legends Wild Rift",inputType:"username",inputLabel:"Enter Riot ID - Name#Tag",pkgs:[["60 Cores",74],["300 Cores",345]]},
-{id:47,name:"Patti Game",cat:"Games",itunes:"Patti",inputType:"uid",inputLabel:"Enter Patti UID",pkgs:[["100 Chips",90],["500 Chips",435]]},
-{id:48,name:"TikTok Coins",cat:"Social",itunes:"TikTok",inputType:"username",inputLabel:"Enter TikTok Username - @username",pkgs:[["70 Coins",99],["350 Coins",468],["700 Coins",898]]},
-{id:49,name:"IMO Diamonds",cat:"Social",itunes:"imo",inputType:"phone",inputLabel:"Enter IMO Number - 01XXXXXXXXX",pkgs:[["100 Diamonds",100],["500 Diamonds",500]]},
+{id:3,name:"Mobile Legends",cat:"Games",itunes:"Mobile Legends Bang Bang",inputType:"uid",inputLabel:"Enter MLBB ID + Server",pkgs:[["86 Diamonds",96],["172 Diamonds",191],["257 Diamonds",286],["515 Diamonds",572]]},
+{id:4,name:"Delta Force",cat:"Games",itunes:"Delta Force",inputType:"uid",inputLabel:"Enter Delta Force UID",pkgs:[["100 Coins",82],["500 Coins",380],["1000 Coins",759]]},
+{id:5,name:"Genshin Impact",cat:"Games",itunes:"Genshin Impact",inputType:"uid",inputLabel:"Enter Genshin UID",pkgs:[["60 Crystals",96],["300 Crystals",506],["980 Crystals",1518]]},
+{id:6,name:"Honkai Star Rail",cat:"Games",itunes:"Honkai Star Rail",inputType:"uid",inputLabel:"Enter HSR UID",pkgs:[["60 Shards",96],["300 Shards",506],["980 Shards",1518]]},
+{id:7,name:"Yalla Ludo",cat:"Games",itunes:"Yalla Ludo",inputType:"uid",inputLabel:"Enter Yalla Ludo UID",pkgs:[["100 Diamonds",96],["500 Diamonds",479],["1000 Diamonds",957]]},
+{id:8,name:"Bigo Live",cat:"Live",itunes:"Bigo Live",inputType:"uid",inputLabel:"Enter Bigo ID / UID",pkgs:[["40 Diamonds",50],["210 Diamonds",259],["420 Diamonds",506]]},
+{id:9,name:"Poppo Live",cat:"Live",itunes:"Poppo Live",inputType:"uid",inputLabel:"Enter Poppo UID",pkgs:[["100 Coins",110],["500 Coins",550],["1000 Coins",1100]]},
+{id:10,name:"8 Ball Pool",cat:"Games",itunes:"8 Ball Pool",inputType:"uid",inputLabel:"Enter 8 Ball Pool UID",pkgs:[["50 Cash",61],["100 Cash",115],["500 Cash",526]]},
+{id:11,name:"Crunchyroll Premium",cat:"Entertainment",itunes:"Crunchyroll",inputType:"email",inputLabel:"Enter Crunchyroll Gmail",pkgs:[["1 Month",220],["3 Months",605]]},
+{id:12,name:"Sniper Duels",cat:"Games",itunes:"Sniper Duels",inputType:"uid",inputLabel:"Enter Sniper Duels UID",pkgs:[["100 Gold",99],["500 Gold",479]]},
+{id:13,name:"Amazon Prime",cat:"Entertainment",itunes:"Amazon Prime Video",inputType:"email",inputLabel:"Enter Amazon Gmail",pkgs:[["1 Month",176],["3 Months",479]]},
+{id:14,name:"Valorant Points",cat:"Games",itunes:"Valorant",inputType:"username",inputLabel:"Enter Riot ID - Name#Tag",pkgs:[["475 VP",443],["950 VP",886],["2050 VP",1865]]},
+{id:15,name:"Legend of Neverland",cat:"Games",itunes:"Legend of Neverland",inputType:"uid",inputLabel:"Enter Neverland UID",pkgs:[["60 Crystals",82],["300 Crystals",380]]},
+{id:16,name:"Legend of the Phoenix",cat:"Games",itunes:"Legend of the Phoenix",inputType:"uid",inputLabel:"Enter Phoenix UID",pkgs:[["60 Ingots",82],["300 Ingots",380]]},
+{id:17,name:"Marvel Rivals",cat:"Games",itunes:"Marvel Rivals",inputType:"uid",inputLabel:"Enter Marvel Rivals UID",pkgs:[["500 Lattice",443],["1000 Lattice",886]]},
+{id:18,name:"Bleach: Soul Resonance",cat:"Games",itunes:"Bleach Soul Resonance",inputType:"uid",inputLabel:"Enter Bleach UID",pkgs:[["60 Jade",82],["300 Jade",380]]},
+{id:19,name:"Soul Land: New World",cat:"Games",itunes:"Soul Land New World",inputType:"uid",inputLabel:"Enter Soul Land UID",pkgs:[["60 Diamonds",82],["300 Diamonds",380]]},
+{id:20,name:"Honor of Kings",cat:"Games",itunes:"Honor of Kings",inputType:"uid",inputLabel:"Enter HoK UID",pkgs:[["80 Tokens",99],["400 Tokens",479],["800 Tokens",957]]},
+{id:21,name:"Onmyoji Arena",cat:"Games",itunes:"Onmyoji Arena",inputType:"uid",inputLabel:"Enter Onmyoji UID",pkgs:[["60 Jade",82],["300 Jade",380]]},
+{id:22,name:"Crystal of Atlan",cat:"Games",itunes:"Crystal of Atlan",inputType:"uid",inputLabel:"Enter Atlan UID",pkgs:[["60 Prisms",82],["300 Prisms",380]]},
+{id:23,name:"Love and Deepspace",cat:"Games",itunes:"Love and Deepspace",inputType:"uid",inputLabel:"Enter Deepspace UID",pkgs:[["60 Diamonds",99],["300 Diamonds",506]]},
+{id:24,name:"Telegram Stars",cat:"Social",itunes:"Telegram",inputType:"username",inputLabel:"Enter Telegram Username - @username",pkgs:[["50 Stars",109],["100 Stars",208],["500 Stars",1034],["1000 Stars",2024]]},
+{id:25,name:"Acecraft",cat:"Games",itunes:"Acecraft",inputType:"uid",inputLabel:"Enter Acecraft UID",pkgs:[["60 Coins",82],["300 Coins",380]]},
+{id:26,name:"Jaco Live",cat:"Live",itunes:"Jaco Live",inputType:"uid",inputLabel:"Enter Jaco UID",pkgs:[["100 Coins",110],["500 Coins",550]]},
+{id:27,name:"Migo Live",cat:"Live",itunes:"Migo Live",inputType:"uid",inputLabel:"Enter Migo UID",pkgs:[["100 Coins",110],["500 Coins",550]]},
+{id:28,name:"Oxide Survival Island",cat:"Games",itunes:"Oxide Survival Island",inputType:"uid",inputLabel:"Enter Oxide UID",pkgs:[["60 Coins",82],["300 Coins",380]]},
+{id:29,name:"Age of Magic",cat:"Games",itunes:"Age of Magic",inputType:"uid",inputLabel:"Enter Age of Magic UID",pkgs:[["60 Gold",82],["300 Gold",380]]},
+{id:30,name:"Once Human",cat:"Games",itunes:"Once Human",inputType:"uid",inputLabel:"Enter Once Human UID",pkgs:[["60 Crystgin",82],["300 Crystgin",380]]},
+{id:31,name:"Etheria Restart",cat:"Games",itunes:"Etheria Restart",inputType:"uid",inputLabel:"Enter Etheria UID",pkgs:[["60 Crystals",82],["300 Crystals",380]]},
+{id:32,name:"Racing Master",cat:"Games",itunes:"Racing Master",inputType:"uid",inputLabel:"Enter Racing Master UID",pkgs:[["60 Diamonds",82],["300 Diamonds",380]]},
+{id:33,name:"Ludus Strategy PVP",cat:"Games",itunes:"Ludus Merge Arena",inputType:"uid",inputLabel:"Enter Ludus UID",pkgs:[["60 Gold",82],["300 Gold",380]]},
+{id:34,name:"Garena Undawn",cat:"Games",itunes:"Undawn",inputType:"uid",inputLabel:"Enter Undawn UID",pkgs:[["60 RC",82],["300 RC",380]]},
+{id:35,name:"Overmortal Idle",cat:"Games",itunes:"Overmortal",inputType:"uid",inputLabel:"Enter Overmortal UID",pkgs:[["60 Jade",82],["300 Jade",380]]},
+{id:36,name:"Growtopia",cat:"Games",itunes:"Growtopia",inputType:"username",inputLabel:"Enter Growtopia Username",pkgs:[["60 Gems",82],["300 Gems",380]]},
+{id:37,name:"Bullet Echo",cat:"Games",itunes:"Bullet Echo",inputType:"uid",inputLabel:"Enter Bullet Echo UID",pkgs:[["60 Gold",82],["300 Gold",380]]},
+{id:38,name:"Ghost Story: Love Destiny",cat:"Games",itunes:"Ghost Story Love Destiny",inputType:"uid",inputLabel:"Enter Ghost Story UID",pkgs:[["60 Jade",82],["300 Jade",380]]},
+{id:39,name:"CATS: Crash Arena",cat:"Games",itunes:"CATS Crash Arena Turbo Stars",inputType:"uid",inputLabel:"Enter CATS UID",pkgs:[["60 Gems",82],["300 Gems",380]]},
+{id:40,name:"Legends of Runeterra",cat:"Games",itunes:"Legends of Runeterra",inputType:"username",inputLabel:"Enter Riot ID - Name#Tag",pkgs:[["60 Coins",82],["300 Coins",380]]},
+{id:41,name:"Pixel Gun 3D",cat:"Games",itunes:"Pixel Gun 3D",inputType:"uid",inputLabel:"Enter Pixel Gun UID",pkgs:[["60 Gems",82],["300 Gems",380]]},
+{id:42,name:"Eggy Party",cat:"Games",itunes:"Eggy Party",inputType:"uid",inputLabel:"Enter Eggy Party UID",pkgs:[["60 Coins",82],["300 Coins",380]]},
+{id:43,name:"Haikyu!! Fly High",cat:"Games",itunes:"Haikyu Fly High",inputType:"uid",inputLabel:"Enter Haikyu UID",pkgs:[["60 Diamonds",82],["300 Diamonds",380]]},
+{id:44,name:"MICO Coins",cat:"Live",itunes:"MICO",inputType:"uid",inputLabel:"Enter MICO UID",pkgs:[["100 Coins",110],["500 Coins",550]]},
+{id:45,name:"Harry Potter: Magic Awakened",cat:"Games",itunes:"Harry Potter Magic Awakened",inputType:"uid",inputLabel:"Enter HP UID",pkgs:[["60 Gems",82],["300 Gems",380]]},
+{id:46,name:"League of Legends",cat:"Games",itunes:"League of Legends Wild Rift",inputType:"username",inputLabel:"Enter Riot ID - Name#Tag",pkgs:[["60 Cores",82],["300 Cores",380]]},
+{id:47,name:"Patti Game",cat:"Games",itunes:"Patti",inputType:"uid",inputLabel:"Enter Patti UID",pkgs:[["100 Chips",99],["500 Chips",479]]},
+{id:48,name:"TikTok Coins",cat:"Social",itunes:"TikTok",inputType:"username",inputLabel:"Enter TikTok Username - @username",pkgs:[["70 Coins",109],["350 Coins",515],["700 Coins",988]]},
+{id:49,name:"IMO Diamonds",cat:"Social",itunes:"imo",inputType:"phone",inputLabel:"Enter IMO Number - 01XXXXXXXXX",pkgs:[["100 Diamonds",110],["500 Diamonds",550]]},
 {id:50,name:"Free Fire MAX",cat:"Games",itunes:"Free Fire MAX",inputType:"uid",inputLabel:"Enter Free Fire MAX UID",pkgs:[["100 Diamonds",75],["310 Diamonds",220],["520 Diamonds",365]]},
-{id:51,name:"Call of Duty Mobile",cat:"Games",itunes:"Call of Duty Mobile",inputType:"uid",inputLabel:"Enter CODM UID",pkgs:[["80 CP",90],["400 CP",435],["800 CP",870]]},
-{id:52,name:"Roblox Robux",cat:"Games",itunes:"Roblox",inputType:"username",inputLabel:"Enter Roblox Username",pkgs:[["80 Robux",90],["400 Robux",435],["800 Robux",870]]},
-{id:53,name:"Ludo King",cat:"Games",itunes:"Ludo King",inputType:"uid",inputLabel:"Enter Ludo King UID",pkgs:[["100 Diamonds",90],["500 Diamonds",435],["1000 Diamonds",870]]},
-{id:54,name:"Clash of Clans",cat:"Games",itunes:"Clash of Clans",inputType:"uid",inputLabel:"Enter COC Player Tag - #XXXX",pkgs:[["1 Gold Pass",99],["3 Gold Pass",288]]},
-{id:55,name:"Carrom Pool",cat:"Games",itunes:"Carrom Pool",inputType:"uid",inputLabel:"Enter Carrom Pool UID",pkgs:[["50 Coins",55],["100 Coins",104],["500 Coins",478]]},
+{id:51,name:"Call of Duty Mobile",cat:"Games",itunes:"Call of Duty Mobile",inputType:"uid",inputLabel:"Enter CODM UID",pkgs:[["80 CP",99],["400 CP",479],["800 CP",957]]},
+{id:52,name:"Roblox Robux",cat:"Games",itunes:"Roblox",inputType:"username",inputLabel:"Enter Roblox Username",pkgs:[["80 Robux",99],["400 Robux",479],["800 Robux",957]]},
+{id:53,name:"Ludo King",cat:"Games",itunes:"Ludo King",inputType:"uid",inputLabel:"Enter Ludo King UID",pkgs:[["100 Diamonds",99],["500 Diamonds",479],["1000 Diamonds",957]]},
+{id:54,name:"Clash of Clans",cat:"Games",itunes:"Clash of Clans",inputType:"uid",inputLabel:"Enter COC Player Tag - #XXXX",pkgs:[["1 Gold Pass",109],["3 Gold Pass",317]]},
+{id:55,name:"Carrom Pool",cat:"Games",itunes:"Carrom Pool",inputType:"uid",inputLabel:"Enter Carrom Pool UID",pkgs:[["50 Coins",61],["100 Coins",115],["500 Coins",526]]},
+{id:56,name:"CapCut Premium",cat:"Entertainment",itunes:"CapCut",inputType:"email",inputLabel:"Enter CapCut Gmail",pkgs:[["7 Days",176],["30 Days",443],["365 Days",3432]]},
 ];
 let curCat="All",curGame=null,curPkg=null,curPay="bKash",curAddPay="bKash",curAddAmt=0,deferredPrompt=null;
 function getUser(){try{return JSON.parse(localStorage.getItem("ut_user")||"null")}catch(e){return null}}
@@ -220,8 +228,7 @@ function getReferCode(p){let c=(p||"").replace(/[^a-zA-Z0-9]/g,"");if(c.length<=
 function getRank(spent){if(spent>=10000)return{rank:"Gold Member",level:"Level 3"};if(spent>=5000)return{rank:"Silver Member",level:"Level 2"};if(spent>=1000)return{rank:"Bronze Member",level:"Level 1"};return{rank:"Silver Member",level:"Level 1 - Current Rank"}}
 function renderCats(){let cats=["All","Games","Live","Social","Entertainment"];document.getElementById('cats').innerHTML=cats.map(c=>`<button class="${c===curCat?'on':''}" onclick="curCat='${c}';renderCats();renderGames()">${c}</button>`).join('')}
 function getResellerPrice(p){let u=getUser();if(u&&localStorage.getItem("ut_is_reseller_"+u.phone)==="1")return Math.floor(p*0.9);return p}
-// LOGO 100% FIX - AGE SOB GAME ER JONNO EKI CALLBACK CHILO TAI LOGO ASTO NA, EKHON PROTTEK GAME ER ALADA CALLBACK
-function loadRealIcons(){GAMES.forEach(g=>{let cb="cb_"+g.id;window[cb]=function(j){try{if(j.results&&j.results[0]&&j.results[0].artworkUrl100){g.img=j.results[0].artworkUrl100.replace('100x100bb','512x512bb');let el=document.getElementById('img-'+g.id);if(el)el.src=g.img;let gm=document.getElementById('gmImg');if(curGame&&curGame.id===g.id&&gm)gm.src=g.img;}}catch(e){}delete window[cb];};let s=document.createElement('script');s.src="https://itunes.apple.com/search?term="+encodeURIComponent(g.itunes)+"&entity=software&limit=1&callback="+cb;s.onerror=function(){delete window[cb];};document.head.appendChild(s);});}
+function loadRealIcons(){GAMES.forEach(g=>{let cb="cb_"+g.id;window[cb]=function(j){try{if(j.results&&j.results[0]&&j.results[0].artworkUrl100){g.img=j.results[0].artworkUrl100.replace('100x100bb','512x512bb');let el=document.getElementById('img-'+g.id);if(el)el.src=g.img;}}catch(e){}delete window[cb];};let s=document.createElement('script');s.src="https://itunes.apple.com/search?term="+encodeURIComponent(g.itunes)+"&entity=software&limit=1&callback="+cb;s.onerror=function(){delete window[cb];};document.head.appendChild(s);});}
 function renderGames(){let q=(document.getElementById('searchInput').value||"").toLowerCase();let list=GAMES.filter(g=>(curCat==="All"||g.cat===curCat)&&g.name.toLowerCase().includes(q));document.getElementById('gameGrid').innerHTML=list.map(g=>{let badge=g.id===1||g.id===2||g.id===48?"HOT":(g.id===4||g.id===17||g.id===50?"NEW":"");return `<div class="card" onclick="openGame(${g.id})"><div class="cardImgWrap"><img id="img-${g.id}" src="${g.img||''}" alt="${g.name}" loading="lazy" onerror="this.style.opacity='0'">${badge?`<span style="position:absolute;top:6px;left:6px;background:#ff2d55;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:900">${badge}</span>`:''}</div><div class="cardName">${g.name}</div></div>`}).join('')||'<p style="padding:20px">No Game Found</p>';}
 let bannerIdx=0;function renderBannerDots(){document.getElementById('bannerDots').innerHTML=[0,1,2,3,4].map(i=>`<span class="${i===bannerIdx?'on':''}" onclick="bannerIdx=${i};moveBanner()"></span>`).join('')}
 function moveBanner(){document.getElementById('bannerTrack').style.transform=`translateX(-${bannerIdx*100}%)`;renderBannerDots()}
