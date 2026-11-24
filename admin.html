@@ -28,12 +28,14 @@ input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin-to
 .row button{flex:1;padding:10px;border:none;border-radius:8px;font-weight:900;cursor:pointer;font-size:13px;min-width:90px}
 .ok{background:#00c853;color:#fff}.del{background:#ffe8ec;color:#ff2d55}.done{background:#eaf4ff;color:#007aff}.rej{background:#ff2d55;color:#fff}
 .loginBox{max-width:400px;margin:40px auto;background:#fff;border-radius:18px;padding:22px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.15)}
-.avatar{width:72px;height:72px;background:linear-gradient(135deg,#111,#00c853);color:#fff;font-size:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.avatar{width:72px;height:72px;background:linear-gradient(135deg,#111,#00c853);color:#fff;font-size:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
 .hide{display:none}
 .badgePending{background:#fff3cd;color:#856404;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:900}
 .badgeOk{background:#e8fff0;color:#00a651;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:900}
 .badgeNo{background:#ffe8ec;color:#ff2d55;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:900}
 .warn{background:#fff9c4;border:1px solid #ffe082;border-radius:12px;padding:12px;margin-top:12px;font-size:13px;line-height:1.6}
+.userCard{background:#f9f9ff;border:1.5px solid #6a1b9a;border-radius:12px;padding:12px;margin-top:10px}
 </style>
 </head>
 <body>
@@ -64,21 +66,33 @@ input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin-to
     <div class="stat"><b id="pendingOrders">0</b><small>⏳ Pending Orders</small></div>
     <div class="stat"><b id="pendingAdd">0</b><small>💰 Pending Add Money</small></div>
     <div class="stat"><b id="totalReseller">0</b><small>👑 Reseller Request</small></div>
+    <div class="stat"><b id="totalUsers">0</b><small>👥 Total Users</small></div>
+    <div class="stat"><b id="totalRedeem">0</b><small>🎁 Pending Redeem</small></div>
   </div>
+
+  <div class="card" style="border:1.5px solid #6a1b9a">
+    <h3>🔑 PIN / Number Diya User Khujo</h3>
+    <p style="font-size:12px;color:#666;margin-top:4px">User je Support PIN dise oita ba Number dao.</p>
+    <input id="pinSearch" placeholder="PIN - jemon 29925 / Number - 01XXXXXXXXX">
+    <button class="btn" style="background:#6a1b9a" onclick="searchUserByPin()">🔍 Search User →</button>
+    <div id="pinResult"></div>
+  </div>
+
   <input id="searchOrder" placeholder="🔍 Search - Game / UID / TrxID / Phone" oninput="renderAdmin()">
   <div class="tabs">
     <button id="tabAddMoney" class="on" onclick="showTab('addmoney')">💰 Add Money</button>
     <button id="tabOrders" onclick="showTab('orders')">🛍️ Orders</button>
+    <button id="tabUsers" onclick="showTab('users')">👥 Users</button>
     <button id="tabReseller" onclick="showTab('reseller')">👑 Reseller</button>
     <button id="tabCodes" onclick="showTab('codes')">🎁 Redeem</button>
   </div>
   <div id="adminList"></div>
   <button class="btn2" onclick="refreshAdmin()">🔄 Refresh</button>
+  <button class="btn2" onclick="goSite()">🏠 Main Site e Jao</button>
   <button class="btn2 btnRed" onclick="adminLogout()">Logout</button>
 </div>
 
 <script>
-// ===== ADMIN LOGIN - TOMAR DEYA GMAIL / PASSWORD =====
 const ADMIN_GMAIL="ultratupup@2026gmail.com";
 const ADMIN_PASS="Rana@1234#";
 let curTab="addmoney";
@@ -90,29 +104,81 @@ function doAdminLogin(){
     localStorage.setItem("ut_admin_login","1");
     showDash();
   }else{
-    document.getElementById('loginMsg').innerText="❌ Vul Gmail / Password! Gmail: ultratupup@2026gmail.com dao";
+    document.getElementById('loginMsg').innerText="❌ Vul Gmail / Password!";
   }
 }
 function adminLogout(){localStorage.removeItem("ut_admin_login");location.reload();}
+function goSite(){window.location.href="./index.html";}
 function showDash(){document.getElementById('loginWrap').classList.add('hide');document.getElementById('dashWrap').classList.remove('hide');renderAdmin();}
 function showTab(t){
   curTab=t;
   document.getElementById('tabAddMoney').className=t==='addmoney'?'on':'';
   document.getElementById('tabOrders').className=t==='orders'?'on':'';
+  document.getElementById('tabUsers').className=t==='users'?'on':'';
   document.getElementById('tabReseller').className=t==='reseller'?'on':'';
   document.getElementById('tabCodes').className=t==='codes'?'on':'';
   renderAdmin();
 }
 function refreshAdmin(){renderAdmin();alert("✅ Refreshed!")}
 
-function getBalances(){try{return JSON.parse(localStorage.getItem("ut_balances")||"{}")}catch(e){return {}}}
-function addBalanceToUser(phone,amount){let m=getBalances(); m[phone]=parseInt(m[phone]||0)+parseInt(amount); localStorage.setItem("ut_balances",JSON.stringify(m));}
+function getPins(){try{return JSON.parse(localStorage.getItem("ut_pins")||"{}")}catch(e){return{}}}
+function getBalances(){try{return JSON.parse(localStorage.getItem("ut_balances")||"{}")}catch(e){return{}}}
+function getCoinsMap(){try{return JSON.parse(localStorage.getItem("ut_coins")||"{}")}catch(e){return{}}}
+function addBalanceToUser(phone,amount){let m=getBalances();m[phone]=parseInt(m[phone]||0)+parseInt(amount);localStorage.setItem("ut_balances",JSON.stringify(m));}
+function getName(ph){try{let u=JSON.parse(localStorage.getItem("ut_user_"+ph)||"null");if(u&&u.name)return u.name}catch(e){}try{let a=JSON.parse(localStorage.getItem("ut_all_users")||"{}");if(a[ph])return a[ph]}catch(e){}return "User "+String(ph).slice(-4)}
+function maskPhone(p){p=String(p||"");if(p.length===11&&p.startsWith("01"))return p.slice(0,3)+"****"+p.slice(7);return p}
+function getSpent(ph){let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");return o.filter(x=>x.phone===ph).reduce((s,x)=>s+(x.price||0),0)}
+
+function searchUserByPin(){
+  let q=document.getElementById('pinSearch').value.trim();
+  if(!q){alert("PIN ba Number dao!");return}
+  let pins=getPins(),ph=null;
+  for(let k in pins){if(pins[k]===q)ph=k}
+  if(!ph&&pins[q])ph=q;
+  if(!ph){let b=getBalances();if(b[q]!=null)ph=q}
+  let box=document.getElementById('pinResult');
+  if(!ph){box.innerHTML=`<div class="userCard" style="border-color:#ff2d55"><b>❌ Pai nai!</b><br><small>PIN / Number: ${q} - Ei user nai.</small></div>`;return}
+  renderOneUser(ph,box);
+}
+function renderOneUser(ph,box){
+  let pins=getPins(),bals=getBalances(),coins=getCoinsMap();
+  let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");
+  let myO=orders.filter(x=>x.phone===ph);
+  let adds=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");
+  let myA=adds.filter(x=>x.user===ph);
+  let av="";try{av=localStorage.getItem("ut_avatar_"+ph)||""}catch(e){}
+  box.innerHTML=`<div class="userCard"><div style="display:flex;gap:10px;align-items:center"><div class="avatar">${av?`<img src="${av}">`:getName(ph).charAt(0).toUpperCase()}</div><div><b style="font-size:17px">${getName(ph)}</b><br><small>${ph} | ${maskPhone(ph)}</small><br><small>📍 Thikana: ${localStorage.getItem("ut_address_"+ph)||"Deya nai"}</small></div></div><p style="margin-top:10px">🔑 Support PIN: <b style="font-size:22px">${pins[ph]||"Nai"}</b><br>💳 Wallet: <b>Tk ${bals[ph]||0}</b> | 🪙 Coin: <b>${coins[ph]||0}</b><br>🛍️ Total Kinse: <b>Tk ${getSpent(ph)}</b> | Order: <b>${myO.length} ta</b></p><div class="row"><button class="ok" onclick="impersonate('${ph}')">👀 ID te Dhuko</button><button class="ok" style="background:#007aff" onclick="adminAddBalance('${ph}')">➕ Taka Add</button><button class="rej" onclick="adminCutBalance('${ph}')">➖ Taka Katao</button></div><h4 style="margin-top:10px">🛍️ Orders:</h4>${myO.length?myO.slice(0,10).map(x=>`<div class="order"><b>${x.game} - ${x.pkg}</b><small>UID: ${x.pid||''} | Tk ${x.price} | ${x.status} | ${x.time}</small></div>`).join(''):'<p>Kono order nai</p>'}</div>`;
+}
+function impersonate(ph){
+  if(!confirm(getName(ph)+" er ID te dhukba? Main site e tar ID khulbe."))return;
+  let cur=null;try{cur=JSON.parse(localStorage.getItem("ut_user")||"null")}catch(e){}
+  if(cur)localStorage.setItem("ut_admin_back",JSON.stringify(cur));
+  localStorage.setItem("ut_user",JSON.stringify({name:getName(ph),phone:ph}));
+  localStorage.setItem("ut_admin_mode","1");
+  window.location.href="./index.html";
+}
+function adminAddBalance(ph){
+  let a=parseInt(prompt(getName(ph)+" ke koto taka diba?"));
+  if(!a||a<=0)return;
+  addBalanceToUser(ph,a);
+  alert("✅ Tk "+a+" add hoise. Ekhon Wallet: Tk "+getBalances()[ph]);
+  renderAdmin();
+  let box=document.getElementById('pinResult');if(box.innerHTML)renderOneUser(ph,box);
+}
+function adminCutBalance(ph){
+  let a=parseInt(prompt(getName(ph)+" er koto taka katba?"));
+  if(!a||a<=0)return;
+  let m=getBalances();m[ph]=Math.max(0,parseInt(m[ph]||0)-a);localStorage.setItem("ut_balances",JSON.stringify(m));
+  alert("✅ Tk "+a+" kata hoise. Ekhon Wallet: Tk "+m[ph]);
+  renderAdmin();
+}
 
 function renderAdmin(){
   let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");
   let addReqs=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");
   let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");
   let redeemReqs=JSON.parse(localStorage.getItem("ut_redeem_requests")||"[]");
+  let pins=getPins(),bals=getBalances(),coins=getCoinsMap();
   let total=orders.reduce((s,o)=>s+(o.price||0),0);
   let pending=orders.filter(o=>o.status==="Pending"||o.status==="Robot").length;
   let pendingAdd=addReqs.filter(r=>r.status==="Pending").length;
@@ -121,6 +187,8 @@ function renderAdmin(){
   document.getElementById('pendingOrders').innerText=pending;
   document.getElementById('pendingAdd').innerText=pendingAdd;
   document.getElementById('totalReseller').innerText=reqs.length;
+  document.getElementById('totalUsers').innerText=Object.keys(pins).length;
+  document.getElementById('totalRedeem').innerText=redeemReqs.filter(r=>r.status==="Pending").length;
   let q=(document.getElementById('searchOrder').value||"").toLowerCase();
   let box=document.getElementById('adminList');
 
@@ -129,50 +197,17 @@ function renderAdmin(){
     box.innerHTML=list.length?list.map((r)=>{
       let idx=addReqs.indexOf(r);
       let badge=r.status==='Pending'?'<span class="badgePending">⏳ Pending</span>':r.status==='Approved'?'<span class="badgeOk">✅ Approved</span>':'<span class="badgeNo">❌ Rejected</span>';
-      return `<div class="order"><b>💰 ${r.name||''} - Tk ${r.amount}</b> ${badge}<small>Phone / Gmail: ${r.user}<br>TrxID: ${r.trx} | Pay: ${r.pay}<br>Time: ${r.time}<br><b style="color:red">👉 bKash e TrxID milao, taka asche kina dekho.</b></small><div class="row">${r.status==='Pending'?`<button class="ok" onclick="approveAddMoney(${idx})">✅ Accept - Taka Add Hobe</button><button class="rej" onclick="rejectAddMoney(${idx})">❌ Reject</button>`:''}<button class="del" onclick="deleteAddMoney(${idx})">🗑️ Delete</button></div></div>`
+      return `<div class="order"><b>💰 ${r.name||''} - Tk ${r.amount}</b> ${badge}<small>Phone / Gmail: ${r.user}<br>PIN: ${pins[r.user]||'?'} | TrxID: ${r.trx} | Pay: ${r.pay}<br>Time: ${r.time}<br><b style="color:red">👉 bKash e TrxID milao, taka asche kina dekho.</b></small><div class="row">${r.status==='Pending'?`<button class="ok" onclick="approveAddMoney(${idx})">✅ Accept - Taka Add Hobe</button><button class="rej" onclick="rejectAddMoney(${idx})">❌ Reject</button>`:''}<button class="del" onclick="deleteAddMoney(${idx})">🗑️ Delete</button></div></div>`
     }).join(''):'<p style="text-align:center;margin-top:16px;color:#666">Kono Add Money Request nai.<br>Public Add Money korle ekhane asbe.</p>';
   }
   if(curTab==="orders"){
     let list=orders.filter(o=>JSON.stringify(o).toLowerCase().includes(q));
     box.innerHTML=list.length?list.map((o)=>{
       let idx=orders.indexOf(o);
-      return `<div class="order"><b>${o.game} - ${o.pkg}</b><small>UID / ID: ${o.pid||''}<br>TrxID: ${o.trx||''} | Pay: ${o.pay||''}<br>Phone: ${o.phone||'Guest'}<br>Status: ${o.status||'Pending'} ${o.apiOrderId?'| Robot Order: '+o.apiOrderId:''}<br>Time: ${o.time||''}</small><div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><b style="color:#00c853">Tk ${o.price}</b><span style="font-size:12px;background:#eee;padding:4px 8px;border-radius:10px">#${idx+1}</span></div><div class="row"><button class="ok" onclick="markDone(${idx})">✅ Complete</button><button class="done" onclick="markPending(${idx})">⏳ Pending Koro</button><button class="del" onclick="deleteOrder(${idx})">🗑️ Delete</button><button class="ok" onclick="copyOrder(${idx})" style="background:#111;color:#fff">📋 Copy</button></div></div>`
+      return `<div class="order"><b>${o.game} - ${o.pkg}</b><small>UID / ID: ${o.pid||''}<br>TrxID: ${o.trx||''} | Pay: ${o.pay||''}<br>Phone: ${o.phone||'Guest'} | PIN: ${pins[o.phone]||'?'}<br>Status: ${o.status||'Pending'} ${o.apiOrderId?'| Robot Order: '+o.apiOrderId:''}<br>Time: ${o.time||''}</small><div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><b style="color:#00c853">Tk ${o.price}</b><span style="font-size:12px;background:#eee;padding:4px 8px;border-radius:10px">#${idx+1}</span></div><div class="row"><button class="ok" onclick="markDone(${idx})">✅ Complete</button><button class="done" onclick="markPending(${idx})">⏳ Pending Koro</button><button class="del" onclick="deleteOrder(${idx})">🗑️ Delete</button><button class="ok" onclick="copyOrder(${idx})" style="background:#111;color:#fff">📋 Copy</button></div></div>`
     }).join(''):'<p style="text-align:center;margin-top:16px;color:#666">No Order Found</p>';
   }
-  if(curTab==="reseller"){
-    box.innerHTML=reqs.length?reqs.map((r,i)=>`<div class="order"><b>👑 ${r.name||''} - ${r.phone}</b><small>Shop: ${r.shop||''}<br>User: ${r.user}<br>Total Spent: Tk ${r.totalSpent||0}<br>Status: ${r.status}<br>Time: ${r.time||''}</small><div class="row">${r.status!=='Approved'?`<button class="ok" onclick="approveResellerAdmin(${i})">✅ Approve</button>`:''}<button class="del" onclick="deleteReseller(${i})">🗑️ Delete</button></div></div>`).join(''):'<p style="text-align:center;margin-top:16px;color:#666">No Reseller Request</p>';
-  }
-  if(curTab==="codes"){
-    box.innerHTML=`<div class="card"><h3>🎁 Redeem Requests - Pending</h3><p style="font-size:13px;color:#666;margin-top:6px">Redeem dile auto taka add hobe NA. Tui check kore Accept korle tobei add hobe.</p></div>`+(redeemReqs.length?redeemReqs.map((r,i)=>`<div class="order"><b>🎁 ${r.code} - ${r.user}</b><small>Status: ${r.status}<br>Time: ${r.time}</small><div class="row">${r.status==='Pending'?`<button class="ok" onclick="approveRedeem(${i})">✅ Accept</button><button class="rej" onclick="rejectRedeem(${i})">❌ Reject</button>`:''}<button class="del" onclick="deleteRedeem(${i})">🗑️ Delete</button></div></div>`).join(''):'<p style="text-align:center;margin-top:10px;color:#666">Kono Redeem Request nai</p>');
-  }
-}
-
-function approveAddMoney(i){
-  let reqs=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");
-  let r=reqs[i]; if(!r||r.status!=='Pending') return;
-  if(!confirm("Tumi ki bKash e Tk "+r.amount+" paiso?\nTrxID: "+r.trx+" milse?\nAccept korle "+r.name+" er account e taka add hoia jabe!")) return;
-  r.status='Approved'; localStorage.setItem("ut_add_requests",JSON.stringify(reqs));
-  addBalanceToUser(r.user, r.amount);
-  alert("✅ Approved! Tk "+r.amount+" - "+r.name+" er account e add hoise.");
-  renderAdmin();
-}
-function rejectAddMoney(i){
-  let reqs=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");
-  reqs[i].status='Rejected'; localStorage.setItem("ut_add_requests",JSON.stringify(reqs));
-  alert("❌ Rejected! Taka add hoy nai.");
-  renderAdmin();
-}
-function deleteAddMoney(i){if(!confirm("Delete this Add Money request?"))return;let reqs=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");reqs.splice(i,1);localStorage.setItem("ut_add_requests",JSON.stringify(reqs));renderAdmin();}
-function markDone(i){let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");o[i].status="Complete";localStorage.setItem("ut_orders",JSON.stringify(o));renderAdmin();}
-function markPending(i){let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");o[i].status="Pending";localStorage.setItem("ut_orders",JSON.stringify(o));renderAdmin();}
-function deleteOrder(i){if(!confirm("Delete this order?"))return;let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");o.splice(i,1);localStorage.setItem("ut_orders",JSON.stringify(o));renderAdmin();}
-function copyOrder(i){let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");let x=o[i];let txt=`Game: ${x.game}\nPackage: ${x.pkg}\nPrice: Tk ${x.price}\nUID: ${x.pid}\nTrxID: ${x.trx}\nPay: ${x.pay}\nPhone: ${x.phone}`;navigator.clipboard.writeText(txt).then(()=>alert("✅ Copied!"));}
-function approveResellerAdmin(i){let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");let r=reqs[i];localStorage.setItem("ut_is_reseller_"+r.user,"1");reqs[i].status="Approved";localStorage.setItem("ut_reseller_req",JSON.stringify(reqs));alert("✅ Reseller Approved: "+r.phone);renderAdmin();}
-function deleteReseller(i){if(!confirm("Delete reseller request?"))return;let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");reqs.splice(i,1);localStorage.setItem("ut_reseller_req",JSON.stringify(reqs));renderAdmin();}
-function approveRedeem(i){let reqs=JSON.parse(localStorage.getItem("ut_redeem_requests")||"[]");reqs[i].status='Approved';localStorage.setItem("ut_redeem_requests",JSON.stringify(reqs));alert("Redeem Approved - Taka tumi nije thik kore diba, auto fek taka dewa hoy na.");renderAdmin();}
-function rejectRedeem(i){let reqs=JSON.parse(localStorage.getItem("ut_redeem_requests")||"[]");reqs[i].status='Rejected';localStorage.setItem("ut_redeem_requests",JSON.stringify(reqs));renderAdmin();}
-function deleteRedeem(i){let reqs=JSON.parse(localStorage.getItem("ut_redeem_requests")||"[]");reqs.splice(i,1);localStorage.setItem("ut_redeem_requests",JSON.stringify(reqs));renderAdmin();}
-if(localStorage.getItem("ut_admin_login")==="1"){showDash();}
-</script>
-</body>
-</html>
+  if(curTab==="users"){
+    let list=Object.keys(pins).filter(ph=>JSON.stringify({ph:ph,name:getName(ph),pin:pins[ph]}).toLowerCase().includes(q));
+    box.innerHTML=list.length?list.map(ph=>{
+      let av="";try{av=localStorage.getItem("ut_avatar_"+ph)||""}catch(e){}
