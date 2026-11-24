@@ -8,8 +8,10 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#f2f2f2;padding-bottom:30px}
-.top{background:#111;color:#fff;padding:16px;text-align:center;position:sticky;top:0;z-index:10}
+.top{background:#111;color:#fff;padding:12px 16px;text-align:center;position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:center;gap:10px}
 .top b{font-size:19px}.top span{color:#00c853}
+.logoTop{width:48px;height:48px;border-radius:12px;overflow:hidden;border:2px solid #00c853;flex-shrink:0;background:#fff}
+.logoTop img{width:100%;height:100%;object-fit:cover}
 .wrap{max-width:520px;margin:0 auto;padding:14px}
 .card{background:#fff;border-radius:14px;padding:16px;margin-top:12px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
 input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin-top:10px;font-size:14px}
@@ -28,7 +30,7 @@ input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin-to
 .row button{flex:1;padding:10px;border:none;border-radius:8px;font-weight:900;cursor:pointer;font-size:13px;min-width:90px}
 .ok{background:#00c853;color:#fff}.del{background:#ffe8ec;color:#ff2d55}.done{background:#eaf4ff;color:#007aff}.rej{background:#ff2d55;color:#fff}
 .loginBox{max-width:400px;margin:40px auto;background:#fff;border-radius:18px;padding:22px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.15)}
-.avatar{width:72px;height:72px;background:linear-gradient(135deg,#111,#00c853);color:#fff;font-size:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;overflow:hidden}
+.avatar{width:92px;height:92px;background:#fff;color:#fff;font-size:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;overflow:hidden;border:3px solid #00c853}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .hide{display:none}
 .badgePending{background:#fff3cd;color:#856404;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:900}
@@ -39,13 +41,13 @@ input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin-to
 </style>
 </head>
 <body>
-<div class="top"><b>ULTRA <span>TOP UP BD</span></b><br><small>🔐 Admin Panel - Real System</small></div>
+<div class="top"><div class="logoTop"><img src="https://i.ibb.co/DDmdVS2L/IMG-20261123-WA0003.jpg" alt="ULTRA TOP UP BD"></div><div style="text-align:left"><b>ULTRA <span>TOP UP BD</span></b><br><small>🔐 Admin Panel - Real System</small></div></div>
 
 <div class="wrap" id="loginWrap">
   <div class="loginBox">
-    <div class="avatar">🔐</div>
-    <h2 style="margin-top:12px">Admin Login</h2>
-    <p style="color:#666;font-size:13px;margin-top:4px">Sudhu Admin dhukte parbo</p>
+    <div class="avatar"><img src="https://i.ibb.co/DDmdVS2L/IMG-20261123-WA0003.jpg" alt="ULTRA TOP UP BD Logo"></div>
+    <h2 style="margin-top:12px">ULTRA TOP UP BD</h2>
+    <p style="color:#666;font-size:13px;margin-top:4px">Admin Login - Sudhu Admin dhukte parbo</p>
     <input id="a_gmail" placeholder="Admin Gmail - ultratupup@2026gmail.com">
     <input id="a_pass" type="password" placeholder="Admin Password">
     <button class="btn" onclick="doAdminLogin()">Login →</button>
@@ -56,7 +58,8 @@ input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin-to
 
 <div class="wrap hide" id="dashWrap">
   <div class="card" style="text-align:center;background:linear-gradient(135deg,#111,#00c853);color:#fff">
-    <p>👋 Welcome, Admin Rana</p>
+    <div style="width:64px;height:64px;border-radius:50%;overflow:hidden;border:3px solid #fff;margin:0 auto;background:#fff"><img src="https://i.ibb.co/DDmdVS2L/IMG-20261123-WA0003.jpg" style="width:100%;height:100%;object-fit:cover"></div>
+    <p style="margin-top:8px">👋 Welcome, Admin Rana</p>
     <h2 style="margin-top:6px" id="totalSell">Tk 0</h2>
     <p style="font-size:12px;opacity:.9">Total Sell (Orders)</p>
   </div>
@@ -98,16 +101,16 @@ const ADMIN_PASS="Rana@1234#";
 let curTab="addmoney";
 
 function doAdminLogin(){
-  let g=document.getElementById('a_gmail').value.trim();
+  let g=document.getElementById('a_gmail').value.trim().toLowerCase();
   let p=document.getElementById('a_pass').value;
-  if(g===ADMIN_GMAIL && p===ADMIN_PASS){
+  if((g===ADMIN_GMAIL||g==="ultratupup@2026gmail"||g==="ultratopup@2026@gmail.com"||g==="ultratupup@2026@gmail.com") && p===ADMIN_PASS){
     localStorage.setItem("ut_admin_login","1");
     showDash();
   }else{
     document.getElementById('loginMsg').innerText="❌ Vul Gmail / Password!";
   }
 }
-function adminLogout(){localStorage.removeItem("ut_admin_login");location.reload();}
+function adminLogout(){localStorage.removeItem("ut_admin_login");localStorage.removeItem("ut_admin_mode");location.reload();}
 function goSite(){window.location.href="./index.html";}
 function showDash(){document.getElementById('loginWrap').classList.add('hide');document.getElementById('dashWrap').classList.remove('hide');renderAdmin();}
 function showTab(t){
@@ -144,10 +147,8 @@ function renderOneUser(ph,box){
   let pins=getPins(),bals=getBalances(),coins=getCoinsMap();
   let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");
   let myO=orders.filter(x=>x.phone===ph);
-  let adds=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");
-  let myA=adds.filter(x=>x.user===ph);
   let av="";try{av=localStorage.getItem("ut_avatar_"+ph)||""}catch(e){}
-  box.innerHTML=`<div class="userCard"><div style="display:flex;gap:10px;align-items:center"><div class="avatar">${av?`<img src="${av}">`:getName(ph).charAt(0).toUpperCase()}</div><div><b style="font-size:17px">${getName(ph)}</b><br><small>${ph} | ${maskPhone(ph)}</small><br><small>📍 Thikana: ${localStorage.getItem("ut_address_"+ph)||"Deya nai"}</small></div></div><p style="margin-top:10px">🔑 Support PIN: <b style="font-size:22px">${pins[ph]||"Nai"}</b><br>💳 Wallet: <b>Tk ${bals[ph]||0}</b> | 🪙 Coin: <b>${coins[ph]||0}</b><br>🛍️ Total Kinse: <b>Tk ${getSpent(ph)}</b> | Order: <b>${myO.length} ta</b></p><div class="row"><button class="ok" onclick="impersonate('${ph}')">👀 ID te Dhuko</button><button class="ok" style="background:#007aff" onclick="adminAddBalance('${ph}')">➕ Taka Add</button><button class="rej" onclick="adminCutBalance('${ph}')">➖ Taka Katao</button></div><h4 style="margin-top:10px">🛍️ Orders:</h4>${myO.length?myO.slice(0,10).map(x=>`<div class="order"><b>${x.game} - ${x.pkg}</b><small>UID: ${x.pid||''} | Tk ${x.price} | ${x.status} | ${x.time}</small></div>`).join(''):'<p>Kono order nai</p>'}</div>`;
+  box.innerHTML=`<div class="userCard"><div style="display:flex;gap:10px;align-items:center"><div class="avatar" style="width:56px;height:56px;font-size:20px">${av?`<img src="${av}">`:getName(ph).charAt(0).toUpperCase()}</div><div><b style="font-size:17px">${getName(ph)}</b><br><small>${ph} | ${maskPhone(ph)}</small><br><small>📍 Thikana: ${localStorage.getItem("ut_address_"+ph)||"Deya nai"}</small></div></div><p style="margin-top:10px">🔑 Support PIN: <b style="font-size:22px">${pins[ph]||"Nai"}</b><br>💳 Wallet: <b>Tk ${bals[ph]||0}</b> | 🪙 Coin: <b>${coins[ph]||0}</b><br>🛍️ Total Kinse: <b>Tk ${getSpent(ph)}</b> | Order: <b>${myO.length} ta</b></p><div class="row"><button class="ok" onclick="impersonate('${ph}')">👀 ID te Dhuko</button><button class="ok" style="background:#007aff" onclick="adminAddBalance('${ph}')">➕ Taka Add</button><button class="rej" onclick="adminCutBalance('${ph}')">➖ Taka Katao</button></div><h4 style="margin-top:10px">🛍️ Orders:</h4>${myO.length?myO.slice(0,10).map(x=>`<div class="order"><b>${x.game} - ${x.pkg}</b><small>UID: ${x.pid||''} | Tk ${x.price} | ${x.status} | ${x.time}</small></div>`).join(''):'<p>Kono order nai</p>'}</div>`;
 }
 function impersonate(ph){
   if(!confirm(getName(ph)+" er ID te dhukba? Main site e tar ID khulbe."))return;
@@ -196,7 +197,7 @@ function renderAdmin(){
     let list=addReqs.filter(o=>JSON.stringify(o).toLowerCase().includes(q));
     box.innerHTML=list.length?list.map((r)=>{
       let idx=addReqs.indexOf(r);
-      let badge=r.status==='Pending'?'<span class="badgePending">⏳ Pending</span>':r.status==='Approved'?'<span class="badgeOk">✅ Approved</span>':'<span class="badgeNo">❌ Rejected</span>';
+      let badge=r.status==='Pending'?'<span class="badgePending">⏳ Pending</span>':r.status==='Approved'||r.status==='Accepted'?'<span class="badgeOk">✅ Approved</span>':'<span class="badgeNo">❌ Rejected</span>';
       return `<div class="order"><b>💰 ${r.name||''} - Tk ${r.amount}</b> ${badge}<small>Phone / Gmail: ${r.user}<br>PIN: ${pins[r.user]||'?'} | TrxID: ${r.trx} | Pay: ${r.pay}<br>Time: ${r.time}<br><b style="color:red">👉 bKash e TrxID milao, taka asche kina dekho.</b></small><div class="row">${r.status==='Pending'?`<button class="ok" onclick="approveAddMoney(${idx})">✅ Accept - Taka Add Hobe</button><button class="rej" onclick="rejectAddMoney(${idx})">❌ Reject</button>`:''}<button class="del" onclick="deleteAddMoney(${idx})">🗑️ Delete</button></div></div>`
     }).join(''):'<p style="text-align:center;margin-top:16px;color:#666">Kono Add Money Request nai.<br>Public Add Money korle ekhane asbe.</p>';
   }
@@ -211,3 +212,54 @@ function renderAdmin(){
     let list=Object.keys(pins).filter(ph=>JSON.stringify({ph:ph,name:getName(ph),pin:pins[ph]}).toLowerCase().includes(q));
     box.innerHTML=list.length?list.map(ph=>{
       let av="";try{av=localStorage.getItem("ut_avatar_"+ph)||""}catch(e){}
+      return `<div class="order"><div style="display:flex;gap:10px;align-items:center"><div class="avatar" style="width:52px;height:52px;font-size:20px">${av?`<img src="${av}">`:getName(ph).charAt(0).toUpperCase()}</div><div><b>${getName(ph)}</b><small>${ph} | ${maskPhone(ph)}<br>📍 ${localStorage.getItem("ut_address_"+ph)||"Thikana deya nai"}</small></div></div><p style="margin-top:8px;font-size:13px">🔑 PIN: <b>${pins[ph]}</b> | 💳 Wallet: <b>Tk ${bals[ph]||0}</b> | 🪙 Coin: <b>${coins[ph]||0}</b><br>🛍️ Total Kinse: <b>Tk ${getSpent(ph)}</b></p><div class="row"><button class="ok" onclick="impersonate('${ph}')">👀 ID te Dhuko</button><button class="ok" style="background:#007aff" onclick="adminAddBalance('${ph}')">➕ Taka Add</button><button class="rej" onclick="adminCutBalance('${ph}')">➖ Katao</button></div></div>`
+    }).join(''):'<p style="text-align:center;margin-top:16px;color:#666">Kono User nai.</p>';
+  }
+  if(curTab==="reseller"){
+    let list=reqs.filter(o=>JSON.stringify(o).toLowerCase().includes(q));
+    box.innerHTML=list.length?list.map((r)=>{
+      let idx=reqs.indexOf(r);
+      let badge=r.status==='Pending'?'<span class="badgePending">⏳ Pending</span>':r.status==='Accepted'||r.status==='Approved'?'<span class="badgeOk">✅ Accepted</span>':'<span class="badgeNo">❌ Rejected</span>';
+      return `<div class="order"><b>👑 ${r.name||''} - ${r.user||r.phone}</b> ${badge}<small>Phone: ${r.user||r.phone}<br>Total Kinse: Tk ${r.totalSpent||0}<br>Time: ${r.time||''}</small><div class="row">${r.status==='Pending'?`<button class="ok" onclick="approveReseller(${idx})">✅ Accept Reseller</button><button class="rej" onclick="rejectReseller(${idx})">❌ Reject</button>`:''}<button class="del" onclick="deleteReseller(${idx})">🗑️ Delete</button></div></div>`
+    }).join(''):'<p style="text-align:center;margin-top:16px;color:#666">Kono Reseller Request nai.</p>';
+  }
+  if(curTab==="codes"){
+    let list=redeemReqs.filter(o=>JSON.stringify(o).toLowerCase().includes(q));
+    box.innerHTML=list.length?list.map((r)=>{
+      let idx=redeemReqs.indexOf(r);
+      let badge=r.status==='Pending'?'<span class="badgePending">⏳ Pending</span>':r.status==='Accepted'||r.status==='Approved'?'<span class="badgeOk">✅ Accepted</span>':'<span class="badgeNo">❌ Rejected</span>';
+      return `<div class="order"><b>🎁 Code: ${r.code}</b> ${badge}<small>User: ${r.user} | PIN: ${pins[r.user]||'?'}<br>${r.coinTk?`Coin Tk: ${r.coinTk}<br>`:''}Time: ${r.time||''}</small><div class="row">${r.status==='Pending'?`<button class="ok" onclick="approveRedeem(${idx})">✅ Accept</button><button class="rej" onclick="rejectRedeem(${idx})">❌ Reject</button>`:''}<button class="del" onclick="deleteRedeem(${idx})">🗑️ Delete</button></div></div>`
+    }).join(''):'<p style="text-align:center;margin-top:16px;color:#666">Kono Redeem Request nai.</p>';
+  }
+}
+
+function approveAddMoney(idx){
+  let a=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");
+  let r=a[idx];if(!r)return;
+  if(r.status!=="Pending"){alert("Eta already "+r.status);return}
+  if(!confirm(r.user+" ke Tk "+r.amount+" diba? bKash e TrxID "+r.trx+" milaiso to?"))return;
+  r.status="Approved";localStorage.setItem("ut_add_requests",JSON.stringify(a));
+  addBalanceToUser(r.user,r.amount);
+  alert("✅ Accept Hoise! "+r.user+" er Wallet e Tk "+r.amount+" add hoise.");
+  renderAdmin();
+}
+function rejectAddMoney(idx){let a=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");if(!confirm("Reject korba?"))return;a[idx].status="Rejected";localStorage.setItem("ut_add_requests",JSON.stringify(a));alert("❌ Reject Hoise");renderAdmin();}
+function deleteAddMoney(idx){let a=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");if(!confirm("Delete korba?"))return;a.splice(idx,1);localStorage.setItem("ut_add_requests",JSON.stringify(a));renderAdmin();}
+
+function markDone(idx){let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");o[idx].status="Completed";localStorage.setItem("ut_orders",JSON.stringify(o));alert("✅ Order Complete!");renderAdmin();}
+function markPending(idx){let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");o[idx].status="Pending";localStorage.setItem("ut_orders",JSON.stringify(o));renderAdmin();}
+function deleteOrder(idx){let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");if(!confirm("Order Delete korba?"))return;o.splice(idx,1);localStorage.setItem("ut_orders",JSON.stringify(o));renderAdmin();}
+function copyOrder(idx){let o=JSON.parse(localStorage.getItem("ut_orders")||"[]")[idx];if(!o)return;let t=o.game+" - "+o.pkg+" | UID: "+(o.pid||"")+" | Tk "+o.price+" | Phone: "+o.phone;navigator.clipboard.writeText(t).then(()=>alert("✅ Copy Hoise!")).catch(()=>alert(t));}
+
+function approveReseller(idx){let r=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");let x=r[idx];if(!x)return;x.status="Accepted";localStorage.setItem("ut_reseller_req",JSON.stringify(r));localStorage.setItem("ut_is_reseller_"+(x.user||x.phone),"1");alert("✅ Reseller Accept!");renderAdmin();}
+function rejectReseller(idx){let r=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");r[idx].status="Rejected";localStorage.setItem("ut_reseller_req",JSON.stringify(r));renderAdmin();}
+function deleteReseller(idx){let r=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");if(!confirm("Delete korba?"))return;r.splice(idx,1);localStorage.setItem("ut_reseller_req",JSON.stringify(r));renderAdmin();}
+
+function approveRedeem(idx){let r=JSON.parse(localStorage.getItem("ut_redeem_requests")||"[]");let x=r[idx];if(!x)return;x.status="Accepted";localStorage.setItem("ut_redeem_requests",JSON.stringify(r));if(x.coinTk){addBalanceToUser(x.user,x.coinTk);alert("✅ Redeem Accept - Tk "+x.coinTk+" add hoise");}else alert("✅ Redeem Accept!");renderAdmin();}
+function rejectRedeem(idx){let r=JSON.parse(localStorage.getItem("ut_redeem_requests")||"[]");r[idx].status="Rejected";localStorage.setItem("ut_redeem_requests",JSON.stringify(r));renderAdmin();}
+function deleteRedeem(idx){let r=JSON.parse(localStorage.getItem("ut_redeem_requests")||"[]");if(!confirm("Delete korba?"))return;r.splice(idx,1);localStorage.setItem("ut_redeem_requests",JSON.stringify(r));renderAdmin();}
+
+if(localStorage.getItem("ut_admin_login")==="1"){showDash();}
+</script>
+</body>
+</html>
