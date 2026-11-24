@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ultra-tup-up-bd.vercel.app/sitemap.xml
