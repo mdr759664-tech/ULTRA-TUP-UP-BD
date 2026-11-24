@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,58 +16,61 @@ input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin-to
 .btn{width:100%;background:#00c853;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:900;margin-top:12px;font-size:15px;cursor:pointer}
 .btn2{width:100%;background:#111;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:900;margin-top:10px;cursor:pointer}
 .btnRed{background:#ff2d55}
-.btnYellow{background:#ffeb3b;color:#111}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
 .stat{background:#fff;border-radius:12px;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .stat b{font-size:22px;display:block}.stat small{color:#666}
-.tabs{display:flex;gap:8px;margin-top:14px}
-.tabs button{flex:1;padding:11px;border:1px solid #ddd;background:#fff;border-radius:20px;font-weight:800;cursor:pointer}
+.tabs{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap}
+.tabs button{flex:1;padding:11px;border:1px solid #ddd;background:#fff;border-radius:20px;font-weight:800;cursor:pointer;min-width:90px}
 .tabs button.on{background:#111;color:#fff}
-.order{border:1px solid #eee;border-radius:12px;padding:12px;margin-top:10px}
+.order{border:1px solid #eee;border-radius:12px;padding:12px;margin-top:10px;background:#fff}
 .order b{font-size:14px}.order small{color:#666;font-size:12px;line-height:1.6;display:block}
-.row{display:flex;gap:8px;margin-top:8px}
-.row button{flex:1;padding:9px;border:none;border-radius:8px;font-weight:900;cursor:pointer;font-size:13px}
-.ok{background:#e8fff0;color:#00a651}.del{background:#ffe8ec;color:#ff2d55}.done{background:#eaf4ff;color:#007aff}
+.row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.row button{flex:1;padding:10px;border:none;border-radius:8px;font-weight:900;cursor:pointer;font-size:13px;min-width:90px}
+.ok{background:#00c853;color:#fff}.del{background:#ffe8ec;color:#ff2d55}.done{background:#eaf4ff;color:#007aff}.rej{background:#ff2d55;color:#fff}
 .loginBox{max-width:400px;margin:40px auto;background:#fff;border-radius:18px;padding:22px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.15)}
 .avatar{width:72px;height:72px;background:linear-gradient(135deg,#111,#00c853);color:#fff;font-size:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto}
 .hide{display:none}
+.badgePending{background:#fff3cd;color:#856404;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:900}
+.badgeOk{background:#e8fff0;color:#00a651;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:900}
+.badgeNo{background:#ffe8ec;color:#ff2d55;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:900}
+.warn{background:#fff9c4;border:1px solid #ffe082;border-radius:12px;padding:12px;margin-top:12px;font-size:13px;line-height:1.6}
 </style>
 </head>
 <body>
-<div class="top"><b>ULTRA <span>TOP UP BD</span></b><br><small>🔐 Admin Panel</small></div>
+<div class="top"><b>ULTRA <span>TOP UP BD</span></b><br><small>🔐 Admin Panel - Real System</small></div>
 
-<!-- LOGIN -->
 <div class="wrap" id="loginWrap">
   <div class="loginBox">
     <div class="avatar">🔐</div>
     <h2 style="margin-top:12px">Admin Login</h2>
-    <p style="color:#666;font-size:13px;margin-top:4px">শুধু Admin ঢুকতে পারবো</p>
-    <input id="a_gmail" placeholder="Admin Gmail">
+    <p style="color:#666;font-size:13px;margin-top:4px">Sudhu Admin dhukte parbo</p>
+    <input id="a_gmail" placeholder="Admin Gmail - ultratupup@2026gmail.com">
     <input id="a_pass" type="password" placeholder="Admin Password">
     <button class="btn" onclick="doAdminLogin()">Login →</button>
     <p id="loginMsg" style="color:red;font-weight:700;margin-top:10px"></p>
-    <p style="font-size:12px;color:#888;margin-top:10px">Gmail: ultratupupbd@2026gmail.com<br>Password: Rana@1234# - এইটা শুধু তুমি জানবা</p>
+    <p style="font-size:12px;color:#888;margin-top:10px">⚠️ Ei Gmail / Password kaure dibi na.</p>
   </div>
 </div>
 
-<!-- DASHBOARD -->
 <div class="wrap hide" id="dashWrap">
   <div class="card" style="text-align:center;background:linear-gradient(135deg,#111,#00c853);color:#fff">
     <p>👋 Welcome, Admin Rana</p>
     <h2 style="margin-top:6px" id="totalSell">Tk 0</h2>
-    <p style="font-size:12px;opacity:.9">Total Sell</p>
+    <p style="font-size:12px;opacity:.9">Total Sell (Orders)</p>
   </div>
+  <div class="warn">⚠️ <b>Real Check Niyom:</b><br>1. Add Money Accept korar age bKash App e giya TrxID milao.<br>2. Taka asche kina dekho. Taka na asle Reject dao.<br>3. Accept chaple tobei public er account e taka add hobe.<br>4. Ek TrxID 2 bar Accept hobe na.</div>
   <div class="stats">
     <div class="stat"><b id="totalOrders">0</b><small>🛍️ Total Orders</small></div>
-    <div class="stat"><b id="pendingOrders">0</b><small>⏳ Pending</small></div>
+    <div class="stat"><b id="pendingOrders">0</b><small>⏳ Pending Orders</small></div>
+    <div class="stat"><b id="pendingAdd">0</b><small>💰 Pending Add Money</small></div>
     <div class="stat"><b id="totalReseller">0</b><small>👑 Reseller Request</small></div>
-    <div class="stat"><b id="totalUsers">0</b><small>👥 Total Users (This Device)</small></div>
   </div>
   <input id="searchOrder" placeholder="🔍 Search - Game / UID / TrxID / Phone" oninput="renderAdmin()">
   <div class="tabs">
-    <button id="tabOrders" class="on" onclick="showTab('orders')">Orders</button>
-    <button id="tabReseller" onclick="showTab('reseller')">Reseller</button>
-    <button id="tabCodes" onclick="showTab('codes')">Redeem</button>
+    <button id="tabAddMoney" class="on" onclick="showTab('addmoney')">💰 Add Money</button>
+    <button id="tabOrders" onclick="showTab('orders')">🛍️ Orders</button>
+    <button id="tabReseller" onclick="showTab('reseller')">👑 Reseller</button>
+    <button id="tabCodes" onclick="showTab('codes')">🎁 Redeem</button>
   </div>
   <div id="adminList"></div>
   <button class="btn2" onclick="refreshAdmin()">🔄 Refresh</button>
@@ -75,9 +78,10 @@ input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin-to
 </div>
 
 <script>
-const ADMIN_GMAIL="ultratupupbd@2026gmail.com";
+// ===== ADMIN LOGIN - TOMAR DEYA GMAIL / PASSWORD =====
+const ADMIN_GMAIL="ultratupup@2026gmail.com";
 const ADMIN_PASS="Rana@1234#";
-let curTab="orders";
+let curTab="addmoney";
 
 function doAdminLogin(){
   let g=document.getElementById('a_gmail').value.trim();
@@ -86,20 +90,14 @@ function doAdminLogin(){
     localStorage.setItem("ut_admin_login","1");
     showDash();
   }else{
-    document.getElementById('loginMsg').innerText="❌ Wrong Gmail / Password!";
+    document.getElementById('loginMsg').innerText="❌ Vul Gmail / Password! Gmail: ultratupup@2026gmail.com dao";
   }
 }
-function adminLogout(){
-  localStorage.removeItem("ut_admin_login");
-  location.reload();
-}
-function showDash(){
-  document.getElementById('loginWrap').classList.add('hide');
-  document.getElementById('dashWrap').classList.remove('hide');
-  renderAdmin();
-}
+function adminLogout(){localStorage.removeItem("ut_admin_login");location.reload();}
+function showDash(){document.getElementById('loginWrap').classList.add('hide');document.getElementById('dashWrap').classList.remove('hide');renderAdmin();}
 function showTab(t){
   curTab=t;
+  document.getElementById('tabAddMoney').className=t==='addmoney'?'on':'';
   document.getElementById('tabOrders').className=t==='orders'?'on':'';
   document.getElementById('tabReseller').className=t==='reseller'?'on':'';
   document.getElementById('tabCodes').className=t==='codes'?'on':'';
@@ -107,70 +105,73 @@ function showTab(t){
 }
 function refreshAdmin(){renderAdmin();alert("✅ Refreshed!")}
 
+function getBalances(){try{return JSON.parse(localStorage.getItem("ut_balances")||"{}")}catch(e){return {}}}
+function addBalanceToUser(phone,amount){let m=getBalances(); m[phone]=parseInt(m[phone]||0)+parseInt(amount); localStorage.setItem("ut_balances",JSON.stringify(m));}
+
 function renderAdmin(){
   let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");
+  let addReqs=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");
   let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");
-  let used=JSON.parse(localStorage.getItem("ut_used_codes")||"[]");
+  let redeemReqs=JSON.parse(localStorage.getItem("ut_redeem_requests")||"[]");
   let total=orders.reduce((s,o)=>s+(o.price||0),0);
-  let pending=orders.filter(o=>o.status==="Pending").length;
+  let pending=orders.filter(o=>o.status==="Pending"||o.status==="Robot").length;
+  let pendingAdd=addReqs.filter(r=>r.status==="Pending").length;
   document.getElementById('totalSell').innerText="Tk "+total;
   document.getElementById('totalOrders').innerText=orders.length;
   document.getElementById('pendingOrders').innerText=pending;
+  document.getElementById('pendingAdd').innerText=pendingAdd;
   document.getElementById('totalReseller').innerText=reqs.length;
-  document.getElementById('totalUsers').innerText=orders.length?new Set(orders.map(o=>o.phone)).size:0;
-
   let q=(document.getElementById('searchOrder').value||"").toLowerCase();
   let box=document.getElementById('adminList');
 
+  if(curTab==="addmoney"){
+    let list=addReqs.filter(o=>JSON.stringify(o).toLowerCase().includes(q));
+    box.innerHTML=list.length?list.map((r)=>{
+      let idx=addReqs.indexOf(r);
+      let badge=r.status==='Pending'?'<span class="badgePending">⏳ Pending</span>':r.status==='Approved'?'<span class="badgeOk">✅ Approved</span>':'<span class="badgeNo">❌ Rejected</span>';
+      return `<div class="order"><b>💰 ${r.name||''} - Tk ${r.amount}</b> ${badge}<small>Phone / Gmail: ${r.user}<br>TrxID: ${r.trx} | Pay: ${r.pay}<br>Time: ${r.time}<br><b style="color:red">👉 bKash e TrxID milao, taka asche kina dekho.</b></small><div class="row">${r.status==='Pending'?`<button class="ok" onclick="approveAddMoney(${idx})">✅ Accept - Taka Add Hobe</button><button class="rej" onclick="rejectAddMoney(${idx})">❌ Reject</button>`:''}<button class="del" onclick="deleteAddMoney(${idx})">🗑️ Delete</button></div></div>`
+    }).join(''):'<p style="text-align:center;margin-top:16px;color:#666">Kono Add Money Request nai.<br>Public Add Money korle ekhane asbe.</p>';
+  }
   if(curTab==="orders"){
     let list=orders.filter(o=>JSON.stringify(o).toLowerCase().includes(q));
-    box.innerHTML=list.length?list.map((o,i)=>{
+    box.innerHTML=list.length?list.map((o)=>{
       let idx=orders.indexOf(o);
-      return `<div class="order"><b>${o.game} - ${o.pkg}</b><small>UID / ID: ${o.pid||''}<br>TrxID: ${o.trx||''} | Pay: ${o.pay||''}<br>Phone: ${o.phone||'Guest'}<br>Status: ${o.status||'Pending'}<br>Time: ${o.time||''}</small><div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><b style="color:#00c853">Tk ${o.price}</b><span style="font-size:12px;background:#eee;padding:4px 8px;border-radius:10px">#${idx+1}</span></div><div class="row"><button class="done" onclick="markDone(${idx})">✅ Done</button><button class="del" onclick="deleteOrder(${idx})">🗑️ Delete</button><button class="ok" onclick="copyOrder(${idx})">📋 Copy</button></div></div>`
+      return `<div class="order"><b>${o.game} - ${o.pkg}</b><small>UID / ID: ${o.pid||''}<br>TrxID: ${o.trx||''} | Pay: ${o.pay||''}<br>Phone: ${o.phone||'Guest'}<br>Status: ${o.status||'Pending'} ${o.apiOrderId?'| Robot Order: '+o.apiOrderId:''}<br>Time: ${o.time||''}</small><div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><b style="color:#00c853">Tk ${o.price}</b><span style="font-size:12px;background:#eee;padding:4px 8px;border-radius:10px">#${idx+1}</span></div><div class="row"><button class="ok" onclick="markDone(${idx})">✅ Complete</button><button class="done" onclick="markPending(${idx})">⏳ Pending Koro</button><button class="del" onclick="deleteOrder(${idx})">🗑️ Delete</button><button class="ok" onclick="copyOrder(${idx})" style="background:#111;color:#fff">📋 Copy</button></div></div>`
     }).join(''):'<p style="text-align:center;margin-top:16px;color:#666">No Order Found</p>';
   }
   if(curTab==="reseller"){
     box.innerHTML=reqs.length?reqs.map((r,i)=>`<div class="order"><b>👑 ${r.name||''} - ${r.phone}</b><small>Shop: ${r.shop||''}<br>User: ${r.user}<br>Total Spent: Tk ${r.totalSpent||0}<br>Status: ${r.status}<br>Time: ${r.time||''}</small><div class="row">${r.status!=='Approved'?`<button class="ok" onclick="approveResellerAdmin(${i})">✅ Approve</button>`:''}<button class="del" onclick="deleteReseller(${i})">🗑️ Delete</button></div></div>`).join(''):'<p style="text-align:center;margin-top:16px;color:#666">No Reseller Request</p>';
   }
   if(curTab==="codes"){
-    box.innerHTML=`<div class="card"><h3>🎁 Redeem Codes (Active)</h3><p style="margin-top:8px;line-height:1.8">ULTRA50 = Tk 50<br>ULTRA100 = Tk 100<br>FREE10 = Tk 10<br>ULTRA200 = Tk 200<br>WELCOME20 = Tk 20</p></div><div class="card"><h3>✅ Used Codes (${used.length})</h3><p style="margin-top:8px">${used.join(', ')||'None'}</p></div>`;
+    box.innerHTML=`<div class="card"><h3>🎁 Redeem Requests - Pending</h3><p style="font-size:13px;color:#666;margin-top:6px">Redeem dile auto taka add hobe NA. Tui check kore Accept korle tobei add hobe.</p></div>`+(redeemReqs.length?redeemReqs.map((r,i)=>`<div class="order"><b>🎁 ${r.code} - ${r.user}</b><small>Status: ${r.status}<br>Time: ${r.time}</small><div class="row">${r.status==='Pending'?`<button class="ok" onclick="approveRedeem(${i})">✅ Accept</button><button class="rej" onclick="rejectRedeem(${i})">❌ Reject</button>`:''}<button class="del" onclick="deleteRedeem(${i})">🗑️ Delete</button></div></div>`).join(''):'<p style="text-align:center;margin-top:10px;color:#666">Kono Redeem Request nai</p>');
   }
 }
-function markDone(i){
-  let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");
-  orders[i].status="Done ✅";
-  localStorage.setItem("ut_orders",JSON.stringify(orders));
+
+function approveAddMoney(i){
+  let reqs=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");
+  let r=reqs[i]; if(!r||r.status!=='Pending') return;
+  if(!confirm("Tumi ki bKash e Tk "+r.amount+" paiso?\nTrxID: "+r.trx+" milse?\nAccept korle "+r.name+" er account e taka add hoia jabe!")) return;
+  r.status='Approved'; localStorage.setItem("ut_add_requests",JSON.stringify(reqs));
+  addBalanceToUser(r.user, r.amount);
+  alert("✅ Approved! Tk "+r.amount+" - "+r.name+" er account e add hoise.");
   renderAdmin();
 }
-function deleteOrder(i){
-  if(!confirm("Delete this order?"))return;
-  let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");
-  orders.splice(i,1);
-  localStorage.setItem("ut_orders",JSON.stringify(orders));
+function rejectAddMoney(i){
+  let reqs=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");
+  reqs[i].status='Rejected'; localStorage.setItem("ut_add_requests",JSON.stringify(reqs));
+  alert("❌ Rejected! Taka add hoy nai.");
   renderAdmin();
 }
-function copyOrder(i){
-  let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");
-  let o=orders[i];
-  let txt=`Game: ${o.game}\nPackage: ${o.pkg}\nPrice: Tk ${o.price}\nUID: ${o.pid}\nTrxID: ${o.trx}\nPay: ${o.pay}`;
-  navigator.clipboard.writeText(txt).then(()=>alert("✅ Copied!"));
-}
-function approveResellerAdmin(i){
-  let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");
-  let r=reqs[i];
-  localStorage.setItem("ut_is_reseller_"+r.user,"1");
-  reqs[i].status="Approved";
-  localStorage.setItem("ut_reseller_req",JSON.stringify(reqs));
-  alert("✅ Reseller Approved: "+r.phone);
-  renderAdmin();
-}
-function deleteReseller(i){
-  if(!confirm("Delete reseller request?"))return;
-  let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");
-  reqs.splice(i,1);
-  localStorage.setItem("ut_reseller_req",JSON.stringify(reqs));
-  renderAdmin();
-}
+function deleteAddMoney(i){if(!confirm("Delete this Add Money request?"))return;let reqs=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");reqs.splice(i,1);localStorage.setItem("ut_add_requests",JSON.stringify(reqs));renderAdmin();}
+function markDone(i){let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");o[i].status="Complete";localStorage.setItem("ut_orders",JSON.stringify(o));renderAdmin();}
+function markPending(i){let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");o[i].status="Pending";localStorage.setItem("ut_orders",JSON.stringify(o));renderAdmin();}
+function deleteOrder(i){if(!confirm("Delete this order?"))return;let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");o.splice(i,1);localStorage.setItem("ut_orders",JSON.stringify(o));renderAdmin();}
+function copyOrder(i){let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");let x=o[i];let txt=`Game: ${x.game}\nPackage: ${x.pkg}\nPrice: Tk ${x.price}\nUID: ${x.pid}\nTrxID: ${x.trx}\nPay: ${x.pay}\nPhone: ${x.phone}`;navigator.clipboard.writeText(txt).then(()=>alert("✅ Copied!"));}
+function approveResellerAdmin(i){let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");let r=reqs[i];localStorage.setItem("ut_is_reseller_"+r.user,"1");reqs[i].status="Approved";localStorage.setItem("ut_reseller_req",JSON.stringify(reqs));alert("✅ Reseller Approved: "+r.phone);renderAdmin();}
+function deleteReseller(i){if(!confirm("Delete reseller request?"))return;let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");reqs.splice(i,1);localStorage.setItem("ut_reseller_req",JSON.stringify(reqs));renderAdmin();}
+function approveRedeem(i){let reqs=JSON.parse(localStorage.getItem("ut_redeem_requests")||"[]");reqs[i].status='Approved';localStorage.setItem("ut_redeem_requests",JSON.stringify(reqs));alert("Redeem Approved - Taka tumi nije thik kore diba, auto fek taka dewa hoy na.");renderAdmin();}
+function rejectRedeem(i){let reqs=JSON.parse(localStorage.getItem("ut_redeem_requests")||"[]");reqs[i].status='Rejected';localStorage.setItem("ut_redeem_requests",JSON.stringify(reqs));renderAdmin();}
+function deleteRedeem(i){let reqs=JSON.parse(localStorage.getItem("ut_redeem_requests")||"[]");reqs.splice(i,1);localStorage.setItem("ut_redeem_requests",JSON.stringify(reqs));renderAdmin();}
 if(localStorage.getItem("ut_admin_login")==="1"){showDash();}
 </script>
 </body>
