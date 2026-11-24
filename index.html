@@ -86,6 +86,9 @@ input{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-to
 .waPopHead{background:#25D366;color:#fff;padding:12px;display:flex;gap:8px;align-items:center}
 .waOpt{padding:12px;border-bottom:1px solid #eee;cursor:pointer;display:flex;gap:10px;align-items:center}
 .waOpt b{font-size:13px}.waOpt small{color:#666;font-size:11px}
+.statusPending{background:#fff3cd;color:#856404;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:900}
+.statusComplete{background:#e8fff0;color:#00a651;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:900}
+.statusFailed{background:#ffe8ec;color:#ff2d55;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:900}
 </style>
 </head>
 <body>
@@ -142,37 +145,46 @@ function t(k){return (T[LANG]||T.en)[k]||k}
 function setLang(l){LANG=l;localStorage.setItem("ut_lang",l);renderGames();updateRefer();showToast(l==="en"?"Language: English":"ভাষা: বাংলা")}
 const WA_NUMBER="01837450067";const WA_LINK="8801837450067";
 const PAY_NUMBERS={bKash:WA_NUMBER,Nagad:WA_NUMBER,Rocket:WA_NUMBER,Upay:WA_NUMBER};
-async function callUltraAPI(o){return{success:false,mode:"manual"}}
 function openTelegram(){window.open('https://t.me/+Q6GAbYR_AusxMjE1','_blank')}
 function openWhatsAppSupport(msg){window.open('https://wa.me/'+WA_LINK+'?text='+encodeURIComponent(msg||'Hello, I need help'),'_blank')}
 function toggleWaPop(){document.getElementById('waPop').classList.toggle('open')}
 function closeTgPopup(){document.getElementById('telegramPopup').style.display='none';}
 setTimeout(function(){ document.getElementById('telegramPopup').style.display='flex'; }, 2500);
+
+// ===== ADMIN PANEL - ADD MONEY ACCEPT KORLEI TAKA JOG HOBE =====
 function openAdmin(){
   let pass=prompt("Admin Password দিন:");
   if(pass!=="admin123"){if(pass!==null)alert("Wrong Password!");return;}
   let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");
   let addReqs=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");
   let total=orders.reduce((s,o)=>s+(o.price||0),0);
-  let addHtml=`<h3 style="margin-top:16px">💰 Add Money Requests</h3>`+(addReqs.length?addReqs.map((r,i)=>`<div class="pkg"><div><b>${r.name} - Tk ${r.amount}</b><br><small>${r.user} | Trx: ${r.trx} | ${r.pay} | ${r.status} | ${r.time}</small></div><div style="display:flex;gap:6px">${r.status==='Pending'?`<button onclick="approveAddMoney(${i})" style="background:#00c853;color:#fff;border:none;padding:8px 10px;border-radius:8px;font-weight:900">Accept</button><button onclick="rejectAddMoney(${i})" style="background:#ff2d55;color:#fff;border:none;padding:8px 10px;border-radius:8px;font-weight:900">Reject</button>`:`<b>${r.status}</b>`}</div></div>`).join(''):'<p>No Add Money Request</p>');
-  document.getElementById('adminBox').innerHTML=`<div style="background:#111;color:#fff;padding:14px;border-radius:12px;text-align:center"><h3>📊 Total Orders: ${orders.length}</h3><p>Total Sell: Tk ${total}</p><button onclick="resetFakeBalance()" style="background:#ff2d55;color:#fff;border:none;padding:10px;border-radius:10px;font-weight:900;margin-top:10px;width:100%">⚠️ Fake Balance Reset (5000010 Clear)</button></div>${addHtml}<h3 style="margin-top:14px">🛍️ All Orders</h3>${orders.length?orders.map((o)=>`<div class="pkg"><div><b>${o.game} - ${o.pkg}</b><br><small>${o.pid} | Trx: ${o.trx} | ${o.pay} | ${o.status}</small></div><b>Tk ${o.price}</b></div>`).join(''):'<p>No Orders Yet</p>'}`;
+  let addHtml=`<h3 style="margin-top:16px">💰 Add Money Requests - Pending</h3>`+(addReqs.length?addReqs.map((r,i)=>`<div class="pkg" style="flex-direction:column;align-items:flex-start;gap:8px"><div><b>${r.name} - Tk ${r.amount}</b><br><small>${r.user} | Trx: ${r.trx} | ${r.pay} | ${r.status} | ${r.time}</small></div><div style="display:flex;gap:6px;width:100%">${r.status==='Pending'?`<button onclick="approveAddMoney(${i})" style="flex:1;background:#00c853;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900">✅ Accept - Taka Jog Hobe</button><button onclick="rejectAddMoney(${i})" style="flex:1;background:#ff2d55;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900">❌ Reject - Taka Jog Hobe NA</button>`:`<b>${r.status}</b>`}</div></div>`).join(''):'<p>No Add Money Request</p>');
+  let orderHtml=`<h3 style="margin-top:16px">🛍️ All Orders</h3>`+(orders.length?orders.map((o,i)=>`<div class="pkg" style="flex-direction:column;align-items:flex-start;gap:8px"><div><b>${o.game} - ${o.pkg}</b><br><small>UID: ${o.pid} | Trx: ${o.trx} | ${o.pay} | ${o.status}</small></div><div style="display:flex;gap:6px;width:100%">${o.status!=='Complete'?`<button onclick="completeOrder(${i})" style="flex:1;background:#00c853;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900">✅ Complete</button>`:`<b style="color:#00a651">✅ Complete</b>`}<b>Tk ${o.price}</b></div></div>`).join(''):'<p>No Orders Yet</p>');
+  document.getElementById('adminBox').innerHTML=`<div style="background:#111;color:#fff;padding:14px;border-radius:12px;text-align:center"><h3>📊 Total Orders: ${orders.length}</h3><p>Total Sell: Tk ${total}</p><button onclick="resetFakeBalance()" style="background:#ff2d55;color:#fff;border:none;padding:10px;border-radius:10px;font-weight:900;margin-top:10px;width:100%">⚠️ Fake Balance Reset</button></div>${addHtml}${orderHtml}`;
   document.getElementById('adminModal').classList.add('open');
 }
+function completeOrder(i){
+  let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");
+  orders[i].status="Complete"; localStorage.setItem("ut_orders",JSON.stringify(orders));
+  alert("✅ Complete!"); openAdmin();
+}
+// 👇 EITAI ASOL - Accept chaple TOKHON taka jog hobe, age NA
 function approveAddMoney(i){
   let addReqs=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");
   let r=addReqs[i]; if(!r||r.status!=='Pending') return;
+  if(!confirm("Tumi ki bKash e Tk "+r.amount+" paiso? Trx: "+r.trx+" - Accept korle taka ID te jog hobe!")) return;
   r.status='Approved'; localStorage.setItem("ut_add_requests",JSON.stringify(addReqs));
-  setBal(getBal()+r.amount);
-  alert("✅ Approved! Tk "+r.amount+" Add Hoise - User: "+r.name);
+  setBal(getBal()+r.amount); // <-- SUDHU EKHANE taka jog hoy
+  alert("✅ Approved! Tk "+r.amount+" ID te Jog Hoise - User: "+r.name);
   openAdmin();
 }
 function rejectAddMoney(i){
   let addReqs=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");
   addReqs[i].status='Rejected'; localStorage.setItem("ut_add_requests",JSON.stringify(addReqs));
-  alert("❌ Rejected! Taka Add Hoy Nai."); openAdmin();
+  alert("❌ Rejected! Taka Jog Hoy Nai."); openAdmin();
 }
 function resetFakeBalance(){
-  if(confirm("Fake 5000010 Balance Clear Korba?")){
+  if(confirm("Fake Balance Clear Korba?")){
     setBal(0); localStorage.setItem("ut_add_requests","[]"); localStorage.setItem("ut_used_trx","[]");
     alert("✅ Balance Clear Hoise! Ekhon 0"); openAdmin();
   }
@@ -268,14 +280,27 @@ function selectPkg(i,el){curPkg=curGame.pkgs[i];document.querySelectorAll('#gmPk
 function payStepsHTML(method,amount){return `• Dial *247# Or Open ${method} App<br>• Click Send Money<br>• Send To: <b>${PAY_NUMBERS[method]}</b> <span onclick="navigator.clipboard.writeText('${PAY_NUMBERS[method]}');showToast('Number Copied')" style="background:#fff;color:#e91e63;padding:2px 8px;border-radius:6px;cursor:pointer">📋 Copy</span><br>• Amount: <b>Tk ${amount}</b><br>• Enter Your ${method} PIN<br>• Send Money & Copy Transaction ID<br>• Paste TrxID & Click Verify`;}
 function goPay(){if(!curPkg){alert("Select A Package First!");return}let pid=document.getElementById('gmPlayerId').value.trim();if(!pid){alert(curGame.inputLabel||"Enter Player ID!");return}if(curGame.inputType==="phone"&& (pid.length<11||!pid.startsWith("01"))){alert("Enter Correct 11 Digit Number - 01XXXXXXXXX");return}if(curGame.inputType==="username"&&pid.length<3){alert("Enter Correct Username - @username");return}if(curGame.inputType==="email"&&!pid.includes("@")){alert("Enter Correct Gmail - @gmail.com");return}let price=getResellerPrice(curPkg[1]);document.getElementById('paySummary').innerHTML=`<b>${curGame.name}</b> - ${curPkg[0]} - <b>Tk ${price}</b><br>${curGame.inputLabel}: ${pid}`;document.getElementById('paySteps').innerHTML=payStepsHTML(curPay,price);closeModal('gameModal');document.getElementById('payModal').classList.add('open')}
 function setPay(m){curPay=m;["bKash","Nagad","Rocket","Upay"].forEach(x=>{let el=document.getElementById('pay-'+x);if(el)el.classList.toggle('on',x===m)});if(curGame&&curPkg)document.getElementById('paySteps').innerHTML=payStepsHTML(m,getResellerPrice(curPkg[1]));}
-async function submitOrder(){
+function submitOrder(){
   let trx=document.getElementById('payTrx').value.trim().toUpperCase();
   if(!/^[A-Z0-9]{10}$/.test(trx)){alert("❌ Transaction Failed! Sothik 10 Digit TrxID Dao!");return}
-  let price=getResellerPrice(curPkg[1]);let orderData={game:curGame.name,pkg:curPkg[0],price,pid:document.getElementById('gmPlayerId').value,trx,pay:curPay,inputType:curGame.inputType,phone:getUser()?getUser().phone:'Guest',time:new Date().toISOString()};let apiRes=await callUltraAPI(orderData);let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");orders.unshift({...orderData,status:apiRes.mode==="api"?"API Sent":"Pending",mode:apiRes.mode});localStorage.setItem("ut_orders",JSON.stringify(orders));let spent=getSpent()+price;localStorage.setItem("ut_total_spent",spent);closeModal('payModal');if(spent>=5000&&spent-price<5000){showToast("🎉 You Bought Tk 5000! Reseller Unlocked In Profile");setTimeout(()=>openAccount(),800);}else showToast(apiRes.mode==="api"?"✅ Order Sent Via API!":"✅ Order Submitted!");openMyOrders();
+  let used=JSON.parse(localStorage.getItem("ut_used_trx")||"[]");
+  if(used.includes(trx)){alert("❌ Transaction Failed! Ei TrxID Agei Bebohar Hoise!");return}
+  let price=getResellerPrice(curPkg[1]);
+  let orderData={game:curGame.name,pkg:curPkg[0],price,pid:document.getElementById('gmPlayerId').value.trim(),trx,pay:curPay,inputType:curGame.inputType,phone:getUser()?getUser().phone:'Guest',time:new Date().toLocaleString('en-GB')};
+  let orders=JSON.parse(localStorage.getItem("ut_orders")||"[]");
+  orders.unshift({...orderData,status:"Pending"});
+  localStorage.setItem("ut_orders",JSON.stringify(orders));
+  used.push(trx); localStorage.setItem("ut_used_trx",JSON.stringify(used));
+  let spent=getSpent()+price; localStorage.setItem("ut_total_spent",spent);
+  closeModal('payModal'); document.getElementById('payTrx').value="";
+  alert("⏳ Order Pending! Diamond Gele Complete Hobe.");
+  showToast("⏳ Order Pending");
+  openMyOrders();
 }
 function openWallet(){let u=getUser();if(!u){alert("Login First!");openAccount();return}document.getElementById('walletModal').classList.add('open')}
 function goAddMoneyPay(){let a=parseInt(document.getElementById('addAmt').value||"0");if(a<10){alert("Enter Amount Minimum Tk 10");return}curAddAmt=a;document.getElementById('addPaySummary').innerHTML=`Add Money: <b>Tk ${a}</b>`;document.getElementById('addPaySteps').innerHTML=payStepsHTML(curAddPay,a);closeModal('walletModal');document.getElementById('addPayModal').classList.add('open')}
 function setAddPay(m){curAddPay=m;["bKash","Nagad","Rocket","Upay"].forEach(x=>{let el=document.getElementById('add-'+x);if(el)el.classList.toggle('on',x===m)});document.getElementById('addPaySteps').innerHTML=payStepsHTML(m,curAddAmt);}
+// 👇 ADD MONEY - EKHANE TAKA JOG HOY NA, SUDHU PENDING HOY
 function addMoney(){
   let a=curAddAmt;
   let trx=document.getElementById('addTrx').value.trim().toUpperCase();
@@ -289,8 +314,9 @@ function addMoney(){
   localStorage.setItem("ut_add_requests",JSON.stringify(reqs));
   usedTrx.push(trx); localStorage.setItem("ut_used_trx",JSON.stringify(usedTrx));
   closeModal('addPayModal'); document.getElementById('addTrx').value="";
-  alert("✅ Transaction Successful! Payment Pending. Admin Check Kore Taka Add Korbe.");
+  alert("⏳ Payment Pending! Admin Accept Korle Taka ID te Jog Hobe.");
   showToast("⏳ Payment Pending - Admin Approval Lagbe");
+  openMyOrders();
 }
 function closeModal(id){document.getElementById(id).classList.remove('open')}
 function openAccount(){let u=getUser();let b=document.getElementById('accBox');if(!u){b.innerHTML=`<div class="profHead"><div class="profAvatar">👤</div><h2 style="margin-top:10px">Guest User</h2><p style="color:#666">Login To See Profile</p></div><input id="a_name" placeholder="Your Name - e.g. Md Rana"><input id="a_phone" placeholder="Phone / Gmail"><input id="a_pass" type="password" placeholder="Password - First Time: 123456"><button class="btnMain" onclick="doLogin()">Login / Register →</button><p style="font-size:12px;text-align:center;margin-top:8px;color:#007aff;cursor:pointer" onclick="openForgotFromLogin()">Forget Password?</p><p style="font-weight:900;margin-top:14px">${t('lang')} / Language</p><div class="langRow"><button class="${LANG==='en'?'on':''}" onclick="setLang('en');openAccount()">🇬🇧 English</button><button class="${LANG==='bn'?'on':''}" onclick="setLang('bn');openAccount()">🇧🇩 বাংলা</button></div>`;}else{let spent=getSpent();let pct=Math.min(100,spent/5000*100);let rank=getRank(spent);let isReseller=localStorage.getItem("ut_is_reseller_"+u.phone)==="1";let reqs=JSON.parse(localStorage.getItem("ut_reseller_req")||"[]");let myReq=reqs.find(r=>r.user===u.phone);let resellerHTML="";if(isReseller){resellerHTML=`<div class="resellerLock"><h3>👑 Reseller Active</h3><p>10% Discount Running</p><button disabled>✅ ${t('active')}</button></div>`;}else if(myReq&&myReq.status==='Pending'){resellerHTML=`<div class="resellerLock"><h3>⏳ Reseller Application Pending</h3><p>Admin Is Checking Your Tk 5000 Purchase. Please Wait.</p><p style="font-size:12px">Total Purchase: Tk ${spent} / 5000</p><button disabled>🔒 ${t('pending')} - Locked</button></div>`;}else if(spent>=5000){resellerHTML=`<div class="resellerLock"><h3>🎉 Reseller Unlocked!</h3><p>You Bought Tk 5000+. Apply Free Now. Admin Will Confirm.</p><button onclick="openReseller()">📝 ${t('apply')}</button></div>`;}else{resellerHTML=`<div class="resellerLock"><h3>👑 ${t('reseller')}</h3><p>Buy Tk 5000 To Unlock Reseller</p><p style="margin-top:8px">Total Purchase: <b>Tk ${spent} / Tk 5000</b></p><div class="progressBar"><i style="width:${pct}%"></i></div><p style="font-size:12px;margin-top:6px">Need Tk ${5000-spent} More To Unlock</p><button disabled>🔒 ${t('locked')} - Buy Tk ${5000-spent} More</button></div>`;}let firstLetter=(u.name||"U").charAt(0).toUpperCase();b.innerHTML=`<div class="profHead"><div class="profAvatar">${firstLetter}<span class="onlineDot"></span></div><h2 style="margin-top:10px">${u.name} <span class="verified">● Verified</span></h2><p style="color:#666;font-size:13px;margin-top:4px">🛡️ Support PIN: ${getReferCode(u.phone)} &nbsp; ★ Verified Account</p><div class="rankBox"><div style="font-size:32px">🛡️</div><div><b>${rank.rank}</b><br><small style="color:#666">${rank.level}</small></div><span style="margin-left:auto">⭐</span></div></div><div class="walletCard"><p style="color:#666">${t('walletBal')}</p><h2 style="margin-top:6px">Tk ${getBal()}</h2><button class="btnMain" style="background:linear-gradient(135deg,#111,#007aff)" onclick="closeModal('accountModal');openWallet()">${t('addMoney')}</button></div><div style="background:#fff;border-radius:12px;padding:14px;margin-top:12px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><p>📞 ${u.phone}</p><p style="margin-top:6px">🛍️ ${t('totalBuy')}: <b>Tk ${spent} / 5000</b></p><p style="margin-top:6px">🎁 ${t('referCode')}: <b>${getReferCode(u.phone)}</b></p></div>${resellerHTML}<button class="btnMain" style="background:#111" onclick="openSettings()">⚙️ Settings - Password Change / Forget</button><p style="font-weight:900;margin-top:14px">${t('lang')} / Language</p><div class="langRow"><button class="${LANG==='en'?'on':''}" onclick="setLang('en');openAccount()">🇬🇧 English</button><button class="${LANG==='bn'?'on':''}" onclick="setLang('bn');openAccount()">🇧🇩 বাংলা</button></div><button class="btnMain" onclick="copyRefer()">📋 ${t('copyRefer')}</button><button class="btnMain" style="background:#ff2d55" onclick="localStorage.removeItem('ut_user');location.reload()">${t('logout')}</button>`;}document.getElementById('accountModal').classList.add('open');}
@@ -303,8 +329,8 @@ function forgetPasswordGuest(){let ph=document.getElementById('forgetPhone').val
 function openMyOrders(){
   let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");
   let adds=JSON.parse(localStorage.getItem("ut_add_requests")||"[]");
-  let addHtml=adds.length?`<h3 style="margin-top:10px">💰 Add Money History</h3>`+adds.map(x=>`<div class="pkg"><div><b>Add Money - Tk ${x.amount}</b><br><small>${x.time} | Trx: ${x.trx} | ${x.status}</small></div><b>${x.status}</b></div>`).join(''):'';
-  document.getElementById('ordersBox').innerHTML=(o.length?o.map(x=>`<div class="pkg"><div><b>${x.game} - ${x.pkg}</b><br><small>${x.time} | ${x.status} | ${x.pid||''}</small></div><b>Tk ${x.price}</b></div>`).join(''):'<p>No Order Yet.</p>')+addHtml;
+  let addHtml=adds.length?`<h3 style="margin-top:14px">💰 Add Money History</h3>`+adds.map(x=>`<div class="pkg"><div><b>Add Money - Tk ${x.amount}</b><br><small>${x.time} | Trx: ${x.trx} | <span class="${x.status==='Approved'?'statusComplete':x.status==='Rejected'?'statusFailed':'statusPending'}">${x.status}</span></small></div><b>Tk ${x.amount}</b></div>`).join(''):'';
+  document.getElementById('ordersBox').innerHTML=(o.length?o.map(x=>`<div class="pkg" style="flex-direction:column;align-items:flex-start;gap:8px"><div><b>${x.game} - ${x.pkg}</b><br><small>UID: ${x.pid||''} | ${x.time}</small></div><div style="display:flex;justify-content:space-between;width:100%;align-items:center"><span class="${x.status==='Complete'?'statusComplete':'statusPending'}">${x.status}</span><b>Tk ${x.price}</b></div></div>`).join(''):'<p>No Order Yet.</p>')+addHtml;
   document.getElementById('ordersModal').classList.add('open')
 }
 function goHome(el){document.querySelectorAll('.bottomNav button').forEach(b=>b.classList.remove('on'));el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'})}
@@ -322,4 +348,4 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').cat
 renderCats();renderGames();setBal(getBal());updateRefer();loadRealIcons();
 </script>
 </body>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                 </html>
+</html>
