@@ -12,9 +12,10 @@ body{background:#f2f2f2;display:flex;align-items:center;justify-content:center;m
 .logo img{width:100%;height:100%;object-fit:cover}
 h2{margin-top:14px;font-size:22px}
 p{color:#666;font-size:13px;margin-top:6px;line-height:1.5}
-.btn{display:block;background:#00c853;color:#fff;padding:15px;border-radius:14px;text-decoration:none;font-weight:900;margin-top:18px;font-size:16px}
+.btn{display:block;background:#00c853;color:#fff;padding:15px;border-radius:14px;text-decoration:none;font-weight:900;margin-top:18px;font-size:16px;border:none;width:100%;cursor:pointer}
 .btn2{display:block;background:#111;color:#fff;padding:13px;border-radius:14px;text-decoration:none;font-weight:900;margin-top:10px;font-size:14px}
 small{display:block;margin-top:14px;color:#888;font-size:11px;line-height:1.5}
+.warn{background:#fff3cd;border:1px solid #ffcc00;padding:10px;border-radius:10px;font-size:12px;margin-top:14px;color:#333}
 </style>
 </head>
 <body>
@@ -22,14 +23,17 @@ small{display:block;margin-top:14px;color:#888;font-size:11px;line-height:1.5}
 <div class="logo"><img src="https://i.ibb.co/DDmdVS2L/IMG-20261123-WA0003.jpg"></div>
 <h2>ULTRA TOP UP BD</h2>
 <p>Official App Download<br>Free Fire • PUBG • TikTok Top Up</p>
-<a class="btn" id="dlBtn" href="./ultra-top-up-bd.apk" download>⬇️ Download APK - Direct</a>
+<button class="btn" onclick="downloadNow()">⬇️ Download APK - Direct</button>
 <a class="btn2" href="https://ultra-tup-up-bd.vercel.app/">🏠 Back To Website</a>
+<div class="warn" id="msg">⚠️ নিচে APK ফাইল আপলোড না দিলে ডাউনলোড হইবো না। নিচের নিয়ম দেখো।</div>
 <small>Download না হইলে Allow Unknown Sources<br>On কইরা Install দাও।<br>Version: v1.0 - New App</small>
 </div>
 <script>
-const APK_URL = "./ultra-top-up-bd.apk";
-document.getElementById('dlBtn').href = APK_URL;
-setTimeout(()=>{ window.location.href = APK_URL; }, 800);
+function downloadNow(){
+  // এই লাইনে তোমার আসল APK লিংক বসাইতে হইবো
+  // এখন আপাতত APK ফাইল Repo তে নাই, তাই Alert দেখাইবো
+  alert("ভাই, APK ফাইলটা এখনো Repo তে আপলোড হয় নাই! GitHub > Add file > Upload files দিয়া ultra-top-up-bd.apk ফাইলটা আপলোড করো, তারপর ডাউনলোড হইবো।");
+}
 </script>
 </body>
 </html>
