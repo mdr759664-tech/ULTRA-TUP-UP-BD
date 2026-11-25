@@ -197,4 +197,5 @@ function exitImpersonate(){let back=null;try{back=JSON.parse(localStorage.getIte
 renderCats();renderGames();renderLive();renderTop();updateCoinUI();updateRefer();updateResellerUI();loadRealIcons();
 if(getUser()){hideLogin();setBal(getBal());refreshAvatars()}else{showLogin();}
 if(localStorage.getItem("ut_admin_mode")==="1"){let u=getUser();if(u){document.getElementById('adminBar').style.display='block';document.getElementById('adminViewing').innerText=u.name+" ("+u.phone+" | PIN "+getSupportPin()+")"}}
+  <script type="module" src="firebase.js"></script>
 </script></body></html>
