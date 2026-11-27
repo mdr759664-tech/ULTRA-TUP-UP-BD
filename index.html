@@ -217,5 +217,5 @@ function updateRefer(){let u=getUser();if(!u)return;let logs=JSON.parse(localSto
 function openMyOrders(){closeAllModals();let u=getUser();let b=document.getElementById('ordersBox');if(!u){alert("Age Login koro!");showLogin();return}let o=JSON.parse(localStorage.getItem("ut_orders")||"[]");let my=o.filter(x=>x.phone===u.phone);if(!my.length){b.innerHTML='<p>Ekhono kono order nai</p><button class="btnMain" onclick="closeModal(\'ordersModal\');goHome()">Top Up Koro →</button>';}else{b.innerHTML=my.map(x=>`<div style="border:1px solid #eee;border-radius:12px;padding:12px;margin-top:10px"><b>${x.game} - ${x.pkg}</b><br>UID: ${x.pid}<br>Price: Tk ${x.price} - ${x.payMode||""}<br>Status: <b>${x.status}</b><br><small>${x.time}</small>${x.trx?`<br><small>TrxID: ${x.trx}</small>`:''}</div>`).join('')}document.getElementById('ordersModal').classList.add('open')}
 function init(){renderCats();renderGames();renderRecent();renderTop();updateCoinUI();updateResellerUI();refreshAvatars();if(getUser())hideLogin();else showLogin();setBal(getBal());setTimeout(()=>{try{loadRealIcons()}catch(e){}},1200);}
 init();
-</script></body></html>
 <script src="games-data.js"></script>
+</script></body></html>
