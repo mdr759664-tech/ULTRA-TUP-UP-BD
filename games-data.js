@@ -1,3 +1,6 @@
+// games-data.js - ULTRA TOP UP BD - FULL FILE
+// 1 USD = 125 Tk + 5% Lav = Hisab kora
+
 const GAMES_DATA = [
 
 // ============ GIFT CARD ============
@@ -13,17 +16,18 @@ const GAMES_DATA = [
 ["Facebook Stars","Social","⭐","Facebook","Enter Facebook Page Link / ID","100 Stars:137,500 Stars:651,1000 Stars:1292"],
 ["Instagram Followers","Social","📸","Instagram","Enter Instagram Username - @username","100 Followers:95,500 Followers:441,1000 Followers:861"],
 ["YouTube Subscribers","Social","▶️","YouTube","Enter YouTube Channel Link","100 Subs:158,500 Subs:756,1000 Subs:1470"],
-["Telegram Stars","Social","⭐","Telegram","Enter Telegram Username - @username","50 Stars:100,100 Stars:195,500 Stars:945"],
+["Telegram Stars","Social","⭐","Telegram","Enter Telegram Username - @username","50 Stars:103,75 Stars:155,100 Stars:205,150 Stars:306,250 Stars:510,350 Stars:713,500 Stars:1019,750 Stars:1528,1000 Stars:2035,1500 Stars:3055,2500 Stars:5089,5000 Stars:10176,10000 Stars:20351,Premium 3 Months:1628,Premium 6 Months:2170,Premium 12 Months:3935"],
 
 // ============ LIVE ============
 ["Bigo Live","Live","📺","Bigo Live","Enter Bigo ID","40 Diamonds:53,210 Diamonds:272,420 Diamonds:541,1050 Diamonds:1344"],
-["Poppo Live","Live","📺","Poppo Live","Enter Poppo UID","100 Coins:116,500 Coins:578,1000 Coins:1145,5000 Coins:5670"],
+["Poppo Live","Live","📺","Poppo Live","Enter Poppo UID","300 Coins:633,600 Coins:1263,980 Coins:2061,1980 Coins:4161,2980 Coins:6264,6000 Coins:12608,8000 Coins:16812,15980 Coins:33579,19800 Coins:41605,30000 Coins:63037,50000 Coins:105061,51800 Coins:108843,80000 Coins:168098,100000 Coins:210121,200000 Coins:420241"],
 ["MICO Coins","Live","🎙️","MICO","Enter MICO UID","100 Coins:121,500 Coins:599,1000 Coins:1187"],
 ["Jaco Live","Live","🎙️","Jaco Live","Enter Jaco UID","100 Coins:121,500 Coins:599"],
 ["Migo Live","Live","🎙️","Migo Live","Enter Migo UID","100 Coins:121,500 Coins:599"],
 ["Likee Diamonds","Live","💎","Likee","Enter Likee ID","100 Diamonds:121,500 Diamonds:599"],
 
 // ============ GAMES ============
+["Patti Game","Games","🃏","Patti Game","Enter Patti UID","1 Cr Chips Pack:191,3.3 Cr Chips Pack:470,7.5 Cr Chips Pack:972,16 Cr Chips Pack:1896,51 Cr Chips Pack:5682,55 Cr Chips Pack:6924,125 Cr Chips Pack:8421,550 Gems Pack:541,1100 Gems Pack:804,2900 Gems Pack:1971,6200 Gems Pack:3341,13500 Gems Pack:5925,16L Chips Pack:37,45L Chips Pack:96,Gold Pass:711"],
 ["Free Fire MAX","Games","🔥","Free Fire MAX","Enter Free Fire MAX UID","100 Diamonds:84,310 Diamonds:237,520 Diamonds:389,1060 Diamonds:788,2180 Diamonds:1596"],
 ["Roblox Robux","Games","🧱","Roblox","Enter Roblox Username","80 Robux:104,400 Robux:503,800 Robux:997,1700 Robux:2099"],
 ["Call of Duty Mobile","Games","🔫","Call of Duty Mobile","Enter CODM UID","80 CP:104,400 CP:503,800 CP:997,2000 CP:2468"],
@@ -48,3 +52,6 @@ const GAMES_DATA = [
 ["HBO Max","Entertainment","🎬","HBO Max","Enter HBO Gmail","1 Month:399"],
 ["Viu Premium","Entertainment","🎬","Viu","Enter Viu Gmail","1 Month:263"]
 ];
+
+// --- Eita index.html e lagbe, naile game asbe na ---
+if (typeof module !== 'undefined') { module.exports = GAMES_DATA; }
